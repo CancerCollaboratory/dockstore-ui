@@ -90,7 +90,7 @@ angular
   }]).run(['$rootScope', '$auth', '$location',
     function($rootScope, $auth, $location) {
       $rootScope.$on('$routeChangeStart', function(event, next, current) {
-        var public_views = ['/search', '/docs', '/login', '/register'];
+        var public_views = ['/search', '/docs', '/login', '/register', '/'];
         var isViewPublic = function(path) {
           for (var i = 0; i < public_views.length; i++) {
             if (path.indexOf(public_views[i]) !== -1) { return true; }
