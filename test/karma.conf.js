@@ -21,8 +21,8 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js',
-      'bower_components/AngularJS-Toaster/toaster.js',
+      'bower_components/bootstrap-sass-official/bootstrap-sass-3.3.5/assets/javascripts/bootstrap.js',
+      'bower_components/AngularJS-Toaster/AngularJS-Toaster-0.4.16/toaster.js',
       // bower:js
       'bower_components/jquery/dist/jquery.js',
       'bower_components/angular/angular.js',
