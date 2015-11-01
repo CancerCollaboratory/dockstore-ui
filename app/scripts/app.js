@@ -56,6 +56,11 @@ angular
           controller: 'SearchCtrl',
           controllerAs: 'Search'
         })
+        .when('/home', {
+          templateUrl: 'views/home.html',
+          controller: 'HomeCtrl',
+          controllerAs: 'Home'
+        })
         .when('/search/:containerId', {
           templateUrl: 'views/searchcontainerdetails.html',
           controller: 'SearchContainerDetailsCtrl',
@@ -133,7 +138,7 @@ angular
       });
       $rootScope.$on('$routeChangeStart', function(event, next, current) {
         if ($location.url() === '') return;
-        var public_views = ['/search', '/docs', '/login', '/register'];
+        var public_views = ['/search', '/docs', '/login', '/register', '/home'];
         var isViewPublic = function(path) {
           for (var i = 0; i < public_views.length; i++) {
             if (path.indexOf(public_views[i]) !== -1) { return true; }

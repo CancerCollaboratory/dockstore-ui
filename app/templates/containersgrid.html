@@ -1,116 +1,86 @@
-<div class="row">
-  <div class="col-md-12">
-    <form class="form-inline">
-      <div class="form-group form-group-sm pull-left">
-        <label for="num-page-select">Show: </label>
-        <div class="input-group">
-          <select id="num-page-select" class="form-control" ng-model="numContsPage">
-            <option value="10">10 rows</option>
-            <option value="20">20 rows</option>
-            <option value="40">40 rows</option>
-            <option value="80">80 rows</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-group form-group-sm pull-right">
-        <div class="input-group">
-          <div class="input-group-addon">
-            <span class="glyphicon glyphicon-search"></span>
-          </div>
-          <input type="text"
-                  class="form-control"
-                  ng-model="searchContainers"
-                  placeholder="Search Containers" />
-        </div>
-      </div>
-    </form>
-  </div>
+<div id="container-table">
+	<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<table class="homepage-container">
+	<thead>
+		<tr>
+			<th>Name <img src="images/arrows.png"></th>
+			<th>Author <img src="images/arrows.png"></th>
+			<th>Project Links <img src="images/arrows.png"></th>
+			<th>Docker Pull <img src="images/arrows.png"></th>
+		</tr>
+	</thead>
+	<tbody>
+    <tr ng-show="filteredContainers.length === 0">
+      <td colspan="4">
+        <div class="text-center">No Records Found</div>
+      </td>
+    </tr>
+    <tr ng-repeat="cont in ((filteredContainers = (containers | filter: searchContainers)) | orderBy:sortColumn:sortReverse | PaginationFilter:getPaginRangeObj())">
+      <td>
+        <a href="#/search/{{cont.id}}">{{cont.name}}</a>
+      </td>
+      <td>
+        {{ cont.author ? cont.author : 'n/a' }}
+      </td>
+      <td>
+        <span ng-if="getGitHubURL(cont.gitUrl)">
+          <a ng-href="{{getGitHubURL(cont.gitUrl)}}" target="_blank">GitHub</a>
+        </span>
+        <span ng-if="getQuayIOURL(cont.path)">
+          <a ng-href="{{getQuayIOURL(cont.path)}}" target="_blank">Quay.io</a>
+        </span>
+        <span
+            ng-if="!(getGitHubURL(cont.gitUrl) || getQuayIOURL(cont.path))">
+          n/a
+        </span>
+      </td>
+      <td>
+        <span class="rounded2">
+				<input type="text" class="docker-pull rounded2" value="docker pull {{cont.path}}" />
+			</span>
+      </td>
+    </tr>
+
+	</tbody>
+</table>
 </div>
-<div class="row vert-offset-8">
-  <div class="col-md-12">
-    <table class="table table-bordered table-condensed table-striped">
-      <thead>
-        <tr>
-          <th class="col-md-3">
-            Name
-            <span class="glyphicon pull-right"
-                  ng-class="getIconClass('name')"
-                  ng-click="clickSortColumn('name')">
-            </span>
-          </th>
-          <th class="col-md-2">
-            Author
-            <span class="glyphicon pull-right"
-                  ng-class="getIconClass('author')"
-                  ng-click="clickSortColumn('author')">
-            </span>
-          </th>
-          <th class="col-md-2">
-            Project Links
-          </th>
-          <th class="col-md-5">
-            Docker Pull
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-show="filteredContainers.length === 0">
-          <td colspan="4">
-            <div class="text-center">No Records Found</div>
-          </td>
-        </tr>
-        <!-- need a to write a 'smart search' filter -->
-        <tr ng-repeat="cont in ((filteredContainers = (containers | filter: searchContainers)) | orderBy:sortColumn:sortReverse | PaginationFilter:getPaginRangeObj())">
-          <td>
-            <a href="#/search/{{cont.id}}">{{cont.name}}</a>
-          </td>
-          <td>
-            {{ cont.author ? cont.author : 'n/a' }}
-          </td>
-          <td>
-            <span ng-if="getGitHubURL(cont.gitUrl)">
-              <a ng-href="{{getGitHubURL(cont.gitUrl)}}" target="_blank">GitHub</a>
-            </span>
-            <span ng-if="getQuayIOURL(cont.path)">
-              <a ng-href="{{getQuayIOURL(cont.path)}}" target="_blank">Quay.io</a>
-            </span>
-            <span
-                ng-if="!(getGitHubURL(cont.gitUrl) || getQuayIOURL(cont.path))">
-              n/a
-            </span>
-          </td>
-          <td>
-            <div copy-text>docker pull {{cont.path}}</div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
 </div>
-<div class="row ds-grid-footer">
-  <div class="col-md-12">
-    <div class="pull-left">
-      Results {{getRangeString()}}
-    </div>
-    <nav class="pull-right">
-      <ul class="pagination pagination-sm">
-        <li ng-class="{ disabled: currPage === 1 }">
-          <a  href ng-click="changePage(1)">First</a>
+</div>
+</div>
+
+
+<!-- pagination -->
+<div id="container-pagination">
+	<div class="container">
+	<div class="row-center">
+			<ul class="pagination">
+				<li>Results {{getRangeString()}}</li>
+        <li> <div ng-class="{ disabled: currPage === 1 }" class="button">
+          <p><a href ng-click="changePage(-1)">Previous &laquo;</a></p>
         </li>
-        <li ng-class="{ disabled: currPage === 1 }">
-          <a href ng-click="changePage(-1)">Previous</a>
-        </li>
-        <li ng-repeat="pageNum in pageNumList"
-            ng-class="{ active: pageNum === currPage }">
-          <a href ng-click="changePage(pageNum)">{{pageNum}}</a>
-        </li>
-        <li ng-class="{ disabled: (currPage === numPages) || (numPages === 0) }">
-          <a href ng-click="changePage(-2)">Next</a>
-        </li>
-        <li ng-class="{ disabled: (currPage === numPages) || (numPages === 0) }">
-          <a href ng-click="changePage(numPages)">Last</a>
-        </li>
-      </ul>
-    </nav>
-  </div>
+				<li><div ng-class="{ disabled: (currPage === numPages) || (numPages === 0) }" class="button">
+					<p><a ng-click="changePage(-2)">Next &raquo;</a></p>
+				</div></p></li>
+			</ul>
+	</div>
+</div>
+</div>
+
+
+<div id="our-sponsors">
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<ul class="our-sponsors">
+				<li>Our Sponsors:</li>
+				<li><img src="images/collaboratory.png"></li>
+				<li><img src="images/oicr.png"></li>
+				<li><img src="images/ga4gh.png"></li>
+
+			</ul>
+</div>
+</div>
+</div>
 </div>

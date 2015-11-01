@@ -83,97 +83,8 @@
 </div>
 
 <div class="container">
-  <div class="row">
-    <div class="col-md-10 col-md-offset-1">
-      <div ng-view></div>
-    </div>
-  </div>
+<div ng-view></div>
 </div>
-
-<div id="container-table">
-	<div class="container">
-	<div class="row">
-		<div class="col-md-12">
-			<table class="homepage-container">
-	<thead>
-		<tr>
-			<th>Name <img src="images/arrows.png"></th>
-			<th>Author <img src="images/arrows.png"></th>
-			<th>Version <img src="images/arrows.png"></th>
-			<th>Docker Pull <img src="images/arrows.png"></th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td><a href="#">Container 1</a></td>
-			<td>Peter Amstutz</td>
-			<td>3.8.14.4</td>
-			<td>
-				<span class="rounded2">
-				<input type="text" class="docker-pull rounded2" value="docker pull quay.io/briandoconnor/wo" />
-			</span>
-		</td>
-		</tr>
-		<tr>
-			<td><a href="#">Container 2</a></td>
-			<td>Peter Amstutz</td>
-			<td>develop</td>
-			<td>
-				<span class="rounded2">
-				<input type="text" class="docker-pull rounded2" value="docker pull quay.io/briandoconnor/wo" />
-			</span>
-			</td>
-		</tr>
-		<tr>
-			<td><a href="#">Container 3</a></td>
-			<td>Peter Amstutz</td>
-			<td>3.8.14.4</td>
-			<td>
-				<span class="rounded2">
-				<input type="text" class="docker-pull rounded2" value="docker pull quay.io/briandoconnor/wo" />
-			</span>
-		</td>
-
-		</tr>
-		<tr>
-			<td><a href="#">Container 4</a></td>
-			<td>Peter Amstutz</td>
-			<td>3.8.14.4</td>
-			<td>
-				<span class="rounded2">
-				<input type="text" class="docker-pull rounded2" value="docker pull quay.io/briandoconnor/wo" />
-			</span>
-		</td>
-
-		</tr>
-		<tr>
-			<td><a href="#">Container 5</a></td>
-			<td>Peter Amstutz</td>
-			<td>3.8.14.4</td>
-			<td>
-				<span class="rounded2">
-				<input type="text" class="docker-pull rounded2" value="docker pull quay.io/briandoconnor/wo" />
-			</span>
-		</td>
-
-		</tr>
-
-
-
-
-		<tr>
-    <td colspan="4" class="browse-all"><div class="button">
-					<p><a href="#">Browse All Containers &raquo;</a></p>
-				</div>
-			</td>
-  </tr>
-	</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-
 
 <div id="documentation">
 <div class="container">
@@ -270,6 +181,7 @@
 <script src="scripts/directives/navbar.js"></script>
 <script src="scripts/controllers/navbar.js"></script>
 <script src="scripts/controllers/search.js"></script>
+<script src="scripts/controllers/home.js"></script>
 <script src="scripts/controllers/containers.js"></script>
 <script src="scripts/controllers/documentation.js"></script>
 <script src="scripts/controllers/settings.js"></script>
@@ -277,9 +189,11 @@
 <script src="scripts/controllers/accounts.js"></script>
 <script src="scripts/directives/tokensgrid.js"></script>
 <script src="scripts/directives/containersgrid.js"></script>
+<script src="scripts/directives/containersgridhome.js"></script>
 <script src="scripts/directives/copytext.js"></script>
 <script src="scripts/controllers/copytext.js"></script>
 <script src="scripts/controllers/containersgrid.js"></script>
+<script src="scripts/controllers/containersgridhome.js"></script>
 <script src="scripts/filters/paginationfilter.js"></script>
 <script src="scripts/directives/containerdetails.js"></script>
 <script src="scripts/controllers/searchcontainerdetails.js"></script>
