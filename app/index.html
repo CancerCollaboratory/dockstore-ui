@@ -6,15 +6,19 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <base href="/">
-    
+
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
+    <link rel="stylesheet" href="bower_components/AngularJS-Toaster/AngularJS-Toaster-0.4.16/toaster.css" />
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/AngularJS-Toaster/toaster.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
+    <!--link rel="stylesheet" href="styles/main.css"-->
+    <link href="styles/bootstrap.min.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="styles/style.css"/>
+
     <!-- endbuild -->
 
     <!-- highlight.js -->
@@ -33,19 +37,17 @@
     <!--/div-->
 
     <!-- Page Content -->
-    <div class="container">
-      <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-          <div ng-view></div>
-        </div>
-      </div>
-    </div>
 
-    <!--div class="footer">
+          <div ng-view></div>
+
+
+
+
+    <div class="footer">
       <div class="container">
         <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
       </div>
-    </div-->
+    </div>
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
@@ -66,6 +68,8 @@
     <script src="bower_components/angular-marked/angular-marked.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
+    <script src="bower_components/bootstrap-sass-official/bootstrap-sass-3.3.5/assets/javascripts/bootstrap.js"></script>
+    <script src="bower_components/AngularJS-Toaster/AngularJS-Toaster-0.4.16/toaster.js"></script>
 
     <!-- Satellizer Modified for Dockstore -->
     <script src="scripts/libs/satellizer/satellizer-ds.js"></script>
@@ -81,6 +85,7 @@
     <script src="scripts/directives/navbar.js"></script>
     <script src="scripts/controllers/navbar.js"></script>
     <script src="scripts/controllers/search.js"></script>
+    <script src="scripts/controllers/home.js"></script>
     <script src="scripts/controllers/containers.js"></script>
     <script src="scripts/controllers/documentation.js"></script>
     <script src="scripts/controllers/settings.js"></script>

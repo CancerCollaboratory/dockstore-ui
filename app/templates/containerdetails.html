@@ -1,3 +1,37 @@
+
+<div class="col-md-9" id="tabs">
+  <div class="tabs">
+
+    <div id="info">
+        <a href="#info">Info</a>
+        <div>
+
+            <div class="well well-sm">
+              <span><span class="h5">Author:</span>&nbsp;&nbsp;&nbsp;&nbsp;Peter Amshutz</span>
+              <div
+                  ng-show="containerObj.description.length > 0"
+                  marked="containerObj.description">
+
+              </div>
+              <div versions-grid container-obj="containerObj"></div>
+              <span ng-show="containerObj.description.length <= 0">
+                No description associated with this container.
+              </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- LEFT OFF HERE: Vincent I stopped working here -->
+
+    <div id="versions">
+        <a href="#versions">Versions</a>
+        <div>
+        	<h5>Version History:</h5>
+
+        </div>
+    </div>
+
+
 <uib-tabset>
   <uib-tab>
     <uib-tab-heading>Container Info</uib-tab-heading>
@@ -38,16 +72,8 @@
       </li>
       <li>
         <strong>Description</strong>:
-        <div class="well well-sm">
-          <div
-              ng-show="containerObj.description.length > 0"
-              marked="containerObj.description">
-          </div>
-          <span ng-show="containerObj.description.length <= 0">
-            No description associated with this container.
-          </span>
-        </div>
-        
+
+
       </li>
     </ul>
   </uib-tab>
@@ -85,5 +111,9 @@
           source="wfDescriptorFileString"
           ng-show="wfDescriptorFileLoaded && wfDescriptorFileString">
     </div>
+
   </uib-tab>
 </uib-tabset>
+
+</div>
+</div>
