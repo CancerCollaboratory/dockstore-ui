@@ -129,6 +129,25 @@ angular.module('dockstore.ui')
       });
     };
 
+    this.setDefaultWorkflowPath = function(workflowId, path, workflowname, descType, giturl) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'PUT',
+          url: WebService.API_URI + '/workflows/' + workflowId,
+          data: {
+            workflow_path: path,
+            workflowName: workflowname,
+            descriptorType: descType,
+            gitUrl: giturl
+          }
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    }
+
     this.setWorkflowLabels = function(workflowId, labels) {
       return $q(function(resolve, reject) {
         $http({
