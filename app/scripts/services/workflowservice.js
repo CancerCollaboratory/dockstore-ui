@@ -129,15 +129,16 @@ angular.module('dockstore.ui')
       });
     };
 
-    this.setDefaultWorkflowPath = function(workflowId, path, workflowname, descType, giturl) {
+    this.setDefaultWorkflowPath = function(workflowId, workflowpath, workflowname, descType,path, giturl) {
       return $q(function(resolve, reject) {
         $http({
           method: 'PUT',
           url: WebService.API_URI + '/workflows/' + workflowId,
           data: {
-            workflow_path: path,
+            workflow_path: workflowpath,
             workflowName: workflowname,
             descriptorType: descType,
+            path: path,
             gitUrl: giturl
           }
         }).then(function(response) {

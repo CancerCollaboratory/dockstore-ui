@@ -102,7 +102,8 @@ angular.module('dockstore.ui')
       };
 
       $scope.setDefaultWorkflowPath = function(workflowId, path){
-        return WorkflowService.setDefaultWorkflowPath(workflowId, path, $scope.workflowObj.workflowName, $scope.workflowObj.descriptorType, $scope.workflowObj.gitUrl)
+        return WorkflowService.setDefaultWorkflowPath(workflowId, path, $scope.workflowObj.workflowName, $scope.workflowObj.descriptorType, 
+          $scope.workflowObj.path, $scope.workflowObj.gitUrl)
           .then(
             function(workflowObj){
               $scope.workflowObj.workflow_path = workflowObj.workflow_path;
@@ -110,7 +111,7 @@ angular.module('dockstore.ui')
               return workflowObj;
             },
             function(response) {
-              $scope.setContainerDetailsError(
+              $scope.setWorkflowDetailsError(
                 'The webservice encountered an error trying to modify default path ' +
                 'for this workflow, please ensure that the path is valid, ' +
                 'properly-formatted and does not contain prohibited ' +
