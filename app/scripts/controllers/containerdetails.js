@@ -351,11 +351,6 @@ angular.module('dockstore.ui')
       };
 
       $scope.submitDescriptorEdits = function(type){
-        console.log("containerToolName: "+$scope.containerToolname);
-        console.log("gitURL: "+$scope.containerObj.gitUrl);
-        console.log("default_cwl_path: "+$scope.containerObj.default_cwl_path);
-        console.log("default_wdl_path: "+$scope.containerObj.default_wdl_path);
-        console.log("default_dockerfile_path: "+$scope.containerObj.default_dockerfile_path);
         if (type === 'cwl') {
           if($scope.containerObj.default_cwl_path !== 'undefined'){
             $scope.setDefaultCWLPath($scope.containerObj.id,
