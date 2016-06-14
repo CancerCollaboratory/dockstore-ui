@@ -36,9 +36,6 @@ angular.module('dockstore.ui')
         scope.$on('checkDescPageType', function(event) {
           scope.checkDescriptor();
         });
-        scope.$on('getFile', function(event) {
-          scope.getFileContent();
-        });
       }
     };
   });
