@@ -24,9 +24,6 @@ angular.module('dockstore.ui')
         scope.$on('versionTagEditorRefreshWorkflow', function(event, workflowId) {
           scope.refreshWorkflow(workflowId, 2);
         });
-        scope.$on('refreshWorkflows', function(event) {
-          scope.refreshWorkflow(scope.workflowObj.id);
-        });
         scope.$on('returnValid', function(event, valid){
           scope.validContent = valid;
           scope.checkContentValid();

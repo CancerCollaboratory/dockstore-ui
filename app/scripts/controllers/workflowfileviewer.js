@@ -20,7 +20,6 @@ angular.module('dockstore.ui')
       $scope.fileLoaded = false;
       $scope.fileContents = null;
       $scope.successContent = [];
-      $scope.missingContent = [];
       $scope.fileContent = null;
 
       $scope.checkDescriptor = function() {
