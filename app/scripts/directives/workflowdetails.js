@@ -21,14 +21,6 @@ angular.module('dockstore.ui')
       },
       templateUrl: 'templates/workflowdetails.html',
       link: function postLink(scope, element, attrs) {
-        // scope.$watchGroup(['selVersionName', 'workflowObj.id', 'selDescriptorName', 'workflowObj.path'], function(newValue, oldValue) {
-        //   if (newValue) {
-        //     scope.updateInfoURLs();
-        //     scope.resetDocument();
-        //     scope.checkValidation();
-        //     scope.updateInfoURLs();
-        //   }
-        // });
         scope.$on('versionTagEditorRefreshWorkflow', function(event, workflowId) {
           scope.refreshWorkflow(workflowId, 2);
         });
@@ -40,7 +32,7 @@ angular.module('dockstore.ui')
           scope.checkContentValid();
         });
         scope.$on('returnMissing', function(event,missing){
-          scope.missingContent.push(missing);
+          scope.missingContent = missing;
         });
       }
     };

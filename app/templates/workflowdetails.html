@@ -81,7 +81,7 @@
                   type="button"
                   class="btn btn-primary"
                   ng-class="!refreshingWorkflow && isWorkflowValid()? '' : 'disabled'"
-                  ng-click="setWorkflowRegistration(workflowObj.id, workflowObj.is_published); checkValidation()"
+                  ng-click="setWorkflowRegistration(workflowObj.id, workflowObj.is_published); checkContentValid()"
                   ng-model="workflowObj.is_published"
                   ng-class="workflowObj.is_published? 'btn-primary' : 'btn-warning'"
                   ng-disabled="refreshingWorkflow || !isWorkflowValid() || workflowObj.mode === 'STUB' || !validContent">
@@ -91,7 +91,7 @@
 
         <button type="button"
                 class="btn btn-primary"
-                ng-click="refreshWorkflow(workflowObj.id); checkValidation()"
+                ng-click="refreshWorkflow(workflowObj.id); checkPage()"
                 ng-disabled="refreshingWorkflow">
           Refresh
         </button>

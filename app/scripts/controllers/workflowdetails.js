@@ -108,25 +108,18 @@ angular.module('dockstore.ui')
           });
       };
 
-      $scope.checkValidation = function(){
-        //this function is just a bridge to call the function on 'workflowfileviewer.js' to check content of file
-        console.log($scope.workflowObj);
-        $scope.missingContent = [];
-        $scope.$broadcast('getFile');
-      };
-
       $scope.checkContentValid = function(){
         //will print this when the 'Publish' button is clicked
         var message = 'The file is missing some required fields. Please make sure the file has all the required fields. ';
         var missingMessage = 'The missing field(s):'
         if($scope.validContent){
-          if($scope.missingContent.length !== 0 && $scope.workflowObj.is_published){
+          if($scope.missingContent.length !== 0){
             $scope.missingWarning = true;
           }
           return true;
 
         } else{
-            if($scope.missingContent.length !== 0 && $scope.workflowObj.is_published){
+            if($scope.missingContent.length !== 0){
               $scope.missingWarning = false;
               for(var i=0;i<$scope.missingContent.length;i++){
                 missingMessage += ' \''+$scope.missingContent[i]+'\'';
