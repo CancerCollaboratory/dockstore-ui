@@ -20,15 +20,31 @@ angular.module('dockstore.ui')
       $scope.fileLoaded = false;
       $scope.fileContents = null;
       $scope.successContent = [];
+      $scope.fileContent = null;
 
       $scope.checkDescriptor = function() {
         $scope.workflowVersions = $scope.getWorkflowVersions();
         $scope.successContent = [];
+        $scope.fileContent = null;
         var accumulator = [];
         var index = 0;
+        var inputFound = false;
+        var outputFound = false;
+        var stepsFound = false;
+        var classFound = false;
+        var taskFound = false;
+        var workflowFound = false;
+        var commandFound = false;
+        var callFound = false;
+        var m = [];
+        var v = false;
         for (var i=0; i<$scope.workflowVersions.length; i++) {
           for (var j=0; j<descriptors.length; j++) {
-            accumulator[index] = {ver: $scope.workflowVersions[i], desc: descriptors[j]};
+            accumulator[index] = {
+              ver: $scope.workflowVersions[i], 
+              desc: descriptors[j], 
+              content: null
+            };
             index++;
           };
         };
@@ -39,7 +55,11 @@ angular.module('dockstore.ui')
             function filePromise(vd){
               return $scope.getDescriptorFile($scope.workflowObj.id, vd.ver, vd.desc).then(
                 function(s){
-                  $scope.successContent.push({version:vd.ver,descriptor:vd.desc});
+                  $scope.successContent.push({
+                    version:vd.ver,
+                    descriptor:vd.desc,
+                    content: s
+                  });
                   if(start+1 === acc.length) {
                     return {success: true, index:start};
                   } else{
@@ -66,6 +86,81 @@ angular.module('dockstore.ui')
           function(result){
             $scope.selVersionName = $scope.successContent[0].version;
             $scope.selDescriptorName = $scope.successContent[0].descriptor;
+            $scope.fileContent = $scope.successContent[0].content;
+            var result = $scope.fileContent.toLowerCase();
+            m = [];
+            v = false;
+            if($scope.selDescriptorName === "cwl"){
+              //Descriptor: CWL
+              if(result.search("inputs:") !== -1){
+                inputFound = true;
+              }else{
+                m.push('inputs');
+              }
+
+              if(result.search("outputs:") !== -1){
+                outputFound = true;
+              }else{
+                m.push('outputs');
+              }
+
+              if(result.search("steps:") !== -1){
+                stepsFound = true;
+              }else{
+                m.push('steps');
+              }
+
+              if(result.search("class:") !== -1){
+                classFound = true;
+              }else{
+                m.push('class');
+              }
+
+              if(inputFound && outputFound && classFound && stepsFound){
+                v = true;
+              } else{
+                v = false;
+              }
+            } else{
+              //Descriptor: WDL
+              if(result.search('task') !== -1){
+                taskFound = true;
+              }else{
+                m.push('task');
+              }
+
+              if(result.search('workflow') !== -1){
+                workflowFound = true;
+              }else{
+                m.push('workflow');
+              }
+
+              if(result.search('call') !== -1){
+                callFound = true;
+              }else{
+                m.push('call');
+              }
+
+              if(result.search('command') !== -1){
+                commandFound = true;
+              }else{
+                m.push('command');
+              }
+
+              if(result.search('output') !== -1){
+                outputFound = true;
+              }else{
+                m.push('output');
+              }
+
+              if(taskFound && workflowFound && commandFound && callFound && outputFound){
+                v = true;
+              } else{
+                v = false;
+              }
+            }
+            $scope.$emit('returnMissing',m);
+            $scope.$emit('returnValid',v);
           },
           function(e){console.log("error",e)}
         );
