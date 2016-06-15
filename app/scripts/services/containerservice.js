@@ -239,7 +239,7 @@ angular.module('dockstore.ui')
       });
     };
 
-
+    // this is actually a partial update, see https://github.com/ga4gh/dockstore/issues/274 
     this.setDefaultCWLPath = function(containerId,cwlPath,wdlPath,dfPath,toolname,giturl){
       return $q(function(resolve, reject) {
         $http({
@@ -260,6 +260,7 @@ angular.module('dockstore.ui')
       });
     };
 
+    // this is actually a partial update, see https://github.com/ga4gh/dockstore/issues/274 
     this.setDefaultWDLPath = function(containerId,cwlPath,wdlPath,dfPath,toolname,giturl){
       return $q(function(resolve, reject) {
         $http({

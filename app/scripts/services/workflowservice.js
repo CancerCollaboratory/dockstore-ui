@@ -128,7 +128,8 @@ angular.module('dockstore.ui')
         });
       });
     };
-
+    
+    // this is actually a partial update, see https://github.com/ga4gh/dockstore/issues/274 
     this.setDefaultWorkflowPath = function(workflowId, workflowpath, workflowname, descType,path, giturl) {
       return $q(function(resolve, reject) {
         $http({
@@ -149,6 +150,7 @@ angular.module('dockstore.ui')
       });
     }
 
+    // this is actually a partial update, see https://github.com/ga4gh/dockstore/issues/274 
     this.setWorkflowLabels = function(workflowId, labels) {
       return $q(function(resolve, reject) {
         $http({
