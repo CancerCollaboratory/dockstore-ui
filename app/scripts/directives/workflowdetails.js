@@ -24,6 +24,13 @@ angular.module('dockstore.ui')
         scope.$on('versionTagEditorRefreshWorkflow', function(event, workflowId) {
           scope.refreshWorkflow(workflowId, 2);
         });
+        scope.$on('returnValid', function(event, valid){
+          scope.validContent = valid;
+          scope.checkContentValid();
+        });
+        scope.$on('returnMissing', function(event,missing){
+          scope.missingContent = missing;
+        });
       }
     };
   });

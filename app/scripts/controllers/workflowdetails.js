@@ -18,6 +18,9 @@ angular.module('dockstore.ui')
 
       $scope.labelsEditMode = false;
       $scope.descriptorEnabled = false;
+      $scope.validContent = true;
+      $scope.missingContent = [];
+      $scope.missingWarning = false;
       if (!$scope.activeTabs) {
         $scope.activeTabs = [true];
         for (var i = 0; i < 3; i++) $scope.activeTabs.push(false);
@@ -71,6 +74,10 @@ angular.module('dockstore.ui')
           });
       };
 
+      // $scope.resetDocument = function(){
+      //   $scope.$broadcast('refreshFiles');
+      // };
+
       $scope.refreshWorkflow = function(workflowId, activeTabIndex) {
         $scope.setWorkflowDetailsError(null);
         if ($scope.refreshingWorkflow) return;
@@ -99,6 +106,44 @@ angular.module('dockstore.ui')
           ).finally(function(response) {
             $scope.refreshingWorkflow = false;
           });
+      };
+
+      $scope.checkContentValid = function(){
+        //will print this when the 'Publish' button is clicked
+        var message = 'The file is missing some required fields. Please make sure the file has all the required fields. ';
+        var missingMessage = 'The missing field(s):'
+        if($scope.validContent){
+          if($scope.missingContent.length !== 0){
+            $scope.missingWarning = true;
+          }
+          return true;
+
+        } else{
+            if($scope.missingContent.length !== 0){
+              $scope.missingWarning = false;
+              for(var i=0;i<$scope.missingContent.length;i++){
+                missingMessage += ' \''+$scope.missingContent[i]+'\'';
+                if(i!=$scope.missingContent.length -1){
+                  missingMessage+=',';
+                }
+              }
+              if(!$scope.refreshingWorkflow){
+                if($scope.workflowObj.descriptorType === 'wdl'){
+                  $scope.setWorkflowDetailsError(
+                    message+missingMessage +
+                    '. Required fields in WDL file: \'task\', \'workflow\', \'call\', \'command\', and \'output\'',''
+                  );
+                }else{
+                  $scope.setWorkflowDetailsError(
+                    message+missingMessage +
+                    '. Required fields in CWL file: \'inputs\', \'outputs\', \'class\', and \'steps\'',''
+                  );
+                }
+              }
+            }
+
+          return false;
+        }
       };
 
       $scope.setDefaultWorkflowPath = function(workflowId, path){
