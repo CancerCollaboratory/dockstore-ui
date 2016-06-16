@@ -127,7 +127,9 @@ angular.module('dockstore.ui')
       };
 
       $scope.setDescriptorType = function(workflowId){
-        return WorkflowService.setDescriptorType(workflowId, $scope.workflowObj.workflow_path, $scope.workflowObj.workflowName, 
+        //we are calling setDefaultWorkflowPath because PUT in this service will also change the descriptor type
+        //and required to change the same values as when changing the default path
+        return WorkflowService.setDefaultWorkflowPath(workflowId, $scope.workflowObj.workflow_path, $scope.workflowObj.workflowName, 
           $scope.workflowObj.descriptorType, $scope.workflowObj.path, $scope.workflowObj.gitUrl)
           .then(
             function(workflowObj){
