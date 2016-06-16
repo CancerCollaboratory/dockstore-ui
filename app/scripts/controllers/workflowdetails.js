@@ -18,6 +18,8 @@ angular.module('dockstore.ui')
 
       $scope.labelsEditMode = false;
       $scope.descriptorEnabled = false;
+      $scope.showEditWorkflowPath = true;
+      $scope.showEditDescriptorType = true;
       if (!$scope.activeTabs) {
         $scope.activeTabs = [true];
         for (var i = 0; i < 3; i++) $scope.activeTabs.push(false);
@@ -116,6 +118,27 @@ angular.module('dockstore.ui')
                 'for this workflow, please ensure that the path is valid, ' +
                 'properly-formatted and does not contain prohibited ' +
                 'characters of words.',
+                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                response.data
+              );
+              return $q.reject(response);
+            }
+          );
+      };
+
+      $scope.setDescriptorType = function(workflowId){
+        return WorkflowService.setDescriptorType(workflowId, $scope.workflowObj.workflow_path, $scope.workflowObj.workflowName, 
+          $scope.workflowObj.descriptorType, $scope.workflowObj.path, $scope.workflowObj.gitUrl)
+          .then(
+            function(workflowObj){
+              $scope.workflowObj.descriptorType = workflowObj.descriptorType;
+              $scope.updateWorkflowObj();
+              return workflowObj;
+            },
+            function(response) {
+              $scope.setWorkflowDetailsError(
+                'The webservice encountered an error trying to modify descriptor type ' +
+                'for this workflow.',
                 '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
                 response.data
               );
@@ -250,6 +273,11 @@ angular.module('dockstore.ui')
             $scope.labelsEditMode = false;
           });
         }
+      };
+
+      $scope.submitDescriptorEdit = function() {
+        $scope.setDescriptorType($scope.workflowObj.id)
+          .then(function(workflowObj){console.log("success submit descriptor edit")});
       };
 
       $scope.submitWorkflowEdits = function() {
