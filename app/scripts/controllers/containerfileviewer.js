@@ -28,15 +28,11 @@ angular.module('dockstore.ui')
         $scope.fileContent = null;
         var accumulator = [];
         var index = 0;
-        var inputFound = false;
-        var outputFound = false;
-        var classFound = false;
-        var taskFound = false;
-        var workflowFound = false;
-        var commandFound = false;
-        var callFound = false;
         var m = [];
         var v = false;
+        var count = 0;
+        var cwlFields = ["inputs","outputs","baseCommand","class"];
+        var wdlFields = ["task","output","workflow","command","call"];
         for (var i=0; i<$scope.containerTags.length; i++) {
           for (var j=0; j<descriptors.length; j++) {
             accumulator[index] = {
@@ -86,76 +82,38 @@ angular.module('dockstore.ui')
             $scope.selTagName = $scope.successContent[0].tag;
             $scope.selDescriptorName = $scope.successContent[0].descriptor;
             $scope.fileContent = $scope.successContent[0].content;
-            var result = $scope.fileContent.toLowerCase();
+            var result = $scope.fileContent;
             m = [];
             v = false;
+            count = 0;
             if($scope.selDescriptorName === "cwl"){
               //Descriptor: CWL
-              if(result.search("inputs:") !== -1){
-                inputFound = true;
-              }else{
-                m.push('inputs');
+              for(var i=0;i<cwlFields.length;i++){
+                if(result.search(cwlFields[i]) !==-1){
+                  count++;
+                } else{
+                  m.push(cwlFields[i]);
+                }
+              }
+              if(result.search("cwlVersion:")===-1){
+                m.push('cwlVersion');
               }
 
-              if(result.search("outputs:") !== -1){
-                outputFound = true;
-              }else{
-                m.push('outputs');
-              }
-
-              if(result.search("basecommand:") !== -1){
-                commandFound = true;
-              }else{
-                m.push('baseCommand');
-              }
-
-              if(result.search("class:") !== -1){
-                classFound = true;
-              }else{
-                m.push('class');
-              }
-
-              if(inputFound && outputFound && classFound && commandFound){
+              if(count===4){
                 v = true;
-              } else{
-                v = false;
               }
             } else{
               //Descriptor: WDL
-              if(result.search('task') !== -1){
-                taskFound = true;
-              }else{
-                m.push('task');
+              for(var i=0;i<wdlFields.length;i++){
+                if(result.search(wdlFields[i]) !==-1){
+                  count++;
+                } else{
+                  m.push(wdlFields[i]);
+                }
               }
 
-              if(result.search('workflow') !== -1){
-                workflowFound = true;
-              }else{
-                m.push('workflow');
-              }
-
-              if(result.search('call') !== -1){
-                callFound = true;
-              }else{
-                m.push('call');
-              }
-
-              if(result.search('command') !== -1){
-                commandFound = true;
-              }else{
-                m.push('command');
-              }
-
-              if(result.search('output') !== -1){
-                outputFound = true;
-              }else{
-                m.push('output');
-              }
-
-              if(taskFound && workflowFound && commandFound && callFound && outputFound){
+              if(count===5){
                 v = true;
-              } else{
-                v = false;
               }
             }
             $scope.$emit('returnMissing',m);
