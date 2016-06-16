@@ -187,6 +187,12 @@
             </span>
           </li>
           <li>
+          <!-- for when it's not edit mode-->
+            <div ng-show="!editMode">
+              <strong>Dockerfile Path</strong>:
+              {{containerObj.default_dockerfile_path}}
+            </div>
+          <!-- for when it's edit mode and Edit button not clicked-->
             <div ng-show="editMode && showEditDockerfile">
               <strong>Dockerfile Path</strong>:
               {{containerObj.default_dockerfile_path}}
@@ -197,6 +203,7 @@
                 <span class="glyphicon glyphicon-edit"></span>Edit
               </button>
             </div>
+          <!-- for when it's edit mode and Edit button clicked-->
             <form name="editContainerForm"
                   class="edit-container form-inline"
                   ng-show="editMode && !showEditDockerfile"
@@ -232,6 +239,12 @@
             </form>
           </li>
           <li>
+          <!-- for when it's not edit mode-->
+            <div ng-show="!editMode">
+              <strong>CWL Path</strong>:
+              {{containerObj.default_cwl_path}}
+            </div>
+          <!-- for when it's edit mode and Edit button not clicked-->
             <div ng-show="editMode && showEditCWL">
               <strong>CWL Path</strong>:
               {{containerObj.default_cwl_path}}
@@ -242,6 +255,7 @@
                 <span class="glyphicon glyphicon-edit"></span>Edit
               </button>
             </div>
+            <!-- for when it's edit mode and Edit button clicked-->
             <form name="editContainerForm"
                   class="edit-container form-inline"
                   ng-show="editMode && !showEditCWL"
@@ -277,6 +291,12 @@
             </form>
           </li>
           <li>
+          <!-- for when it's not edit mode-->
+            <div ng-show="!editMode">
+              <strong>WDL Path</strong>:
+              {{containerObj.default_wdl_path}}
+            </div>
+          <!-- for when it's edit mode and Edit button not clicked-->
             <div ng-show="editMode && showEditWDL">
               <strong>WDL Path</strong>:
               {{containerObj.default_wdl_path}}
@@ -287,6 +307,7 @@
                 <span class="glyphicon glyphicon-edit"></span>Edit
               </button>
             </div>
+            <!-- for when it's edit mode and Edit button clicked-->
             <form name="editContainerForm"
                   class="edit-container form-inline"
                   ng-show="editMode && !showEditWDL"
