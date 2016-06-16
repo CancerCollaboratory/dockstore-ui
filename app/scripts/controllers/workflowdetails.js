@@ -307,7 +307,7 @@ angular.module('dockstore.ui')
         $scope.labelsEditMode = !$scope.labelsEditMode;
       };
 
-      $scope.submitWorkflowPathEdits = function(type){
+      $scope.submitWorkflowPathEdits = function(){
         if($scope.workflowObj.workflow_path !== 'undefined'){
           $scope.setDefaultWorkflowPath($scope.workflowObj.id,
             $scope.workflowObj.workflow_path)
