@@ -143,7 +143,8 @@ angular.module('dockstore.ui')
         return ContainerService.getDescriptorFile(containerId, tagName, type)
           .then(
             function(descriptorFile) {
-              $scope.fileContents = descriptorFile;
+              // this seems to cause flickr when loading
+              // $scope.fileContents = descriptorFile;
               return descriptorFile;
             },
             function(response) {
@@ -185,6 +186,10 @@ angular.module('dockstore.ui')
           );
       };
 
+      function extracted(){
+        return $scope.containerObj.tags.filter(function(a) {return a.name === $scope.selTagName;})[0].sourceFiles.filter(function(a) {return a.type === 'DOCKSTORE_'+$scope.selDescriptorName.toUpperCase();}).map(function(a) {return a.path;}).sort();
+      }
+
       $scope.setDocument = function() {
         // prepare Container Version drop-down
         $scope.containerTags = $scope.getContainerTags();
@@ -193,7 +198,7 @@ angular.module('dockstore.ui')
         $scope.descriptors = descriptors;
         $scope.selDescriptorName = descriptors[0];
         // prepare Descriptor Imports drop-down
-        $scope.secondaryDescriptors = $scope.containerObj.tags.filter(function(a) {return a.name === $scope.selTagName;})[0].sourceFiles.filter(function(a) {return a.type === 'DOCKSTORE_'+$scope.selDescriptorName.toUpperCase();}).map(function(a) {return a.path;});
+        $scope.secondaryDescriptors = extracted();
         $scope.selSecondaryDescriptorName = $scope.secondaryDescriptors[0];
       };
 
@@ -208,7 +213,7 @@ angular.module('dockstore.ui')
           case 'descriptor':
             $scope.expectedFilename = 'Descriptor';
             // prepare Descriptor Imports drop-down
-            $scope.secondaryDescriptors = $scope.containerObj.tags.filter(function(a) {return a.name === $scope.selTagName;})[0].sourceFiles.filter(function(a) {return a.type === 'DOCKSTORE_'+$scope.selDescriptorName.toUpperCase();}).map(function(a) {return a.path;});
+            $scope.secondaryDescriptors = extracted();
             $scope.selSecondaryDescriptorName = $scope.secondaryDescriptors[0];
             $scope.getSecondaryDescriptorFile($scope.containerObj.id, $scope.selTagName, $scope.selDescriptorName, $scope.selSecondaryDescriptorName);
             break;
