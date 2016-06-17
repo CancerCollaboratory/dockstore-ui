@@ -20,6 +20,7 @@ angular.module('dockstore.ui')
       $scope.descriptorEnabled = false;
       $scope.validContent = true;
       $scope.missingWarning = false;
+      $scope.invalidClass = false;
       $scope.showEditWorkflowPath = true;
       $scope.showEditDescriptorType = true;
       if (!$scope.activeTabs) {
@@ -133,10 +134,18 @@ angular.module('dockstore.ui')
                 }else{
                   $scope.setWorkflowDetailsError(
                     message+missingMessage +
-                    '. Required fields in CWL file: \'inputs\', \'outputs\', \'class\', and \'steps\'',''
+                    '. Required fields in CWL Workflow file: \'inputs\', \'outputs\', \'class: Workflow\', and \'steps\'',''
                   );
                 }
               }
+            }
+
+            if($scope.invalidClass){
+              //file is invalid because class is commandLineTool instead of Workflow
+              $scope.setContainerDetailsError(
+                'This CWL file is not a Workflow'+
+                '. Required fields in CWL Workflow file: \'inputs\', \'outputs\', \'class: Workflow\', and \'steps\'',''
+              );
             }
 
           return false;

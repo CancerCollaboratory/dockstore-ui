@@ -22,6 +22,7 @@ angular.module('dockstore.ui')
       $scope.validContent = true;
       $scope.missingContent = [];
       $scope.missingWarning = false;
+      $scope.invalidClass = false;
       $scope.showEditCWL = true;
       $scope.showEditWDL = true;
       $scope.showEditDockerfile = true;
@@ -157,10 +158,18 @@ angular.module('dockstore.ui')
                 }else{
                   $scope.setContainerDetailsError(
                     message+missingMessage +
-                    '. Required fields in CWL file: \'inputs\', \'outputs\', \'class\', and \'baseCommand\'',''
+                    '. Required fields in CWL Tool file: \'inputs\', \'outputs\', \'class: CommandLineTool\', and \'baseCommand\'',''
                   );
                 }
               }
+            }
+
+            if($scope.invalidClass){
+              //file is invalid because class is workflow instead of commandlinetool
+              $scope.setContainerDetailsError(
+                'This CWL file is not a CommandLineTool'+
+                '. Required fields in CWL Tool file: \'inputs\', \'outputs\', \'class: CommandLineTool\', and \'baseCommand\'',''
+              );
             }
 
           return false;

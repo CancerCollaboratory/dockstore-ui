@@ -30,6 +30,7 @@ angular.module('dockstore.ui')
         var index = 0;
         var m = [];
         var v = false;
+        var invalidClass = false;
         var count = 0;
         var cwlFields = ["inputs","outputs","steps","class"];
         var wdlFields = ["task","output","workflow","command","call"];
@@ -90,11 +91,19 @@ angular.module('dockstore.ui')
               //Descriptor: CWL
               for(var i=0;i<cwlFields.length;i++){
                 if(result.search(cwlFields[i]) !==-1){
+                  if(cwlFields[i] === 'class'){
+                    if(result.search("CommandLineTool") !== -1 && result.search("Workflow") === -1){
+                      //class is CommandLineTool instead of Workflow, this is invalid!
+                      invalidClass = true;
+                      break;
+                    }
+                  }
                   count++;
                 } else{
                   m.push(cwlFields[i]);
                 }
               }
+
               if(result.search("cwlVersion:")===-1){
                 m.push('cwlVersion');
               }
@@ -102,6 +111,7 @@ angular.module('dockstore.ui')
               if(count===4){
                 v = true;
               }
+              $scope.$emit('invalidClass', invalidClass); //only for CWL
             } else{
               //Descriptor: WDL
               for(var i=0;i<wdlFields.length;i++){

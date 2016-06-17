@@ -31,6 +31,9 @@ angular.module('dockstore.ui')
         scope.$on('returnMissing', function(event,missing){
           scope.missingContent = missing;
         });
+        scope.$on('invalidClass', function(event, invalid){
+          scope.invalidClass = invalid;
+        });
       }
     };
   });
