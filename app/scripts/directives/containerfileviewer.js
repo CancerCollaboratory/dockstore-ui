@@ -25,7 +25,12 @@ angular.module('dockstore.ui')
           }
         });
         scope.$watchGroup(
-          ['selTagName', 'containerObj.id', 'selDescriptorName'],
+          ['selDescriptorName'],
+          function(newValues, oldValues) {
+            scope.refreshDocumentType();
+          });
+        scope.$watchGroup(
+          ['selTagName', 'containerObj.id', 'selSecondaryDescriptorName'],
           function(newValues, oldValues) {
             scope.refreshDocument();
         });
