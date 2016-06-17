@@ -24,6 +24,13 @@ angular.module('dockstore.ui')
             scope.checkDescriptor();
           }
         });
+        scope.$on('refreshFiles', function(event) {
+          scope.setDocument();
+          scope.refreshDocument();
+        });
+        scope.$on('checkDescPageType', function(event) {
+          scope.checkDescriptor();
+        });
         scope.$watchGroup(
           ['selDescriptorName'],
           function(newValues, oldValues) {
@@ -33,14 +40,7 @@ angular.module('dockstore.ui')
           ['selTagName', 'containerObj.id', 'selSecondaryDescriptorName'],
           function(newValues, oldValues) {
             scope.refreshDocument();
-        });
-        scope.$on('refreshFiles', function(event) {
-          scope.setDocument();
-          scope.refreshDocument();
-        });
-        scope.$on('checkDescPageType', function(event) {
-          scope.checkDescriptor();
-        });
+          });
       }
     };
   });
