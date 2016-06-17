@@ -23,6 +23,9 @@ angular.module('dockstore.ui')
 
       $scope.checkDescriptor = function() {
         $scope.workflowVersions = $scope.getWorkflowVersions();
+        if ($scope.workflowVersions.length === 0){
+          return;
+        }
         $scope.successContent = [];
         var accumulator = [];
         var index = 0;
@@ -145,6 +148,9 @@ angular.module('dockstore.ui')
       };
 
       $scope.getSecondaryDescriptorFile = function(containerId, tagName, type, secondaryDescriptorPath) {
+        if(typeof $scope.selVersionName === 'undefined' || typeof $scope.selSecondaryDescriptorName === 'undefined'){
+          return;
+        }
         return WorkflowService.getSecondaryDescriptorFile(containerId, tagName, type, encodeURIComponent(secondaryDescriptorPath))
           .then(
             function (descriptorFile) {
