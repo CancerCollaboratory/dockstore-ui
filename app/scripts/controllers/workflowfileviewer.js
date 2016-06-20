@@ -39,7 +39,7 @@ angular.module('dockstore.ui')
         var wdlFields = ["task","output","workflow","command","call"];
         for (var i=0; i<$scope.workflowVersions.length; i++) {
             accumulator[index] = {
-              ver: $scope.workflowVersions[i], 
+              ver: $scope.workflowVersions[i],
               content: null
             };
             index++;
@@ -133,30 +133,6 @@ angular.module('dockstore.ui')
           },
           function(e){console.log("error",e)}
         );
-      };
-
-      $scope.filterDescriptor = function(element) {
-        for(var i=0;i<$scope.successContent.length;i++){
-          if($scope.successContent[i].descriptor === element){
-            return true;
-          } else{
-            if(i===$scope.successContent.length -1){
-              return false;
-            }
-          }
-        }
-      };
-
-      $scope.filterVersion = function(element) {
-        for(var i=0;i<$scope.successContent.length;i++){
-          if($scope.successContent[i].version === element){
-            return true;
-          } else{
-            if(i===$scope.successContent.length -1){
-              return false;
-            }
-          }
-        }
       };
 
       $scope.getWorkflowVersions = function() {
