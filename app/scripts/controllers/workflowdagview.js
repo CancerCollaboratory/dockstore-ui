@@ -45,12 +45,12 @@ angular.module('dockstore.ui')
       }
       for (var i = 0; i < workflowVersions.length; i++) {
         if (workflowVersions[i].name === $scope.selVersionName) {
-          if (workflowVersions[i].valid) {
+        //  if (workflowVersions[i].valid) {
             workflowVersionId = workflowVersions[i].id;
             break;
-          } else {
-            return null;
-          }
+          // } else {
+          //   return null;
+          // }
         }
       }
         return WorkflowService.getWorkflowDag(workflowId, workflowVersionId)
@@ -88,6 +88,7 @@ angular.module('dockstore.ui')
       				selector: 'node',
       				style: {
       					'content': 'data(name)',
+                'font-size': '12px',
       					'text-valign': 'center',
       					'text-halign': 'center',
       					'background-opacity': '0'
@@ -97,10 +98,11 @@ angular.module('dockstore.ui')
       			{
       				selector: 'edge',
       				style: {
-      					'width': 4,
+      					'width': 3,
       					'target-arrow-shape': 'triangle',
       					'line-color': '#9dbaea',
-      					'target-arrow-color': '#9dbaea'
+      					'target-arrow-color': '#9dbaea',
+                'curve-style': 'bezier'
       				}
       			}
       		],
@@ -110,8 +112,9 @@ angular.module('dockstore.ui')
 
       	cy.on('tap', 'node', function(){
           try { // your browser may block popups
-            window.open( this.data('tool') );
+            window.open(this.data('tool'));
           } catch(e){ // fall back on url change
+            console.log(this.data('tool'));
             window.location.href = this.data('tool');
           }
         });

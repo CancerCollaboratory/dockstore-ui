@@ -30,7 +30,12 @@ angular.module('dockstore.ui')
       }
 
       $scope.checkPage = function(){
+        console.log($scope.workflowObj);
         $scope.$broadcast('checkDescPageType');
+      }
+
+      $scope.openDAG = function() {
+        $scope.$broadcast('refreshFiles1');
       }
 
       $scope.loadWorkflowDetails = function(workflowPath) {

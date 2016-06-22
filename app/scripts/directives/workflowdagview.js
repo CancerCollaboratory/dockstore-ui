@@ -29,6 +29,10 @@ angular.module('dockstore.ui')
           scope.setDocument();
           scope.refreshDocument();
         });
+        scope.$on('refreshFiles1', function(event) {
+          scope.setDocument();
+          scope.refreshDocument();
+        });
       }
     };
   });
