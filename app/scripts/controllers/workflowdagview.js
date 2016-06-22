@@ -112,10 +112,13 @@ angular.module('dockstore.ui')
 
       	cy.on('tap', 'node', function(){
           try { // your browser may block popups
-            window.open(this.data('tool'));
+            if(this.data('tool') !== "https://hub.docker.com/_/" && this.data('tool') !== ""){
+              window.open(this.data('tool'));
+            }
           } catch(e){ // fall back on url change
-            console.log(this.data('tool'));
-            window.location.href = this.data('tool');
+            if(this.data('tool') !== "https://hub.docker.com/_/" && this.data('tool') !== ""){
+              window.location.href = this.data('tool');
+            }
           }
         });
         } else {
