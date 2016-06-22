@@ -45,12 +45,12 @@ angular.module('dockstore.ui')
       }
       for (var i = 0; i < workflowVersions.length; i++) {
         if (workflowVersions[i].name === $scope.selVersionName) {
-        //  if (workflowVersions[i].valid) {
+          if (workflowVersions[i].valid) {
             workflowVersionId = workflowVersions[i].id;
             break;
-          // } else {
-          //   return null;
-          // }
+          } else {
+            return null;
+          }
         }
       }
         return WorkflowService.getWorkflowDag(workflowId, workflowVersionId)
