@@ -17,6 +17,7 @@ angular.module('dockstore.ui')
       $scope.dagJson = null;
       var cy;
       $scope.successContent = [];
+      $scope.missingTool = false;
 
       $scope.getWorkflowVersions = function() {
         var sortedVersionObjs = $scope.workflowObj.workflowVersions;
@@ -85,54 +86,54 @@ angular.module('dockstore.ui')
       $scope.refreshDocument = function() {
         $scope.dagJson = $scope.nodesAndEdges($scope.workflowObj.id, $scope.workflowObj.workflowVersions);
         if ($scope.dagJson !== null){
-        cy = window.cy = cytoscape({
-      	  container: document.getElementById('cy'),
+          cy = window.cy = cytoscape({
+        	  container: document.getElementById('cy'),
 
-          boxSelectionEnabled: false,
-          autounselectify: true,
+            boxSelectionEnabled: false,
+            autounselectify: true,
 
-      		layout: {
-      		  name: 'dagre'
-      		},
+        		layout: {
+        		  name: 'dagre'
+        		},
 
-      		style: [
-      			{
-      				selector: 'node',
-      				style: {
-      					'content': 'data(name)',
-                'font-size': '12px',
-      					'text-valign': 'center',
-      					'text-halign': 'center',
-      					'background-opacity': '0'
-      				}
-      			},
+        		style: [
+        			{
+        				selector: 'node',
+        				style: {
+        					'content': 'data(name)',
+                  'font-size': '12px',
+        					'text-valign': 'center',
+        					'text-halign': 'center',
+        					'background-opacity': '0'
+        				}
+        			},
 
-      			{
-      				selector: 'edge',
-      				style: {
-      					'width': 3,
-      					'target-arrow-shape': 'triangle',
-      					'line-color': '#9dbaea',
-      					'target-arrow-color': '#9dbaea',
-                'curve-style': 'bezier'
-      				}
-      			}
-      		],
+        			{
+        				selector: 'edge',
+        				style: {
+        					'width': 3,
+        					'target-arrow-shape': 'triangle',
+        					'line-color': '#9dbaea',
+        					'target-arrow-color': '#9dbaea',
+                  'curve-style': 'bezier'
+        				}
+        			}
+        		],
 
-      		elements: $scope.dagJson,
-    		});
+        		elements: $scope.dagJson,
+      		});
 
-      	cy.on('tap', 'node', function(){
-          try { // your browser may block popups
-            if(this.data('tool') !== "https://hub.docker.com/_/" && this.data('tool') !== ""){
-              window.open(this.data('tool'));
+        	cy.on('tap', 'node', function(){
+            try { // your browser may block popups
+              if(this.data('tool') !== "https://hub.docker.com/_/" && this.data('tool') !== ""){
+                window.open(this.data('tool'));
+              }
+            } catch(e){ // fall back on url change
+              if(this.data('tool') !== "https://hub.docker.com/_/" && this.data('tool') !== ""){
+                window.location.href = this.data('tool');
+              }
             }
-          } catch(e){ // fall back on url change
-            if(this.data('tool') !== "https://hub.docker.com/_/" && this.data('tool') !== ""){
-              window.location.href = this.data('tool');
-            }
-          }
-        });
+          });
         } else {
           cy = window.cy = null;
         }
