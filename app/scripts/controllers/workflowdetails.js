@@ -31,11 +31,11 @@ angular.module('dockstore.ui')
 
       $scope.checkPage = function(){
         $scope.$broadcast('checkDescPageType');
-      }
+      };
 
       $scope.openDAG = function() {
-        $scope.$broadcast('refreshFilesDAG');
-      }
+        $scope.$broadcast('refreshFiles');
+      };
 
       $scope.loadWorkflowDetails = function(workflowPath) {
         $scope.setWorkflowDetailsError(null);

@@ -12,11 +12,11 @@ angular.module('dockstore.ui')
     '$scope',
     '$q',
     'WorkflowService',
-    'FormattingService',
     'NotificationService',
     function ($scope, $q, WorkflowService, FrmttSrvc, NtfnService) {
-      $scope.dagJson = "";
+      $scope.dagJson = null;
       var cy;
+      $scope.successContent = [];
 
       $scope.getWorkflowVersions = function() {
         var sortedVersionObjs = $scope.workflowObj.workflowVersions;
@@ -62,6 +62,18 @@ angular.module('dockstore.ui')
             function(response) {
               return $q.reject(response);
             });
+      };
+
+      $scope.filterVersion = function(element) {
+        for(var i=0;i<$scope.successContent.length;i++){
+          if($scope.successContent[i] === element){
+            return true;
+          } else{
+            if(i===$scope.successContent.length -1){
+              return false;
+            }
+          }
+        }
       };
 
       $scope.setDocument = function() {

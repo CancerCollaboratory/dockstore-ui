@@ -11,7 +11,6 @@ angular.module('dockstore.ui')
     return {
       restrict: 'AE',
       controller: 'WorkflowDagViewCtrl',
-      controllerAs: 'WorkflowDagView',
       scope: {
       	workflowObj: '=',
       },
@@ -29,10 +28,7 @@ angular.module('dockstore.ui')
           scope.setDocument();
           scope.refreshDocument();
         });
-        scope.$on('refreshFilesDAG', function(event) {
-          scope.setDocument();
-          scope.refreshDocument();
-        });
+
       }
     };
   });

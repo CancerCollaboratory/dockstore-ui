@@ -336,6 +336,7 @@
       <uib-tab active="activeTabs[5]" disable="!isWorkflowFull()" style="min-width: 145px !important;">
         <uib-tab-heading ng-click="openDAG()">DAG</uib-tab-heading>
         <div workflow-dag-view
+             ng-if="workflowObj"
              workflow-obj="workflowObj">
         </div>
         <div>
