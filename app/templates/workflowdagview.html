@@ -5,7 +5,7 @@
         <strong>Workflow Version</strong>:
         <select class="ds-version" ng-model="selVersionName">
           <option
-            ng-repeat="version in workflowVersions"
+            ng-repeat="version in workflowVersions | filter: filterVersion "
             value="{{version}}">
             {{version}}
           </option>
@@ -16,10 +16,6 @@
       <span class="glyphicon glyphicon-warning-sign"></span>&nbsp;
       A Descriptor associated with this workflow could not be found.
     </div>
-    <!-- <div class="alert alert-warning" role="alert" ng-show="dagJson !== null">
-      <span class="glyphicon glyphicon-warning-sign"></span>&nbsp;
-      DAG cannot be created because this workflow is missing some required tools. 
-    </div> -->
     <div id="cy" ng-show="dagJson !== null"></div>
   </div>
 </div>
