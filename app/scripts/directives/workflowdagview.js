@@ -18,8 +18,8 @@ angular.module('dockstore.ui')
       link: function postLink(scope, element, attrs) {
         scope.$watch('workflowObj.path', function(newValue, oldValue) {
           if (newValue) {
-            scope.setDocument();
             scope.checkVersion();
+            scope.setDocument();
           }
         });
         scope.$watchGroup(

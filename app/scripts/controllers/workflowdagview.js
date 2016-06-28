@@ -40,20 +40,22 @@ angular.module('dockstore.ui')
       };
 
       $scope.nodesAndEdges = function(workflowId, workflowVersions) {
-      var workflowVersionId;
-      if (workflowVersions.length == 0) {
-        return null;
-      }
-      for (var i = 0; i < workflowVersions.length; i++) {
-        if (workflowVersions[i].name === $scope.selVersionName) {
-          if (workflowVersions[i].valid) {
-            workflowVersionId = workflowVersions[i].id;
-            break;
-          } else {
-            return null;
+        var workflowVersionId;
+        if (workflowVersions.length == 0) {
+          return null;
+        }
+
+        for (var i = 0; i < workflowVersions.length; i++) {
+          if (workflowVersions[i].name === $scope.selVersionName) {
+            if (workflowVersions[i].valid) {
+              workflowVersionId = workflowVersions[i].id;
+              break;
+            } else {
+              return null;
+            }
           }
         }
-      }
+
         return WorkflowService.getWorkflowDag(workflowId, workflowVersionId)
           .then(
             function(dagJson) {
@@ -63,9 +65,11 @@ angular.module('dockstore.ui')
             function(response) {
               return $q.reject(response);
             });
+
       };
 
       $scope.checkVersion = function() {
+        $scope.successContent = [];
         for(var i=0;i<$scope.workflowObj.workflowVersions.length;i++){
           if($scope.workflowObj.workflowVersions[i].valid){
             $scope.successContent.push($scope.workflowObj.workflowVersions[i].name);
@@ -87,7 +91,7 @@ angular.module('dockstore.ui')
 
       $scope.setDocument = function() {
         $scope.workflowVersions = $scope.getWorkflowVersions();
-        $scope.selVersionName = $scope.workflowVersions[0];
+        $scope.selVersionName = $scope.successContent[0];
 
       };
 
@@ -142,6 +146,7 @@ angular.module('dockstore.ui')
               }
             }
           });
+
         } else {
           cy = window.cy = null;
         }
