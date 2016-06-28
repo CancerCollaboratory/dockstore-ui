@@ -12,14 +12,18 @@
         </select>
       </div>
     </div>
-    <div class="alert alert-warning" role="alert" ng-show="dagJson === null">
+    <div class="alert alert-warning"
+         role="alert"
+         ng-show="dagJson === null || notFound">
       <span class="glyphicon glyphicon-warning-sign"></span>&nbsp;
       A Descriptor associated with this workflow could not be found.
     </div>
-    <!-- <div class="alert alert-warning" role="alert" ng-show="missingtool">
+    <div class="alert alert-warning"
+         role="alert"
+         ng-show="workflowObj.descriptorType === 'cwl' && missingTool">
       <span class="glyphicon glyphicon-warning-sign"></span>&nbsp;
-      DAG cannot be created because some tools are missing from repo.
-    </div> -->
-    <div id="cy" ng-show="dagJson !== null"></div>
+      DAG cannot be created because some required tools are missing from Github repo.
+    </div>
+    <div id="cy" ng-show="dagJson !== null && !missingTool"></div>
   </div>
 </div>

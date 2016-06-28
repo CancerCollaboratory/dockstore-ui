@@ -18,6 +18,7 @@ angular.module('dockstore.ui')
       var cy;
       $scope.successContent = [];
       $scope.missingTool = false;
+      $scope.notFound = false;
 
       $scope.getWorkflowVersions = function() {
         var sortedVersionObjs = $scope.workflowObj.workflowVersions;
@@ -97,7 +98,26 @@ angular.module('dockstore.ui')
 
       $scope.refreshDocument = function() {
         $scope.dagJson = $scope.nodesAndEdges($scope.workflowObj.id, $scope.workflowObj.workflowVersions);
+        //$scope.dagJson is a promise returned by the web service from nodesAndEdges function
         if ($scope.dagJson !== null){
+          $scope.dagJson.then(
+          function(s){
+            if(s.nodes.length === 0 && s.edges.length === 0){
+              //DAG has no nodes and edges even though file is valid
+              //some inputs needed from file are missing from Github repo
+              $scope.missingTool = true;
+            }else{
+              //DAG has nodes and edges
+              $scope.missingTool = false;
+            }
+            $scope.notFound = false;
+          },
+          function(e){
+            console.log("dagJSON error");
+            $scope.notFound = true;
+            $scope.missingTool = false;
+          }
+        );
           cy = window.cy = cytoscape({
         	  container: document.getElementById('cy'),
 
