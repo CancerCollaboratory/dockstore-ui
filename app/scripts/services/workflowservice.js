@@ -253,9 +253,6 @@ angular.module('dockstore.ui')
     };
 
     this.getTableToolContent = function(workflowId, workflowVersionId){
-      console.log("inside workflow service");
-      console.log(workflowId);
-      console.log(workflowVersionId);
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',

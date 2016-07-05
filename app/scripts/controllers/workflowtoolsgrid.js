@@ -38,7 +38,6 @@ angular.module('dockstore.ui')
             versions.push(sortedVersionObjs[i].name);
           }
         }
-        console.log("versions: "+versions);
         return versions;
       };
 
@@ -46,10 +45,6 @@ angular.module('dockstore.ui')
         //this function will call the webservice to get 
         //the workflow and tool/task excerpt in form of json
         //and return here as a promise
-
-        console.log("in get table content");
-        console.log("workflowId: "+workflowId);
-        console.log("workflowVersions: "+workflowVersions);
 
         var workflowVersionId;
         if(workflowVersions.length === 0){
@@ -119,8 +114,6 @@ angular.module('dockstore.ui')
                 }
                 $scope.missingTool = false;
               }
-              
-              console.log($scope.toolsContent);
             },
             function(e){
               console.log("toolJSON error");
