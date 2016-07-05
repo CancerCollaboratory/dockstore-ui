@@ -330,7 +330,8 @@
       <!--<uib-tab active="activeTabs[4]" disable="!isWorkflowFull()" style="min-width: 145px !important;">
         <uib-tab-heading>Tools</uib-tab-heading>
         <div workflow-tools-grid
-             workflow-obj="workflowObj">
+            ng-if="workflowObj"
+            workflow-obj="workflowObj">
         </div>
       </uib-tab>-->
       <uib-tab active="activeTabs[5]" disable="!isWorkflowFull()" style="min-width: 145px !important;">

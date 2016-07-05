@@ -20,8 +20,13 @@
             <span class="glyphicon pull-right">
             </span>
         </th>
-        <th>
-          Task/Tool Excerpt
+        <th ng-if="workflowObj.descriptorType === 'cwl'">
+          Tool Excerpt
+            <span class="glyphicon pull-right">
+            </span>
+        </th>
+        <th ng-if="workflowObj.descriptorType === 'wdl'">
+          Task Excerpt
             <span class="glyphicon pull-right">
             </span>
         </th>
@@ -36,10 +41,10 @@
       <!-- Here is where you would need to set up the table content.  See workflowdagview for help on calling
        dag json for the given workflow and version.  Then write a function in the workflowtoolsgrid.js controller
        to store to an array that you will ng-repeat over-->
-      <!--<tr ng-repeat="" ng-hide="">-->
-        <!--<td>-->
-        <!--</td>-->
-      <!--</tr>-->
+      <!--<tr ng-repeat="" ng-hide="">
+        <td>
+        </td>
+      </tr>-->
       </tbody>
     </table>
   </div>
