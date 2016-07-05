@@ -51,9 +51,10 @@
         </td>
         <td>
           <strong>run</strong>:&nbsp{{tool.file}}<br>
-          <strong>class</strong>:&nbsp{{tool.class}}<br>
           <strong>docker</strong>:&nbsp{{tool.docker}}<br>
-          <strong>link</strong>:&nbsp<a href="{{tool.link}}" target="_blank">{{tool.link}}</a>
+          <strong>link</strong>:&nbsp
+            <a href="{{tool.link}}" target="_blank" ng-if="tool.link !== 'Not Specified'">{{tool.link}}</a>
+            <span ng-if="tool.link === 'Not Specified'">Not Specified</span>
         </td>
       </tr>
       <tr
@@ -64,7 +65,9 @@
         </td>
         <td>
           <strong>docker</strong>:&nbsp{{tool.docker}}<br>
-          <strong>link</strong>:&nbsp<a href="{{tool.link}}" target="_blank">{{tool.link}}</a>
+          <strong>link</strong>:&nbsp
+            <a href="{{tool.link}}" target="_blank" ng-if="tool.link !== 'Not Specified'">{{tool.link}}</a>
+            <span ng-if="tool.link === 'Not Specified'">Not Specified</span>
         </td>
       </tr>
       </tbody>
