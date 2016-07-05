@@ -16,6 +16,10 @@ angular.module('dockstore.ui')
     'NotificationService',
     function ($scope, $q, WorkflowService, FrmttSrvc, NtfnService) {
 
+      $scope.toolJson = null;
+      $scope.successContent = [];
+      $scope.toolsContent = [];
+
       $scope.getWorkflowVersions = function() {
         var sortedVersionObjs = $scope.workflowObj.workflowVersions;
         sortedVersionObjs.sort(function(a, b) {
@@ -33,13 +37,81 @@ angular.module('dockstore.ui')
             versions.push(sortedVersionObjs[i].name);
           }
         }
+        console.log("versions: "+versions);
         return versions;
+      };
+
+      $scope.getTableContent = function(workflowId, workflowVersions) {
+        //this function will call the webservice to get 
+        //the workflow and tool/task excerpt in form of json
+        //and return here as a promise
+
+        console.log("in get table content");
+        console.log("workflowId: "+workflowId);
+        console.log("workflowVersions: "+workflowVersions);
+
+        var workflowVersionId;
+        if(workflowVersions.length === 0){
+          return null;
+        }
+
+        for(var i=0;i<workflowVersions.length; i++){
+          if (workflowVersions[i].name === $scope.selVersionName) {
+            if (workflowVersions[i].valid) {
+              workflowVersionId = workflowVersions[i].id;
+              break;
+            } else {
+              return null;
+            }
+          }
+        }
+
+        return WorkflowService.getTableToolContent(workflowId, workflowVersionId)
+          .then(
+            function(toolJson) {
+              $scope.toolJson = toolJson;
+              return toolJson;
+            },
+            function(response) {
+              return $q.reject(response);
+            });
+      };
+
+      $scope.filterVersion = function(element) {
+        for(var i=0;i<$scope.successContent.length;i++){
+          if($scope.successContent[i] === element){
+            return true;
+          } else{
+            if(i===$scope.successContent.length -1){
+              return false;
+            }
+          }
+        }
       };
 
       $scope.setDocument = function() {
         $scope.workflowVersions = $scope.getWorkflowVersions();
         $scope.selVersionName = $scope.workflowVersions[0];
 
+      };
+
+      $scope.refreshDocument = function() {
+        $scope.toolJson = $scope.getTableContent($scope.workflowObj.id, $scope.workflowObj.workflowVersions);
+        if($scope.toolJson !== null){
+          $scope.toolJson.then(
+            function(s){
+              $scope.toolsContent = [];
+              for(var i = 0;i<s.length;i++){
+                $scope.toolsContent.push(s[i]);
+              }
+              console.log($scope.toolsContent);
+            },
+            function(e){
+              console.log("toolJSON error");
+              
+            }
+          );
+        }
       };
 
       $scope.setDocument();

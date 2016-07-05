@@ -33,7 +33,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr>
+      <tr ng-show="toolJson === null">
         <td colspan="7">
           <div class="text-center">No Records Found</div>
         </td>
@@ -41,10 +41,20 @@
       <!-- Here is where you would need to set up the table content.  See workflowdagview for help on calling
        dag json for the given workflow and version.  Then write a function in the workflowtoolsgrid.js controller
        to store to an array that you will ng-repeat over-->
-      <!--<tr ng-repeat="" ng-hide="">
+      <tr
+        ng-repeat="tool in toolsContent" 
+        ng-show="toolJson !== null">
         <td>
+          <strong>tool&nbspID</strong>:&nbsp{{tool.id}}<br>
         </td>
-      </tr>-->
+        <td>
+          <strong>run</strong>:&nbsp{{tool.file}}<br>
+          <strong>class</strong>:&nbsp{{tool.class}}<br>
+          <strong>docker</strong>:&nbsp{{tool.docker}}<br>
+          <strong>link</strong>:&nbsp
+            <a href="{{tool.link}}" target="_blank">{{tool.link}}</a>
+        </td>
+      </tr>
       </tbody>
     </table>
   </div>
