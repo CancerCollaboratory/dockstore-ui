@@ -19,6 +19,7 @@ angular.module('dockstore.ui')
       $scope.toolJson = null;
       $scope.successContent = [];
       $scope.toolsContent = [];
+      $scope.missingTool = false;
 
       $scope.getWorkflowVersions = function() {
         var sortedVersionObjs = $scope.workflowObj.workflowVersions;
@@ -77,6 +78,15 @@ angular.module('dockstore.ui')
             });
       };
 
+      $scope.checkVersion = function() {
+        $scope.successContent = [];
+        for(var i=0;i<$scope.workflowObj.workflowVersions.length;i++){
+          if($scope.workflowObj.workflowVersions[i].valid){
+            $scope.successContent.push($scope.workflowObj.workflowVersions[i].name);
+          }
+        }
+      };
+
       $scope.filterVersion = function(element) {
         for(var i=0;i<$scope.successContent.length;i++){
           if($scope.successContent[i] === element){
@@ -91,7 +101,7 @@ angular.module('dockstore.ui')
 
       $scope.setDocument = function() {
         $scope.workflowVersions = $scope.getWorkflowVersions();
-        $scope.selVersionName = $scope.workflowVersions[0];
+        $scope.selVersionName = $scope.successContent[0];
 
       };
 
@@ -101,14 +111,20 @@ angular.module('dockstore.ui')
           $scope.toolJson.then(
             function(s){
               $scope.toolsContent = [];
-              for(var i = 0;i<s.length;i++){
-                $scope.toolsContent.push(s[i]);
+              if(s.length === 0){
+                $scope.missingTool = true;
+              }else{
+                for(var i = 0;i<s.length;i++){
+                  $scope.toolsContent.push(s[i]);
+                }
+                $scope.missingTool = false;
               }
+              
               console.log($scope.toolsContent);
             },
             function(e){
               console.log("toolJSON error");
-              
+              $scope.missingTool = true;
             }
           );
         }

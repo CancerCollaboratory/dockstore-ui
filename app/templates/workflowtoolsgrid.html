@@ -5,7 +5,7 @@
         <strong>Workflow Version</strong>:
         <select class="ds-version" ng-model="selVersionName">
           <option
-            ng-repeat="version in workflowVersions"
+            ng-repeat="version in workflowVersions | filter: filterVersion"
             value="{{version}}">
             {{version}}
           </option>
@@ -38,12 +38,14 @@
           <div class="text-center">No Records Found</div>
         </td>
       </tr>
-      <!-- Here is where you would need to set up the table content.  See workflowdagview for help on calling
-       dag json for the given workflow and version.  Then write a function in the workflowtoolsgrid.js controller
-       to store to an array that you will ng-repeat over-->
+      <tr ng-show="toolJson !== null && missingTool">
+        <td colspan="7">
+          <div class="text-center">Tools associated with this workflow cannot be found</div>
+        </td>
+      </tr>
       <tr
         ng-repeat="tool in toolsContent" 
-        ng-show="toolJson !== null">
+        ng-if="toolJson !== null && workflowObj.descriptorType === 'cwl'">
         <td>
           <strong>tool&nbspID</strong>:&nbsp{{tool.id}}<br>
         </td>
@@ -51,8 +53,18 @@
           <strong>run</strong>:&nbsp{{tool.file}}<br>
           <strong>class</strong>:&nbsp{{tool.class}}<br>
           <strong>docker</strong>:&nbsp{{tool.docker}}<br>
-          <strong>link</strong>:&nbsp
-            <a href="{{tool.link}}" target="_blank">{{tool.link}}</a>
+          <strong>link</strong>:&nbsp<a href="{{tool.link}}" target="_blank">{{tool.link}}</a>
+        </td>
+      </tr>
+      <tr
+        ng-repeat="tool in toolsContent" 
+        ng-if="toolJson !== null && workflowObj.descriptorType === 'wdl'">
+        <td>
+          <strong>task&nbspID</strong>:&nbsp{{tool.id}}<br>
+        </td>
+        <td>
+          <strong>docker</strong>:&nbsp{{tool.docker}}<br>
+          <strong>link</strong>:&nbsp<a href="{{tool.link}}" target="_blank">{{tool.link}}</a>
         </td>
       </tr>
       </tbody>

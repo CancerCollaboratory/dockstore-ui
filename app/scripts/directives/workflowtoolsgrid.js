@@ -18,20 +18,23 @@ angular.module('dockstore.ui')
       templateUrl: 'templates/workflowtoolsgrid.html',
       link: function postLink(scope, element, attrs) {
         scope.$watch('workflowObj.path', function(newValue, oldValue) {
-          if (newValue) scope.setDocument();
+          if (newValue) {
+            scope.checkVersion();
+            scope.setDocument();
+          }
         });
         scope.$watchGroup(
           ['selVersionName', 'workflowObj.id'],
           function(newValues, oldValues) {
-              scope.setDocument();
+              scope.refreshDocument();
         });
         scope.$on('refreshTools', function(event) {
           scope.setDocument();
           scope.refreshDocument();
         });
-        // scope.$on('getTools', function(event){
-        //   scope.getTableContent();
-        // });
+        scope.$on('checkToolVersion', function(event){
+          scope.checkVersion();
+        });
       }
     };
   });

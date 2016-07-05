@@ -39,6 +39,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.getTools = function() {
+        $scope.$broadcast('checkToolVersion');
         $scope.$broadcast('refreshTools');
       };
 
