@@ -24,6 +24,9 @@ angular.module('dockstore.ui')
       $scope.invalidClass = false;
       $scope.showEditWorkflowPath = true;
       $scope.showEditDescriptorType = true;
+      $scope.pathExtensions = ['cwl','wdl','yml','yaml'];
+      $scope.extensionWarning = false;
+
       if (!$scope.activeTabs) {
         $scope.activeTabs = [true];
         for (var i = 0; i < 3; i++) $scope.activeTabs.push(false);
@@ -324,11 +327,14 @@ angular.module('dockstore.ui')
 
       $scope.submitWorkflowPathEdits = function(){
         if($scope.workflowObj.workflow_path !== 'undefined'){
-          $scope.setDefaultWorkflowPath($scope.workflowObj.id,
-            $scope.workflowObj.workflow_path)
-          .then(function(workflowObj) {
-            $scope.labelsEditMode = false;
-          });
+          //get the extension of the workflow path and check if it's within the extensions array
+          $scope.checkExtension($scope.workflowObj.workflow_path);
+
+          //change on the webservice
+          $scope.setDefaultWorkflowPath($scope.workflowObj.id, $scope.workflowObj.workflow_path)
+            .then(function(workflowObj) {
+              $scope.labelsEditMode = false;
+            });
         }
       };
 
@@ -353,6 +359,28 @@ angular.module('dockstore.ui')
             .then(function(workflowObj) {
               $scope.labelsEditMode = false;
             });
+        }
+      };
+
+      $scope.checkExtension = function(path){
+        var indexPeriod = path.indexOf('.');
+        var ext = "";
+        if(indexPeriod !== -1){
+          ext = path.substring(indexPeriod+1,path.length);
+          if($scope.pathExtensions.indexOf(ext) !== -1){
+            //extension is one of [cwl,wdl,yaml,yml]
+            if(ext !== $scope.workflowObj.descriptorType){
+              if(ext !== 'wdl'){
+                $scope.workflowObj.descriptorType = 'cwl';
+              }else{
+                $scope.workflowObj.descriptorType = 'wdl';
+              }
+            }
+          }else{
+            $scope.extensionWarning = true;
+          }
+        }else{
+          $scope.extensionWarning = true;
         }
       };
 
