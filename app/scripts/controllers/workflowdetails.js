@@ -25,7 +25,6 @@ angular.module('dockstore.ui')
       $scope.showEditWorkflowPath = true;
       $scope.showEditDescriptorType = true;
       $scope.pathExtensions = ['cwl','wdl','yml','yaml'];
-      $scope.extensionWarning = false;
 
       if (!$scope.activeTabs) {
         $scope.activeTabs = [true];
@@ -328,7 +327,7 @@ angular.module('dockstore.ui')
       $scope.submitWorkflowPathEdits = function(){
         if($scope.workflowObj.workflow_path !== 'undefined'){
           //get the extension of the workflow path and check if it's within the extensions array
-          $scope.checkExtension($scope.workflowObj.workflow_path);
+          $scope.checkExtension($scope.workflowObj.workflow_path, 'path');
 
           //change on the webservice
           $scope.setDefaultWorkflowPath($scope.workflowObj.id, $scope.workflowObj.workflow_path)
@@ -339,6 +338,10 @@ angular.module('dockstore.ui')
       };
 
       $scope.submitDescriptorEdit = function() {
+        //check and change path if required
+        $scope.checkExtension($scope.workflowObj.workflow_path, 'dropdown');
+
+        //change on the webservice
         $scope.setDescriptorType($scope.workflowObj.id)
           .then(
             function(workflowObj){
@@ -362,27 +365,56 @@ angular.module('dockstore.ui')
         }
       };
 
-      $scope.checkExtension = function(path){
+      $scope.checkExtension = function(path, type){
+        // will never have indexPeriod = -1 because by default save button 
+        // is disabled when there is no extension provided in workflow path
+        // and this function is called only when save button is clicked
         var indexPeriod = path.indexOf('.');
-        var ext = "";
-        if(indexPeriod !== -1){
-          ext = path.substring(indexPeriod+1,path.length);
-          if($scope.pathExtensions.indexOf(ext) !== -1){
-            //extension is one of [cwl,wdl,yaml,yml]
-            if(ext !== $scope.workflowObj.descriptorType){
-              if(ext !== 'wdl'){
-                $scope.workflowObj.descriptorType = 'cwl';
-              }else{
-                $scope.workflowObj.descriptorType = 'wdl';
-              }
+        var ext = path.substring(indexPeriod+1,path.length);
+        if($scope.pathExtensions.indexOf(ext) !== -1){
+          //extension is one of [cwl,wdl,yaml,yml]
+          if(ext !== $scope.workflowObj.descriptorType && type === 'path'){
+            //changed made on the path, need to change dropdown
+            if(ext !== 'wdl'){
+              $scope.workflowObj.descriptorType = 'cwl';
+            }else{
+              $scope.workflowObj.descriptorType = 'wdl';
             }
-          }else{
-            $scope.extensionWarning = true;
+          }else if(ext !== $scope.workflowObj.descriptorType && type === 'dropdown'){
+            //changes made on the dropdown, need to change the path
+            $scope.changeExt(path,$scope.workflowObj.descriptorType);
           }
+        }else if(path === ""){
+          //path is empty, should by default put "/Dockstore."+descriptorType
+           $scope.workflowObj.workflow_path = '/Dockstore.'+$scope.workflowObj.descriptorType;
         }else{
-          $scope.extensionWarning = true;
+          //extension is not in extension array and path is not empty
+          var extLowerCase = ext.toLowerCase();
+          if($scope.pathExtensions.indexOf(extLowerCase) !== -1){
+            //although this might be the only case, just making sure that
+            //extension is in upper case, but it's actually in the extension array when changed to lowerCase
+            $scope.changeExt(path,"");
+          }
         }
       };
+
+      $scope.changeExt = function(path, desc){
+        var indexPeriod = path.indexOf('.');
+        var nameNoExt = path.substring(0,indexPeriod);
+        var ext = path.substring(indexPeriod+1,path.length).toLowerCase();
+        if(desc === ""){
+          //change extension from uppercase to lowercase(not because of changes in dropdown)
+          $scope.workflowObj.workflow_path = nameNoExt+'.'+ ext;
+          if(ext !== 'wdl'){
+            $scope.workflowObj.descriptorType = 'cwl';
+          }else{
+            $scope.workflowObj.descriptorType = 'wdl';
+          }
+        }else{
+          //change path based on changed on descriptor type
+          $scope.workflowObj.workflow_path = nameNoExt+'.'+desc;
+        }
+      }
 
       $scope.isWorkflowValid = function() {
         if ($scope.workflowObj.is_published) {
