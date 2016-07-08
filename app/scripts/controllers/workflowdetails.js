@@ -333,6 +333,7 @@ angular.module('dockstore.ui')
           $scope.setDefaultWorkflowPath($scope.workflowObj.id, $scope.workflowObj.workflow_path)
             .then(function(workflowObj) {
               $scope.labelsEditMode = false;
+              $scope.refreshWorkflow($scope.workflowObj.id,0);
             });
         }
       };
