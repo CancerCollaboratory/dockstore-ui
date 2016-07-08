@@ -226,16 +226,14 @@
           <!-- when in edit mode and Edit button for descriptor is clicked-->
             <div ng-show="editMode && !showEditDescriptorType">
             <Strong>Descriptor Type</Strong>:
-              <select
-                ng-model="workflowObj.descriptorType"
-                ng-change="submitDescriptorEdit()">
+              <select ng-model="workflowObj.descriptorType">
               <option value="cwl">cwl</option>
               <option value="wdl">wdl</option>
               </select>
               <button type="submit"
                       class="btn btn-link pull-right"
                       style="padding: 3px 12px!important;"
-                      ng-click="showEditDescriptorType = true"
+                      ng-click="showEditDescriptorType = true;submitDescriptorEdit()"
                       ng-disabled="editContainerForm.$invalid">
                 <span class="glyphicon glyphicon-floppy-save"></span>Save
               </button>

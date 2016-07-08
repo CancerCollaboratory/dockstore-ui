@@ -211,6 +211,29 @@ angular.module('dockstore.ui')
           );
       };
 
+      $scope.updateWorkflowPathVersion = function(workflowId, path){
+        return WorkflowService.updateWorkflowPathVersion(workflowId, path, $scope.workflowObj.workflowName, $scope.workflowObj.descriptorType, 
+          $scope.workflowObj.path, $scope.workflowObj.gitUrl)
+          .then(
+            function(workflowObj){
+              $scope.workflowObj.workflow_path = workflowObj.workflow_path;
+              $scope.updateWorkflowObj();
+              return workflowObj;
+            },
+            function(response) {
+              $scope.setWorkflowDetailsError(
+                'The webservice encountered an error trying to modify default path ' +
+                'for this workflow, please ensure that the path is valid, ' +
+                'properly-formatted and does not contain prohibited ' +
+                'characters of words.',
+                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                response.data
+              );
+              return $q.reject(response);
+            }
+          );
+      };
+
       $scope.setWorkflowLabels = function(workflowId, labels) {
         $scope.setWorkflowDetailsError(null);
         return WorkflowService.setWorkflowLabels(workflowId, labels)
@@ -338,6 +361,10 @@ angular.module('dockstore.ui')
           $scope.setDefaultWorkflowPath($scope.workflowObj.id, $scope.workflowObj.workflow_path)
             .then(function(workflowObj) {
               $scope.labelsEditMode = false;
+            });
+          $scope.updateWorkflowPathVersion($scope.workflowObj.id, $scope.workflowObj.workflow_path)
+            .then(function(workflowObj) {
+              $scope.labelsEditMode = false;
               $scope.refreshWorkflow($scope.workflowObj.id,0);
             });
         }
@@ -351,7 +378,10 @@ angular.module('dockstore.ui')
         $scope.setDescriptorType($scope.workflowObj.id)
           .then(
             function(workflowObj){
-              $scope.refreshWorkflow($scope.workflowObj.id,0);
+              $scope.updateWorkflowPathVersion($scope.workflowObj.id, $scope.workflowObj.workflow_path)
+              .then(function(workflowObj) {
+                $scope.refreshWorkflow($scope.workflowObj.id,0);
+              });
             });
       };
 
