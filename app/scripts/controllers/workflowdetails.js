@@ -346,7 +346,7 @@ angular.module('dockstore.ui')
         $scope.setDescriptorType($scope.workflowObj.id)
           .then(
             function(workflowObj){
-              console.log("success submit descriptor edit");
+              $scope.refreshWorkflow($scope.workflowObj.id,0);
             });
       };
 
