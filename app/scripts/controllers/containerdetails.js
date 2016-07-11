@@ -26,6 +26,7 @@ angular.module('dockstore.ui')
       $scope.showEditCWL = true;
       $scope.showEditWDL = true;
       $scope.showEditDockerfile = true;
+      $scope.cwlPathExtension = ['cwl','yaml','yml'];
       if (!$scope.activeTabs) {
         $scope.activeTabs = [true];
         for (var i = 0; i < 4; i++) $scope.activeTabs.push(false);
@@ -174,6 +175,37 @@ angular.module('dockstore.ui')
 
           return false;
         }
+      };
+
+      $scope.updateToolTagPaths = function(containerId, cwlpath, wdlpath, dfpath) {
+        var toolname = $scope.containerToolname;
+        var giturl = $scope.containerObj.gitUrl;
+
+        return ContainerService.updateToolPathTag(containerId, cwlpath, wdlpath, dfpath,toolname, giturl)
+          .then(
+            function(containerObj){
+              if($scope.containerObj.default_cwl_path !== containerObj[0].cwl_path){
+                $scope.containerObj.default_cwl_path = containerObj[0].cwl_path;
+              } else if($scope.containerObj.default_wdl_path !== containerObj[0].wdl_path){
+                $scope.containerObj.default_wdl_path = containerObj[0].wdl_path;
+              } else if($scope.containerObj.default_dockerfile_path !== containerObj[0].dockerfile_path){
+                $scope.containerObj.default_dockerfile_path = containerObj[0].dockerfile_path;
+              }
+              $scope.updateContainerObj();
+              return containerObj;
+            },
+            function(response) {
+              $scope.setContainerDetailsError(
+                'The webservice encountered an error trying to modify default path ' +
+                'for this container, please ensure that the path is valid, ' +
+                'properly-formatted and does not contain prohibited ' +
+                'characters of words.',
+                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                response.data
+              );
+              return $q.reject(response);
+            }
+          );
       };
 
       $scope.setDefaultToolPath = function(containerId, cwlpath, wdlpath, dfpath){
@@ -353,42 +385,18 @@ angular.module('dockstore.ui')
         return FrmttSrvc.getFilteredDockerPullCmd(path);
       };
 
-      $scope.updateToolTagPaths = function(containerId, cwlpath, wdlpath, dfpath) {
-        var toolname = $scope.containerToolname;
-        var giturl = $scope.containerObj.gitUrl;
-
-        return ContainerService.updateToolPathTag(containerId, cwlpath, wdlpath, dfpath,toolname, giturl)
-          .then(
-            function(containerObj){
-              console.log(containerObj);
-              if($scope.containerObj.default_cwl_path !== containerObj[0].cwl_path){
-                $scope.containerObj.default_cwl_path = containerObj[0].cwl_path;
-              } else if($scope.containerObj.default_wdl_path !== containerObj[0].wdl_path){
-                $scope.containerObj.default_wdl_path = containerObj[0].wdl_path;
-              } else if($scope.containerObj.default_dockerfile_path !== containerObj[0].dockerfile_path){
-                $scope.containerObj.default_dockerfile_path = containerObj[0].dockerfile_path;
-              }
-              $scope.updateContainerObj();
-              return containerObj;
-            },
-            function(response) {
-              $scope.setContainerDetailsError(
-                'The webservice encountered an error trying to modify default path ' +
-                'for this container, please ensure that the path is valid, ' +
-                'properly-formatted and does not contain prohibited ' +
-                'characters of words.',
-                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
-                response.data
-              );
-              return $q.reject(response);
-            }
-          );
-      };
-
-      $scope.submitDescriptorEdits = function(){
+      $scope.submitDescriptorEdits = function(type){
         var cwlpath = $scope.containerObj.default_cwl_path;
         var wdlpath = $scope.containerObj.default_wdl_path;
         var dfpath = $scope.containerObj.default_dockerfile_path;
+
+        if(type === 'cwl'){
+          $scope.checkExtension(cwlpath);
+        } else if(type === 'wdl'){
+          $scope.checkExtension(wdlpath);
+        } else if(type === 'dockerfile'){
+          $scope.checkExtension(dfpath);
+        }
 
         if($scope.containerObj.default_cwl_path !== 'undefined' || $scope.containerObj.default_wdl_path !== 'undefined' 
             || $scope.containerObj.default_dockerfile_path !== 'undefined'){
@@ -403,6 +411,10 @@ angular.module('dockstore.ui')
           });
         }
 
+      };
+
+      $scope.checkExtension = function(type) {
+        //will check extension for uppercase and invalid ones
       };
 
       $scope.submitContainerEdits = function() {

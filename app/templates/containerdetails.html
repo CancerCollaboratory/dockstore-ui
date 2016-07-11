@@ -208,7 +208,7 @@
             <form name="editContainerForm"
                   class="edit-container form-inline"
                   ng-show="editMode && !showEditDockerfile"
-                  ng-submit="submitDescriptorEdits()">
+                  ng-submit="submitDescriptorEdits('dockerfile')">
               <button type="submit"
                       class="btn btn-link pull-right"
                       style="padding: 3px 12px!important;"
@@ -260,7 +260,7 @@
             <form name="editContainerForm"
                   class="edit-container form-inline"
                   ng-show="editMode && !showEditCWL"
-                  ng-submit="submitDescriptorEdits()">
+                  ng-submit="submitDescriptorEdits('cwl')">
               <button type="submit"
                       class="btn btn-link pull-right"
                       style="padding: 3px 12px!important;"
@@ -276,7 +276,7 @@
                       class="input-default form-control"
                       name="contDescPath"
                       ng-model="containerObj.default_cwl_path"
-                      ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.cwl$/i"
+                      ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.(cwl|yaml|yml)$/i"
                       ng-minlength="3"
                       ng-maxlength="256"
                       placeholder="e.g. /Dockstore.cwl" />
@@ -312,7 +312,7 @@
             <form name="editContainerForm"
                   class="edit-container form-inline"
                   ng-show="editMode && !showEditWDL"
-                  ng-submit="submitDescriptorEdits()">
+                  ng-submit="submitDescriptorEdits('wdl')">
               <button type="submit"
                       class="btn btn-link pull-right"
                       style="padding: 3px 12px!important;"
