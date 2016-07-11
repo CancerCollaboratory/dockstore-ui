@@ -360,7 +360,6 @@ angular.module('dockstore.ui')
           //change on the webservice
           $scope.setDefaultWorkflowPath($scope.workflowObj.id, $scope.workflowObj.workflow_path)
             .then(function(workflowObj) {
-              $scope.labelsEditMode = false;
               $scope.updateWorkflowPathVersion($scope.workflowObj.id, $scope.workflowObj.workflow_path)
                 .then(function(workflowObj) {
                   $scope.labelsEditMode = false;
