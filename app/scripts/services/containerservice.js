@@ -260,6 +260,26 @@ angular.module('dockstore.ui')
       });
     };
 
+    this.updateToolPathTag = function(containerId,cwlPath,wdlPath,dfPath,toolname,giturl){
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'PUT',
+          url: WebService.API_URI + '/containers/' + containerId + '/updateTagPaths',
+          data: {
+            default_cwl_path: cwlPath,
+            default_wdl_path: wdlPath,
+            default_dockerfile_path: dfPath,
+            toolname: toolname,
+            gitUrl: giturl
+          }
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
     this.getDockerFile = function(containerId, tagName) {
       return $q(function(resolve, reject) {
         $http({

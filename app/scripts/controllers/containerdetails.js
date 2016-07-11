@@ -353,6 +353,38 @@ angular.module('dockstore.ui')
         return FrmttSrvc.getFilteredDockerPullCmd(path);
       };
 
+      $scope.updateToolTagPaths = function(containerId, cwlpath, wdlpath, dfpath) {
+        var toolname = $scope.containerToolname;
+        var giturl = $scope.containerObj.gitUrl;
+
+        return ContainerService.updateToolPathTag(containerId, cwlpath, wdlpath, dfpath,toolname, giturl)
+          .then(
+            function(containerObj){
+              console.log(containerObj);
+              if($scope.containerObj.default_cwl_path !== containerObj[0].cwl_path){
+                $scope.containerObj.default_cwl_path = containerObj[0].cwl_path;
+              } else if($scope.containerObj.default_wdl_path !== containerObj[0].wdl_path){
+                $scope.containerObj.default_wdl_path = containerObj[0].wdl_path;
+              } else if($scope.containerObj.default_dockerfile_path !== containerObj[0].dockerfile_path){
+                $scope.containerObj.default_dockerfile_path = containerObj[0].dockerfile_path;
+              }
+              $scope.updateContainerObj();
+              return containerObj;
+            },
+            function(response) {
+              $scope.setContainerDetailsError(
+                'The webservice encountered an error trying to modify default path ' +
+                'for this container, please ensure that the path is valid, ' +
+                'properly-formatted and does not contain prohibited ' +
+                'characters of words.',
+                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                response.data
+              );
+              return $q.reject(response);
+            }
+          );
+      };
+
       $scope.submitDescriptorEdits = function(){
         var cwlpath = $scope.containerObj.default_cwl_path;
         var wdlpath = $scope.containerObj.default_wdl_path;
@@ -363,7 +395,11 @@ angular.module('dockstore.ui')
           $scope.setDefaultToolPath($scope.containerObj.id,
             cwlpath, wdlpath, dfpath)
           .then(function(containerObj) {
-            $scope.labelsEditMode = false;
+            $scope.updateToolTagPaths($scope.containerObj.id, cwlpath, wdlpath, dfpath)
+              .then(function(containerObj){
+                $scope.labelsEditMode = false;
+                $scope.refreshContainer($scope.containerObj.id,0);
+              });
           });
         }
 
