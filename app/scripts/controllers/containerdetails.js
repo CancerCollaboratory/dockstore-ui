@@ -26,7 +26,6 @@ angular.module('dockstore.ui')
       $scope.showEditCWL = true;
       $scope.showEditWDL = true;
       $scope.showEditDockerfile = true;
-      $scope.cwlPathExtension = ['cwl','yaml','yml'];
       if (!$scope.activeTabs) {
         $scope.activeTabs = [true];
         for (var i = 0; i < 4; i++) $scope.activeTabs.push(false);
@@ -390,14 +389,6 @@ angular.module('dockstore.ui')
         var wdlpath = $scope.containerObj.default_wdl_path;
         var dfpath = $scope.containerObj.default_dockerfile_path;
 
-        if(type === 'cwl'){
-          $scope.checkExtension(cwlpath);
-        } else if(type === 'wdl'){
-          $scope.checkExtension(wdlpath);
-        } else if(type === 'dockerfile'){
-          $scope.checkExtension(dfpath);
-        }
-
         if($scope.containerObj.default_cwl_path !== 'undefined' || $scope.containerObj.default_wdl_path !== 'undefined' 
             || $scope.containerObj.default_dockerfile_path !== 'undefined'){
           $scope.setDefaultToolPath($scope.containerObj.id,
@@ -411,10 +402,6 @@ angular.module('dockstore.ui')
           });
         }
 
-      };
-
-      $scope.checkExtension = function(type) {
-        //will check extension for uppercase and invalid ones
       };
 
       $scope.submitContainerEdits = function() {
