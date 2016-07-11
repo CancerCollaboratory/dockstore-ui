@@ -208,7 +208,7 @@
             <form name="editContainerForm"
                   class="edit-container form-inline"
                   ng-show="editMode && !showEditDockerfile"
-                  ng-submit="submitDescriptorEdits('dockerfile')">
+                  ng-submit="submitDescriptorEdits()">
               <button type="submit"
                       class="btn btn-link pull-right"
                       style="padding: 3px 12px!important;"
@@ -260,7 +260,7 @@
             <form name="editContainerForm"
                   class="edit-container form-inline"
                   ng-show="editMode && !showEditCWL"
-                  ng-submit="submitDescriptorEdits('cwl')">
+                  ng-submit="submitDescriptorEdits()">
               <button type="submit"
                       class="btn btn-link pull-right"
                       style="padding: 3px 12px!important;"
@@ -312,7 +312,7 @@
             <form name="editContainerForm"
                   class="edit-container form-inline"
                   ng-show="editMode && !showEditWDL"
-                  ng-submit="submitDescriptorEdits('wdl')">
+                  ng-submit="submitDescriptorEdits()">
               <button type="submit"
                       class="btn btn-link pull-right"
                       style="padding: 3px 12px!important;"
