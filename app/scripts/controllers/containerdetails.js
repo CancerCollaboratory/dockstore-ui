@@ -389,22 +389,12 @@ angular.module('dockstore.ui')
         var wdlpath = $scope.containerObj.default_wdl_path;
         var dfpath = $scope.containerObj.default_dockerfile_path;
 
-        if(type === 'cwl'){
-          if(cwlpath !== ''){
-            cwlpath = $scope.lowercaseExtension(cwlpath);
-          } else{
+        if(type === 'cwl' && cwlpath === ''){
             cwlpath = '/Dockstore.cwl';
-          }
-        } else if(type === 'wdl'){
-          if(cwlpath !== ''){
-            wdlpath = $scope.lowercaseExtension(wdlpath);
-          } else{
+        } else if(type === 'wdl' && wdlpath === ''){
             wdlpath = '/Dockstore.wdl';
-          }
-        } else{
-          if(dfpath === ''){
+        } else if(type === 'dockerfile' && dfpath === ''){
             dfpath = '/Dockerfile';
-          }
         }
 
         if($scope.containerObj.default_cwl_path !== 'undefined' || $scope.containerObj.default_wdl_path !== 'undefined' 
@@ -420,15 +410,6 @@ angular.module('dockstore.ui')
           });
         }
 
-      };
-
-      $scope.lowercaseExtension = function(path) {
-        var indexPeriod = path.indexOf('.');
-        //if indexPeriod = -1, it will fail the form validation
-        //so will never have indexPeriod = -1
-        var extension = path.substring(indexPeriod,path.length);
-        var stringNoExt = path.substring(0,indexPeriod);
-        return stringNoExt+extension.toLowerCase();
       };
 
       $scope.submitContainerEdits = function() {
