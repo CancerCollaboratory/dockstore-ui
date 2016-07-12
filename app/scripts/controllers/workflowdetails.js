@@ -26,9 +26,12 @@ angular.module('dockstore.ui')
       $scope.showEditDescriptorType = true;
       $scope.pathExtensions = ['cwl','wdl','yml','yaml'];
 
+      //there are 6 tabs, and only 1 tab can be active
+      //so there are 5 tabs that are not active
+      var notActiveTabs = 5;
       if (!$scope.activeTabs) {
         $scope.activeTabs = [true];
-        for (var i = 0; i < 3; i++) $scope.activeTabs.push(false);
+        for (var i = 0; i < notActiveTabs; i++) $scope.activeTabs.push(false);
       }
 
       $scope.checkPage = function(){
@@ -344,7 +347,7 @@ angular.module('dockstore.ui')
        };
 
       $scope.selectLabelTab = function() {
-       for (var i = 0; i < 4; i++) $scope.activeTabs[i] = false;
+       for (var i = 0; i < notActiveTabs; i++) $scope.activeTabs[i] = false;
        $scope.activeTabs[1] = true;
       };
 
