@@ -422,14 +422,6 @@ angular.module('dockstore.ui')
         }else if(path === ""){
           //path is empty, should by default put "/Dockstore."+descriptorType
            $scope.workflowObj.workflow_path = '/Dockstore.'+$scope.workflowObj.descriptorType;
-        }else{
-          //extension is not in extension array and path is not empty
-          var extLowerCase = ext.toLowerCase();
-          if($scope.pathExtensions.indexOf(extLowerCase) !== -1){
-            //although this might be the only case, just making sure that
-            //extension is in upper case, but it's actually in the extension array when changed to lowerCase
-            $scope.changeExt(path,"");
-          }
         }
       };
 
