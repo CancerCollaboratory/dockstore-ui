@@ -393,10 +393,15 @@ angular.module('dockstore.ui')
         var wdlpath = $scope.containerObj.default_wdl_path;
         var dfpath = $scope.containerObj.default_dockerfile_path;
 
+
         if(type === 'cwl' && cwlpath === ''){
+          if(wdlpath === ''){
             cwlpath = '/Dockstore.cwl';
+          }
         } else if(type === 'wdl' && wdlpath === ''){
+          if(cwlpath === ''){
             wdlpath = '/Dockstore.wdl';
+          }
         } else if(type === 'dockerfile' && dfpath === ''){
             dfpath = '/Dockerfile';
         }
