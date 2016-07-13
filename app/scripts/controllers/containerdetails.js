@@ -26,9 +26,13 @@ angular.module('dockstore.ui')
       $scope.showEditCWL = true;
       $scope.showEditWDL = true;
       $scope.showEditDockerfile = true;
+      //There are 5 tabs, and only 1 can be active
+      // so there are 4 other tabs that are not active
+      var notActiveTabs = 4;
+
       if (!$scope.activeTabs) {
         $scope.activeTabs = [true];
-        for (var i = 0; i < 4; i++) $scope.activeTabs.push(false);
+        for (var i = 0; i < notActiveTabs; i++) $scope.activeTabs.push(false);
       }
 
       $scope.checkPage = function(){
@@ -372,7 +376,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.selectLabelTab = function() {
-       for (var i = 0; i < 4; i++) $scope.activeTabs[i] = false;
+       for (var i = 0; i < notActiveTabs; i++) $scope.activeTabs[i] = false;
        $scope.activeTabs[1] = true;
       };
 
