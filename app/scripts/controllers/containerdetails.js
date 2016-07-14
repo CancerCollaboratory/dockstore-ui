@@ -187,12 +187,12 @@ angular.module('dockstore.ui')
         return ContainerService.updateToolPathTag(containerId, cwlpath, wdlpath, dfpath,toolname, giturl)
           .then(
             function(containerObj){
-              if($scope.containerObj.default_cwl_path !== containerObj[0].cwl_path){
-                $scope.containerObj.default_cwl_path = containerObj[0].cwl_path;
-              } else if($scope.containerObj.default_wdl_path !== containerObj[0].wdl_path){
-                $scope.containerObj.default_wdl_path = containerObj[0].wdl_path;
-              } else if($scope.containerObj.default_dockerfile_path !== containerObj[0].dockerfile_path){
-                $scope.containerObj.default_dockerfile_path = containerObj[0].dockerfile_path;
+              if($scope.containerObj.default_cwl_path !== containerObj.default_cwl_path){
+                $scope.containerObj.default_cwl_path = containerObj.default_cwl_path;
+              } else if($scope.containerObj.default_wdl_path !== containerObj.default_wdl_path){
+                $scope.containerObj.default_wdl_path = containerObj.default_wdl_path;
+              } else if($scope.containerObj.default_dockerfile_path !== containerObj.default_dockerfile_path){
+                $scope.containerObj.default_dockerfile_path = containerObj.default_dockerfile_path;
               }
               $scope.updateContainerObj();
               return containerObj;
@@ -218,6 +218,7 @@ angular.module('dockstore.ui')
         return ContainerService.setDefaultToolPath(containerId, cwlpath, wdlpath, dfpath,toolname, giturl)
           .then(
             function(containerObj){
+
               if($scope.containerObj.default_cwl_path !== containerObj.default_cwl_path){
                 $scope.containerObj.default_cwl_path = containerObj.default_cwl_path;
               } else if($scope.containerObj.default_wdl_path !== containerObj.default_wdl_path){
