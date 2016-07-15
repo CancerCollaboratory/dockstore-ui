@@ -3,28 +3,35 @@
     <table class="table versions-grid table-bordered table-condensed table-striped">
       <thead>
         <tr>
-          <th>
+          <th style="width: 8.5% !important;">
             Tag
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('name')"
                   ng-click="clickSortColumn('name')">
             </span>
           </th>
-          <th>
+          <th style="width: 13% !important;">
             Git Reference
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('reference')"
                   ng-click="clickSortColumn('reference')">
             </span>
           </th>
-          <th>
+          <th style="width: 10% !important">
+            Tool Path
+            <span class="glyphicon pull-right"
+                  ng-class="getIconClass('name')"
+                  ng-click="clickSortColumn('name')">
+            </span>
+          </th>
+          <th style="width: 10.5% !important">
             Size
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('size')"
                   ng-click="clickSortColumn('size')">
             </span>
           </th>
-          <th>
+          <th style="width: 15% !important;">
             Date Modified
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('last_modified')"
@@ -38,7 +45,7 @@
                   ng-click="clickSortColumn('valid')">
             </span>
           </th>
-          <th>
+          <th style="width: 3.5% !important;">
             Actions
           </th>
           <th>
@@ -60,6 +67,11 @@
             <div class="git-ref">
               {{versionTag.reference ? versionTag.reference : 'n/a'}}
             </span>
+          </td>
+          <td>
+            <span>{{versionTag.cwl_path}}</span>
+            <span>{{versionTag.wdl_path}}</span>
+            <span>{{versionTag.dockerfile_path}}</span>
           </td>
           <td>
             {{getHRSize(versionTag.size)}}
