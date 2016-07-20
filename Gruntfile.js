@@ -8,6 +8,7 @@
 // 'test/spec/**/*.js'
 
 var modRewrite = require('connect-modrewrite');
+var execSync = require("child_process").execSync;
 
 module.exports = function (grunt) {
 
@@ -29,6 +30,10 @@ module.exports = function (grunt) {
 
   // Define the configuration for all the tasks
   grunt.initConfig({
+
+    revision: execSync("git rev-parse --verify HEAD"),
+    branch: execSync("git rev-parse --abbrev-ref HEAD"),
+    banner: "/*!\n <%= grunt.template.today('dddd, mmmm dS, yyyy, h:MM:ss TT') %>\n branch: <%= branch %> revision: <%= revision %>*/\n",
 
     // Project settings
     yeoman: appConfig,
@@ -218,6 +223,7 @@ module.exports = function (grunt) {
     // Compiles Sass to CSS and generates necessary files if requested
     compass: {
       options: {
+        banner: "<%= banner %>",
         sassDir: '<%= yeoman.app %>/styles',
         cssDir: '.tmp/styles',
         generatedImagesDir: '.tmp/images/generated',
@@ -269,7 +275,17 @@ module.exports = function (grunt) {
               js: ['concat', 'uglifyjs'],
               css: ['cssmin']
             },
-            post: {}
+            post: {
+              js: [{
+                name: 'uglify',
+                createConfig: function (context, block) {
+                  var generated = context.options.generated;
+                  generated.options = {
+                    banner: "<%= banner %>"
+                  };
+                }
+              }]
+            }
           }
         }
       }
