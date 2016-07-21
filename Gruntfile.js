@@ -92,7 +92,7 @@ module.exports = function (grunt) {
               modRewrite([
                 '^[^\\.]*$ /index.html [L]',
                 '^/containers/(.*)$ /index.html [L]',
-                '^/auth/(.*)$ /index.html [L]',
+                '^/auth/(.*)$ /index.html [L]'
               ]),
               serveStatic('.tmp'),
               connect().use(
@@ -127,12 +127,13 @@ module.exports = function (grunt) {
       dist: {
         options: {
           open: true,
+          base: '<%= yeoman.dist %>',
           middleware: function (connect) {
             return [
               modRewrite([
                 '^[^\\.]*$ /index.html [L]',
                 '^/containers/(.*)$ /index.html [L]',
-                '^/auth/(.*)$ /index.html [L]',
+                '^/auth/(.*)$ /index.html [L]'
               ]),
               serveStatic('.tmp'),
               connect().use(
@@ -140,10 +141,10 @@ module.exports = function (grunt) {
                 serveStatic('./bower_components')
               ),
               connect().use(
-                '/app/styles',
-                serveStatic('./app/styles')
+                '/dist/styles',
+                serveStatic('./dist/styles')
               ),
-              serveStatic(appConfig.app)
+              serveStatic(appConfig.dist)
             ];
           }
         }
@@ -192,7 +193,7 @@ module.exports = function (grunt) {
       },
       server: {
         options: {
-          map: true,
+          map: true
         },
         files: [{
           expand: true,
