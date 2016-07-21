@@ -10,6 +10,7 @@
 var modRewrite = require('connect-modrewrite');
 var execSync = require("child_process").execSync;
 var serveStatic = require('serve-static');
+var gitTag = execSync('git describe --always --tag --abbrev=0', { encoding: 'utf8' });
 
 module.exports = function (grunt) {
 
@@ -20,6 +21,7 @@ module.exports = function (grunt) {
   require('jit-grunt')(grunt, {
     useminPrepare: 'grunt-usemin',
     ngtemplates: 'grunt-angular-templates',
+    insert: 'grunt-insert',
     cdnify: 'grunt-google-cdn'
   });
 
@@ -392,6 +394,7 @@ module.exports = function (grunt) {
       }
     },
 
+    //minify, combine and automatically cache html template
     ngtemplates: {
       dist: {
         options: {
@@ -481,6 +484,16 @@ module.exports = function (grunt) {
       ]
     },
 
+    //insert into index.html
+    insert: {
+      options:{},
+       main: {
+          src: "<%= yeoman.app %>/gitVersion.htm",
+          dest: "<%= yeoman.app %>/index.html",
+          match: "<!-- git version -->"
+      }
+    },
+
     // Test settings
     karma: {
       unit: {
@@ -493,6 +506,8 @@ module.exports = function (grunt) {
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
+      grunt.log.write("tag version: "+gitTag);
+      grunt.file.write('./app/gitVersion.htm',gitTag);
       return grunt.task.run(['build', 'connect:dist:keepalive']);
     }
 
@@ -523,6 +538,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'wiredep',
+    'insert',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
