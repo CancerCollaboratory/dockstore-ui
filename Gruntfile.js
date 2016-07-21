@@ -8,6 +8,8 @@
 // 'test/spec/**/*.js'
 
 var modRewrite = require('connect-modrewrite');
+var execSync = require("child_process").execSync;
+var serveStatic = require('serve-static');
 
 module.exports = function (grunt) {
 
@@ -29,6 +31,10 @@ module.exports = function (grunt) {
 
   // Define the configuration for all the tasks
   grunt.initConfig({
+
+    revision: execSync("git rev-parse --verify HEAD"),
+    branch: execSync("git rev-parse --abbrev-ref HEAD"),
+    banner: "/*!\n <%= grunt.template.today('dddd, mmmm dS, yyyy, h:MM:ss TT') %>\n branch: <%= branch %> revision: <%= revision %> */\n",
 
     // Project settings
     yeoman: appConfig,
@@ -86,18 +92,18 @@ module.exports = function (grunt) {
               modRewrite([
                 '^[^\\.]*$ /index.html [L]',
                 '^/containers/(.*)$ /index.html [L]',
-                '^/auth/(.*)$ /index.html [L]',
+                '^/auth/(.*)$ /index.html [L]'
               ]),
-              connect.static('.tmp'),
+              serveStatic('.tmp'),
               connect().use(
                 '/bower_components',
-                connect.static('./bower_components')
+                serveStatic('./bower_components')
               ),
               connect().use(
                 '/app/styles',
-                connect.static('./app/styles')
+                serveStatic('./app/styles')
               ),
-              connect.static(appConfig.app)
+              serveStatic(appConfig.app)
             ];
           }
         }
@@ -107,13 +113,13 @@ module.exports = function (grunt) {
           port: 9001,
           middleware: function (connect) {
             return [
-              connect.static('.tmp'),
-              connect.static('test'),
+              serveStatic('.tmp'),
+              serveStatic('test'),
               connect().use(
                 '/bower_components',
-                connect.static('./bower_components')
+                serveStatic('./bower_components')
               ),
-              connect.static(appConfig.app)
+              serveStatic(appConfig.app)
             ];
           }
         }
@@ -121,7 +127,26 @@ module.exports = function (grunt) {
       dist: {
         options: {
           open: true,
-          base: '<%= yeoman.dist %>'
+          base: '<%= yeoman.dist %>',
+          middleware: function (connect) {
+            return [
+              modRewrite([
+                '^[^\\.]*$ /index.html [L]',
+                '^/containers/(.*)$ /index.html [L]',
+                '^/auth/(.*)$ /index.html [L]'
+              ]),
+              serveStatic('.tmp'),
+              connect().use(
+                '/bower_components',
+                serveStatic('./bower_components')
+              ),
+              connect().use(
+                '/dist/styles',
+                serveStatic('./dist/styles')
+              ),
+              serveStatic(appConfig.dist)
+            ];
+          }
         }
       }
     },
@@ -168,7 +193,7 @@ module.exports = function (grunt) {
       },
       server: {
         options: {
-          map: true,
+          map: true
         },
         files: [{
           expand: true,
@@ -269,7 +294,17 @@ module.exports = function (grunt) {
               js: ['concat', 'uglifyjs'],
               css: ['cssmin']
             },
-            post: {}
+            post: {
+              js: [{
+                name: 'uglify',
+                createConfig: function (context, block) {
+                  var generated = context.options.generated;
+                  generated.options = {
+                    banner: "<%= banner %>"
+                  };
+                }
+              }]
+            }
           }
         }
       }
