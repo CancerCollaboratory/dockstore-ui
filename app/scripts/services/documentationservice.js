@@ -35,6 +35,12 @@ angular.module('dockstore.ui')
           description: 'This tutorial walks through how to launch tools and workflows hosted at Dockstore',
           name: 'Launching Tools and Workflows',
           path: 'docs/launch.md'
+        },
+        {
+          slug: 'blog',
+          description: 'Dockstore news and events',
+          name: 'News and Events',
+          path: 'docs/blog.md'
         }
       ];
 

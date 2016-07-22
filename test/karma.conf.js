@@ -22,8 +22,8 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       // bower:js
-      'bower_components/jquery/dist/jquery.js',
       'bower_components/angular/angular.js',
+      'bower_components/jquery/dist/jquery.js',
       'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js',
       'bower_components/angular-animate/angular-animate.js',
       'bower_components/angular-cookies/angular-cookies.js',
@@ -34,6 +34,12 @@ module.exports = function(config) {
       'bower_components/angular-local-storage/dist/angular-local-storage.js',
       'bower_components/AngularJS-Toaster/toaster.js',
       'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+      'bower_components/lodash/lodash.js',
+      'bower_components/graphlib/dist/graphlib.core.js',
+      'bower_components/cytoscape/dist/cytoscape.js',
+      'bower_components/dagre/dist/dagre.core.js',
+      'bower_components/dagre/dist/dagre.core.min.js',
+      'bower_components/cytoscape-dagre/cytoscape-dagre.js',
       'bower_components/angular-highlightjs/build/angular-highlightjs.js',
       'bower_components/marked/lib/marked.js',
       'bower_components/angular-marked/angular-marked.js',
