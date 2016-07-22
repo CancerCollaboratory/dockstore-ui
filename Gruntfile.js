@@ -35,9 +35,8 @@ module.exports = function (grunt) {
   // Define the configuration for all the tasks
   grunt.initConfig({
 
-    revision: execSync("git rev-parse --verify HEAD  | xargs echo -n"),
     branch: execSync("git rev-parse --abbrev-ref HEAD  | xargs echo -n"),
-    banner: "/*!\n <%= grunt.template.today('dddd, mmmm dS, yyyy, h:MM:ss TT') %>\n branch: <%= branch %>\n revision: <%= revision %>\n */\n",
+    banner: "/*!\n <%= grunt.template.today('dddd, mmmm dS, yyyy, h:MM:ss TT') %>\n branch: <%= branch %>\n revision: "+gitRev+"\n */\n",
 
     // Project settings
     yeoman: appConfig,
@@ -46,7 +45,7 @@ module.exports = function (grunt) {
       dist: {
         source: "<%= yeoman.dist %>/index.html",
         options: {
-          version: "<%= revision %>",
+          version: gitRev,
           links: true,
           scripts: true
         }
