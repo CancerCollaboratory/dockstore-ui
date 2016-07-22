@@ -3,7 +3,7 @@
 /.tmp
 /.sass-cache
 /bower_components
-/app/gitVersion.html
+/app/gitVersion.htm
 
 # System Metadata
 .DS_Store
