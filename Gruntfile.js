@@ -11,6 +11,8 @@ var modRewrite = require('connect-modrewrite');
 var execSync = require("child_process").execSync;
 var serveStatic = require('serve-static');
 var gitTag = execSync('git describe --always --tag --abbrev=0', { encoding: 'utf8' });
+var gitRev = execSync("git rev-parse --verify HEAD  | xargs echo -n");
+var gitBranch = execSync("git rev-parse --abbrev-ref HEAD  | xargs echo -n");
 
 module.exports = function (grunt) {
 
@@ -518,7 +520,9 @@ module.exports = function (grunt) {
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
       grunt.log.write("tag version: "+gitTag);
-      grunt.file.write('./app/gitVersion.htm',gitTag);
+      grunt.log.write("HEAD commit: "+gitRev);
+      grunt.log.write("branch: "+gitBranch);
+      grunt.file.write('./app/gitVersion.htm',"<br>"+gitTag+"<br>"+gitRev+"<br>"+gitBranch);
       return grunt.task.run(['build', 'connect:dist:keepalive']);
     }
 
