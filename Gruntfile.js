@@ -23,6 +23,7 @@ module.exports = function (grunt) {
     useminPrepare: 'grunt-usemin',
     ngtemplates: 'grunt-angular-templates',
     insert: 'grunt-insert',
+    karma : 'grunt-karma',
     coveralls: 'grunt-coveralls',
     cdnify: 'grunt-google-cdn'
   });
@@ -512,14 +513,16 @@ module.exports = function (grunt) {
         force: true
       },
       all: {
-        src: 'build/coverage/PhantomJS 2.1.1 (Linux 0.0.0)/lcov.info',
+        src: 'build/coverage/PhantomJS 2.1.1 (Linux 0.0.0)/lcov.info'
       }
     },
 
     // Test settings
     karma: {
+      options: {
+        configFile: 'test/karma.conf.js'
+      },
       unit: {
-        configFile: 'test/karma.conf.js',
         singleRun: true
       }
     }
