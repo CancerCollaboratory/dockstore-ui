@@ -512,7 +512,7 @@ module.exports = function (grunt) {
         force: true
       },
       all: {
-        src: '.coverage-results/core.lcov',
+        src: 'build/coverage/PhantomJS 2.1.1 (Linux 0.0.0)/lcov.info',
       }
     },
 
