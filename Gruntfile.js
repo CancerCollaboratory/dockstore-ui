@@ -23,6 +23,7 @@ module.exports = function (grunt) {
     useminPrepare: 'grunt-usemin',
     ngtemplates: 'grunt-angular-templates',
     insert: 'grunt-insert',
+    coveralls: 'grunt-coveralls',
     cdnify: 'grunt-google-cdn'
   });
 
@@ -502,6 +503,16 @@ module.exports = function (grunt) {
           src: "<%= yeoman.app %>/gitVersion.htm",
           dest: "<%= yeoman.dist %>/index.html",
           match: "<!-- git version -->"
+      }
+    },
+
+    //coveralls
+    coveralls: {
+      options: {
+        force: true
+      },
+      all: {
+        src: '.coverage-results/core.lcov',
       }
     },
 
