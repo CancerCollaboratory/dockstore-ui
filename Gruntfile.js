@@ -25,6 +25,7 @@ module.exports = function (grunt) {
     insert: 'grunt-insert',
     karma : 'grunt-karma',
     coveralls: 'grunt-coveralls',
+    protractor: 'grunt-protractor-runner',
     cdnify: 'grunt-google-cdn'
   });
 
@@ -517,6 +518,24 @@ module.exports = function (grunt) {
       }
     },
 
+    //protractor
+    protractor: {
+      options: {
+        configFile: "e2e.conf.js", // Default config file 
+        keepAlive: true, // If false, the grunt process stops when the test fails. 
+        noColor: false, // If true, protractor will not use colors in its output. 
+        args: {
+          // Arguments passed to the command 
+        }
+      },
+      e2e: {
+        options: {
+          // Stops Grunt process if a test fails
+          keepAlive: false
+        }
+      }
+    },
+
     // Test settings
     karma: {
       options: {
@@ -559,6 +578,7 @@ module.exports = function (grunt) {
     'concurrent:test',
     'autoprefixer',
     'connect:test',
+    'protractor',
     'karma'
   ]);
 
