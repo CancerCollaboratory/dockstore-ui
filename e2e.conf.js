@@ -20,7 +20,7 @@ exports.config = {
 		'browserName': 'phantomjs'
 	},
 
-	baseUrl: 'http://localhost:9000/',
+	baseUrl: 'http://localhost:9001/', //must be 9001 because grunt-test is in port 9001
 
 	framework: 'jasmine',
 
