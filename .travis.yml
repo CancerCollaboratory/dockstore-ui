@@ -13,9 +13,9 @@ install:
   - 'gem install compass'
   - 'npm update'
   - 'bower update'
-after_script:  
+after_success:  
 - cat ./build/coverage/**/lcov.info | ./node_modules/coveralls/bin/coveralls.js 
-after_success: grunt coveralls
+- grunt coveralls
  
 notifications:
   webhooks:
