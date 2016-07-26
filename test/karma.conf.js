@@ -96,7 +96,7 @@ module.exports = function(config) {
     // urlRoot: '_karma_'
 
     preprocessors: {  
-      'test/spec/**/*.js': ['coverage']
+      'app/scripts/**/*.js': ['coverage']
     },
 
     reporters: ['dots', 'coverage'],
