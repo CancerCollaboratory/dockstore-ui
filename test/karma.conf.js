@@ -48,7 +48,7 @@ module.exports = function(config) {
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",
-      "test/mock/**/*.js",
+      // "test/mock/**/*.js",
       "test/spec/**/*.js"
     ],
 
@@ -74,12 +74,13 @@ module.exports = function(config) {
     // Which plugins to enable
     plugins: [
       "karma-phantomjs-launcher",
+      "karma-coverage",
       "karma-jasmine"
     ],
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
-    singleRun: false,
+    singleRun: true,
 
     colors: true,
 
@@ -93,5 +94,16 @@ module.exports = function(config) {
     // },
     // URL root prevent conflicts with the site root
     // urlRoot: '_karma_'
+
+    preprocessors: {  
+      'app/scripts/**/*.js': ['coverage']
+    },
+
+    reporters: ['dots', 'coverage'],
+
+    coverageReporter: {  
+      type: 'lcov',
+      dir: 'build/coverage/'
+    }
   });
 };
