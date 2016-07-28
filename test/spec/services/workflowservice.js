@@ -122,6 +122,7 @@ describe('Service: WorkflowService', function () {
         .then(function(response){
           expect(response.workflow_path).toBe('/test/Dockstore.cwl');
         });
+      httpBackend.flush();
     });
   });
 
