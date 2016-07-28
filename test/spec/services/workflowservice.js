@@ -98,11 +98,31 @@ describe('Service: WorkflowService', function () {
         });
       httpBackend.flush();
     });
-
   });
 
-  // it('should do something', function () {
-  //   expect(!!WorkflowService).toBe(true);
-  // });
+  describe('mocking services: PUT', function() {
+    //mock setDefaultWorkflowPath
+    it('should mock setDefaultWorkflowPath', function() {
+      httpBackend.whenPUT("http://localhost:8080/workflows/1114").respond({
+        //NOTE: this is just part of the real content. For complete full content, check the webservice
+          "id": 1114,
+          "author": null,
+          "description": null,
+          "labels": [],
+          "gitUrl": "git@github.com:DockstoreTestUser/hello-dockstore-workflow.git",
+          "mode": "FULL",
+          "workflowName": null,
+          "path": "DockstoreTestUser/hello-dockstore-workflow",
+          "descriptorType": "cwl",
+          "workflow_path": "/test/Dockstore.cwl"
+      });
+
+      WorkflowService.setDefaultWorkflowPath(1114,"/test/Dockstore.cwl",null,"cwl",
+         "DockstoreTestUser/hello-dockstore-workflow","git@github.com:DockstoreTestUser/hello-dockstore-workflow.git")
+        .then(function(response){
+          expect(response.workflow_path).toBe('/test/Dockstore.cwl');
+        });
+    });
+  });
 
 });
