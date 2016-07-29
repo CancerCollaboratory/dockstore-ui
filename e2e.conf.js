@@ -9,7 +9,7 @@ exports.config = {
 	// to the location of this config. If no other method of starting selenium
 	// is found, this will default to
 	// node_modules/protractor/selenium/selenium-server...
-	seleniumServerJar: './node_modules/protractor/node_modules/webdriver-manager/selenium/selenium-server-standalone-2.53.1.jar',
+	seleniumServerJar: './node_modules/grunt-protractor-runner/node_modules/protractor/selenium/selenium-server-standalone-2.52.0.jar',
 
 	// The port to start the selenium server on, or null if the server should
 	// find its own unused port.
@@ -17,7 +17,8 @@ exports.config = {
 
 	// Capabilities to be passed to the webdriver instance.
 	capabilities: {
-		'browserName': 'phantomjs'
+		'browserName': 'phantomjs',
+		'phantomjs.binary.path': './node_modules/phantomjs-prebuilt/phantomjs/phantomjs-2.1.1-linux-x86_64/bin/phantomjs'
 	},
 
 	baseUrl: 'http://localhost:9001/', //must be 9001 because grunt-test is in port 9001
