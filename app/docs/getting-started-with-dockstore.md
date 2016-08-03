@@ -1,76 +1,3 @@
-# Getting Started
-
-In this guide we will start with creating a simple Docker-based tool, sharing it through the Dockstore, and calling the container yourself to process some sample data.
-
-## Sign Up for Accounts
-
-Dockstore is powered by [Quay.io](https://quay.io/) and [Docker Hub](https://hub.docker.com/), for storing Docker images, and [GitHub](https://github.com/) and [Bitbucket](https://bitbucket.org/) for storing the build file (`Dockerfile`) and metadata descriptor file (`Dockstore.cwl or Dockstore.wdl`) that are used by this site.  Since the Dockstore does not permanently store your Docker images, your Dockerfile, or your Dockstore.cwl metadata file, you are free to use all the excellent features of Quay.io/Docker Hub and GitHub/Bitbucket.  If you are already using these services then you will appreciate the fact that registering your Docker images on Dockstore is extremely easy and requires very little interruption to the way you work already.  For those of you that use [Docker Hub](https://hub.docker.com/), an extremely popular Docker registry, we are planning on adding enhanced support for features in the near future.  For now, we recommend users of Dockstore sign up for both Quay.io and GitHub/Bitbucket accounts to host their Docker images and build/metadata files respectively.  Partial support for Docker Hub is available, but it requires manual entry of image and tag data on Dockstore. If you are already building your Docker images on Docker Hub automatically it takes just minutes to setup a comparable build on Quay.io.
-
-* [Sign up for an account on GitHub...](https://github.com/) (Required for authentication.)
-* [Sign up for an account on Bitbucket...](https://bitbucket.org/)
-* [Sign up for an account on Quay.io...](https://quay.io/)
-* [Sign up for an account on Docker Hub...](https://hub.docker.com/)
-
-## Create Your Tool
-
-Docker is a fantastic tool for creating light-weight containers to run your tools.  What this means is it gives you a fast VM-like environment for Linux where you can automatically install dependencies, make configurations, and setup your tool exactly the way you want, as you would on a "normal" Linux host.  You can then quickly and easily share these Docker images with the world using registries like Docker Hub and Quay.io (indexed by Dockstore).  The full details on how to make new Docker images is beyond the scope of this site but the first place to look is in the excellent documentation on Docker's site.  See Docker's [documentation](https://docs.docker.com/), which will walk you through installing Docker on your computer and making your own images.  The goal is to create a Dockerfile for your tool, stored in a supported Git repository.  The steps, at a high level, are:
-
-0. create a new repository on GitHub or Bitbucket
-0. create a `Dockerfile` in that repository that conforms to that described in the guide above
-0. use the Docker tools to build and test your Docker image
-0. use the release process on GitHub or Bitbucket to make distinct release tags, we like the  [HubFlow](https://datasift.github.io/gitflow/) process in our group for managing releases in git
-0. setup Quay.io to automatically build your Docker image or manually register public images if you are using Docker Hub
-
-For an example, see the [dockstore-tool-bamstats](https://github.com/briandoconnor/dockstore-tool-bamstats) repository on GitHub which we created as an example.  The [README](https://github.com/briandoconnor/dockstore-tool-bamstats/blob/develop/README.md) has more information which you may find helpful.  Here is the Dockerfile for this tool:
-
-![Dockerfile](docs/dockerfile.png)
-
-Read more on the development process at [https://docs.docker.com...](https://docs.docker.com/). For information on building your Docker image on Quay.io we recommend their [tutorial](https://quay.io/tutorial/).
-
-## Describe Your Tool
-
-Now that you have a git repository that includes a `Dockerfile`, you have tested it, and are satisfied that your tool works in Docker, the next step is to create a [CWL tool definition file](http://common-workflow-language.github.io/). This YAML file describes the inputs, outputs, and Docker image dependencies for your tool.
-
-It is recommended that you have the following minimum fields:
-
-    description: <description>
-    id: <id>
-    label: <label>
-    
-    dct:creator:
-      foaf:name: <name>
-
-Again, we provide an example from the [dockstore-tool-bamstats](https://github.com/briandoconnor/dockstore-tool-bamstats) repository:
-
-![Dockstore.cwl](docs/cwl.png)
-
-You can see this tool takes two inputs, a parameter to control memory usage and a BAM file (binary sequence alignment file).  It produces one output, a zip file, that contains various HTML reports that BamStats creates.
-
-The [CWL standard](http://common-workflow-language.github.io/) is continuing to evolve and hopefully we will see new features, like support for [EDAM ontology](http://edamontology.org/page) terms, in future releases.  In the mean time the [Gitter chat](https://gitter.im/common-workflow-language/common-workflow-language) is an active community to help drive the development of CWL in positive directions and we recommend tool authors make their voices heard.
-
-It is also possible to describe tools via the [WDL language](https://github.com/broadinstitute/wdl). A tool can either be described in WDL-only or can be described with both WDL and CWL.   
-
-A tool can also be described as a one task WDL workflow.
-
-We provide a hello world example as follows:
-
-    task hello {
-      String name
-    
-      command {
-        echo 'hello ${name}!'
-      }
-      output {
-        File response = stdout()
-      }
-    }
-    
-    workflow test {
-      call hello
-    }
-
-We are currently monitoring WDL to see how metadata like that provided for CWL will be integrated into WDL.
-
 ## [Linking GitHub, Bitbucket and Quay.io](#Linking-services)
 
 The first step is to log in to the Dockstore which will link your accounts for GitHub, Bitbucket and Quay.io along with providing you the command line tool we will use for most of the tasks in this tutorial.  Make sure you have your GitHub, Bitbucket and/or Quay.io accounts established and follow the onboarding wizard:
@@ -292,4 +219,6 @@ You can find tools on the Dockstore website or also through the `dockstore tool 
 
 You can follow this basic pattern for each of your Docker-based tools.  Once registered, you can send links to your tools on Dockstore to colleagues and use it as a public platform for sharing your tools.  
 
-Read up on background information on the Dockstore project at [About](/docs/about) page.
+Read up on background information on the Dockstore project at [About](/docs/about) page or see our [full list of documentation](/docs).
+
+

@@ -13,10 +13,22 @@ angular.module('dockstore.ui')
 
       this.docObjs = [
         {
-          slug: 'getting-started',
+          slug: 'getting-started-with-docker',
+          description: 'This tutorial walks through how to create a Docker image',
+          name: 'Getting Started with Docker',
+          path: 'docs/getting-started-with-docker.md'
+        },
+        {
+          slug: 'getting-started-with-cwl',
+          description: 'This tutorial walks through how to describe a Docker image with CWL',
+          name: 'Getting Started with CWL',
+          path: 'docs/getting-started-with-cwl.md'
+        },
+        {
+          slug: 'getting-started-with-dockstore',
           description: 'This tutorial walks through how to register at Dockstore and then share simple tools',
-          name: 'Getting Started',
-          path: 'docs/getting-started.md'
+          name: 'Getting Started with Dockstore',
+          path: 'docs/getting-started-with-dockstore.md'
         },
         {
           slug: 'about',
