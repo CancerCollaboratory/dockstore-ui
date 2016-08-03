@@ -36,9 +36,19 @@ The left side menu is a list of all image repositories associated with the user,
 
 A container is not visible on the public 'Containers' listing unless it is published. To publish a container, press the yellow 'Register' button in the top-right corner.
 
+For the tutorial, generally, you should hit the "Refresh All Tools" button to make sure Dockstore has examined your latest repositories on Quay.  Do this especially if you created a new repository like we did here.
+                  
+ ![Refresh](docs/dockstore_refresh.png)
+                  
+Now select the `briandoconnor/dockstore-tool-bamstats` repository and click "Publish".  The tool is now listed on Dockstore!
+                  
+![Publish](docs/publish.png)
+                  
+You can also click on the "Versions" tab and should notice `1.25-3` is present and Valid=Yes.  If any versions are invalid it is likely due to a path issue to the `Dockstore.cwl`, `Dockerfile`, or `Dockstore.wdl` (if used) files.  In BAMStats I used the default value of `Dockstore.cwl` and `Dockerfile` in the root repo directory so this was not an issue.
+
 #### Manual Registration of Containers
 
-In certain cases, it is not possible for Dockstore to register every existing container, especially those with unusual project structures. Most notably, Docker Hub images can not be automatically detected by Dockstore. The second possibility is that you have multiple CWL documents in a GitHub repository associated with multiple images. For those cases, it is necessary to manually register their details to Dockstore.
+Outside of this tutorial, in certain cases, it is not possible for Dockstore to register every existing container, especially those with unusual project structures. Most notably, Docker Hub images can not be automatically detected by Dockstore. The second possibility is that you have multiple CWL documents in a GitHub repository associated with multiple images. For those cases, it is necessary to manually register their details to Dockstore.
 
 Containers can be registered manually from the 'My Containers' page by pressing the 'Add Container' button at the bottom of the right side bar, or any of the '+' buttons in each accordion namespace group. A modal will appear as below:
 
@@ -60,7 +70,7 @@ The fields in the form should correspond to the actual values on GitHub/Bitbucke
 
 ### CLI Client
 
-The `dockstore` command line has a couple modes.
+The `dockstore` command line can be used as an alternative to the GUI and has a couple modes.
 
     $ dockstore
     
@@ -212,6 +222,12 @@ The `dockstore tool manual_publish` command can be used to manually register a c
       --version-name <version>     Version tag name for Dockerhub containers only, defaults to latest
     
     ------------------
+    
+## Sharing the Tool
+
+This is the simple part.  Now that we've successfully registered the tool on Dockstore you can just send around a link, for example to the BAMStat tool I just registered:
+
+https://www.dockstore.org/containers/quay.io/briandoconnor/dockstore-tool-bamstats
 
 ## Find Other Tools
 
