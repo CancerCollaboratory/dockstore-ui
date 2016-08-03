@@ -1,3 +1,5 @@
+# Getting Started with Dockstore
+
 ## [Linking GitHub, Bitbucket and Quay.io](#Linking-services)
 
 The first step is to log in to the Dockstore which will link your accounts for GitHub, Bitbucket and Quay.io along with providing you the command line tool we will use for most of the tasks in this tutorial.  Make sure you have your GitHub, Bitbucket and/or Quay.io accounts established and follow the onboarding wizard:
@@ -20,7 +22,7 @@ Next, the wizard will instruct you to setup the `dockstore` command line tool af
 
 ![Link accounts](docs/linking4.png)
 
-## Register Your Tool in Dockstore
+## [Register Your Tool in Dockstore](#register-your-tool-in-dockstore)
 
 Now that you have your `Dockerfile` and `Dockstore.cwl` in GitHub, have setup Quay.io to automatically build your Docker image, and have linked your accounts to Dockstore, it is time to register your tool.
 

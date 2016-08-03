@@ -13,6 +13,12 @@ angular.module('dockstore.ui')
 
       this.docObjs = [
         {
+          slug: 'getting-started',
+          description: 'This tutorial walks through how to create your tool development environment',
+          name: 'Getting Started',
+          path: 'docs/getting-started.md'
+        },
+        {
           slug: 'getting-started-with-docker',
           description: 'This tutorial walks through how to create a Docker image',
           name: 'Getting Started with Docker',
