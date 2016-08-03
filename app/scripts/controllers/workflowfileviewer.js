@@ -22,6 +22,50 @@ angular.module('dockstore.ui')
       $scope.successContent = [];
       $scope.fileContent = null;
 
+      // $scope.getContentHTML = function() {
+      //   var pre = document.getElementsByTagName('pre');
+      //   var contentHTML = pre[0].innerHTML;
+      //   console.log(pre[0].innerHTML);
+      //   //console.log($scope.fileContents);   // fileContents is right, the pre is somehow does not change if i already change it manually
+      //   if(contentHTML !== "<code class=\"hljs\"></code>" && contentHTML !== "<code class=\"hljs yaml\"></code>" && contentHTML.indexOf('<span class="line-number">') === -1){
+      //     pre[0].innerHTML = '<span class="line-number"></span>' + contentHTML + '<span class="cl"></span>';
+      //     // console.log(pre[0].innerHTML);
+      //     var num = contentHTML.split(/\n/).length;
+      //     // console.log(num);
+      //     for (var j = 0; j < num; j++) {
+      //       var line_num = pre[0].getElementsByTagName('span')[0];
+      //       line_num.innerHTML += '<span>' + (j + 1) + '</span>';
+      //     }
+      //   }
+      //   console.log(pre[0].innerHTML);
+      // };
+
+      $scope.getContentHTML = function() {
+        var pre = document.getElementsByTagName('pre');
+        var contentHTML = pre[0].innerHTML;
+        if(contentHTML !== "<code class=\"hljs\"></code>" && contentHTML !== "<code class=\"hljs yaml\"></code>"){
+          // will only be here if content is loaded, not empty and does not have line numbers yet
+          // the content from <pre> tag will be copied to a newly created pre appended inside hljs div
+          // the reason is because if the generated pre is replaces, it somehow cannot be replaced to the new file when we switched to another workflow
+          contentHTML = '<span class="line-number"></span>' + contentHTML + '<span class="cl"></span>';
+          $(document).ready(function(){
+            if(pre.length === 1){
+              $('pre').hide();  //hide the descriptor file
+              $('#code').append('<pre class="copy">'+contentHTML+'</pre>'); //append the copy of the descriptor file
+            } else {
+              $('pre.copy').replaceWith('<pre class="copy">'+contentHTML+'</pre>');
+            }
+          });
+
+          //add the line numbers beside the descriptor file
+          var totalLines = contentHTML.split(/\n/).length;
+          for (var i = 1; i < totalLines; i++) {
+            var line = pre[1].getElementsByTagName('span')[0];
+            line.innerHTML += '<span>' + i + '</span>';
+          }
+        }
+      };
+
       $scope.checkDescriptor = function() {
         $scope.workflowVersions = $scope.getWorkflowVersions();
         if ($scope.workflowVersions.length === 0){
@@ -44,14 +88,13 @@ angular.module('dockstore.ui')
             };
             index++;
         }
-
+        
         var checkSuccess = function(acc) {
           var makePromises = function(acc, start) {
             var vd = acc[start];
             function filePromise(vd){
               return $scope.getDescriptorFile($scope.workflowObj.id, vd.ver, $scope.descriptor).then(
                 function(s){
-
                   $scope.successContent.push({
                     version:vd.ver,
                     content: s
@@ -87,6 +130,7 @@ angular.module('dockstore.ui')
             m = [];
             v = false;
             count = 0;
+
             if($scope.descriptor === "cwl"){
               //Descriptor: CWL
               for(var i=0;i<cwlFields.length;i++){
@@ -126,12 +170,14 @@ angular.module('dockstore.ui')
                 v = true;
               }
             }
+            $scope.getContentHTML();
             $scope.$emit('returnMissing',m);
             $scope.$emit('returnValid',v);
           },
           function(e){
             console.log("error",e);
           });
+
       };
 
       $scope.filterVersion = function(element) {
@@ -171,7 +217,7 @@ angular.module('dockstore.ui')
           .then(
             function(descriptorFile) {
               // this causes flicker when loading
-              //$scope.fileContents = descriptorFile;
+              //$scope.fileContents = descriptorFile; //if this is not commented, it will last file that's uploaded despite it's version is wrong
               return descriptorFile;
             },
             function(response) {

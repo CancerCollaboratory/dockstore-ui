@@ -28,7 +28,27 @@
   <span class="glyphicon glyphicon-warning-sign"></span>&nbsp;
   A {{expectedFilename}} associated with this workflow could not be found.
 </div>
-<div hljs
+<style>
+  pre .line-number {
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-size:inherit;
+    color:#444;
+    float:left;
+    margin:7px 2px 0 0;
+    border-right:1px solid #444;
+    text-align:left;
+    padding:0 10px 2px 0;
+  }
+
+  pre .line-number span {
+    display:block;
+  }
+  pre .cl {
+  display:block;
+  clear:both;
+}
+</style>
+<div hljs id="code"
      source="fileContents"
      hljs-language="yaml"
      ng-show="fileLoaded && fileContents">
