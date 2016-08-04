@@ -52,11 +52,19 @@ angular.module('dockstore.ui')
         }
 
         $scope.launchWith = 
-          "$> dockstore tool "+ $scope.desc + " --entry "+ tool_path +" > Dockstore."+$scope.desc+
-          "\n$> dockstore tool convert "+toJson+" --"+$scope.desc+" Dockstore."+$scope.desc+" > Dockstore.json"+
-          "\n$> dockstore tool launch --entry "+ tool_path +" \\ \n   --json Dockstore.json";
+          "$> dockstore tool " + $scope.desc + " --entry " + tool_path + " > Dockstore." + $scope.desc +
+          "\n$> dockstore tool convert " + toJson + " --" + $scope.desc + " Dockstore." + $scope.desc + " > Dockstore.json" +
+          "\n$> dockstore tool launch --entry " + tool_path + " \\ \n   --json Dockstore.json";
 
         return $scope.validContent; //only show this when content is valid
+      };
+
+      $scope.validVersions = function(element) {
+        if(element.valid){
+          return true;
+        }else{
+          return false;
+        }
       };
 
       $scope.loadContainerDetails = function(containerPath) {

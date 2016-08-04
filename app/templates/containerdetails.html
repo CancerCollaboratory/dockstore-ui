@@ -371,6 +371,13 @@
             <strong>Launch With:</strong>
             <div class="well well-sm">
               <div class="pull-right" style="margin-left:5px">
+                <select>
+                  <option ng-repeat="tag in containerObj.tags | filter: validVersions">
+                  {{tag.name}}
+                  </option>
+                </select>
+              </div>
+              <div class="pull-right" style="margin-left:5px">
                 <select class="descType" ng-model="desc" ng-change="showLaunchWith()">
                   <option value="cwl" selected>cwl</option>
                   <option value="wdl">wdl</option>
