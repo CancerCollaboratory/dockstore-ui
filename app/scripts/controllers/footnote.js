@@ -22,6 +22,8 @@ angular.module('dockstore.ui')
               $scope.ga4ghApiVersion = resultFromApi.apiVersion;
             },
             function(response) {
+              $scope.apiVersion = "unreachable";
+              $scope.ga4ghApiVersion = "unreachable";
               var message = '[HTTP ' + response.status + '] ' +
                 response.statusText + ': ' + response.data;
               TokenService.popError('Metadata', message);
