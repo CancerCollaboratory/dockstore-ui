@@ -26,6 +26,8 @@ angular.module('dockstore.ui')
       $scope.showEditCWL = true;
       $scope.showEditWDL = true;
       $scope.showEditDockerfile = true;
+      $scope.launchWith = null;
+      $scope.desc = 'cwl';
       //There are 5 tabs, and only 1 can be active
       // so there are 4 other tabs that are not active
       var notActiveTabs = 4;
@@ -37,6 +39,24 @@ angular.module('dockstore.ui')
 
       $scope.checkPage = function(){
         $scope.$broadcast('checkDescPageType');
+      };
+
+      $scope.showLaunchWith = function() {
+        // assign default values
+        var tool_path = $scope.containerObj.path;
+        var description = $scope.containerObj.description;
+        $scope.desc = document.getElementsByClassName('descType')[0].value;
+        var toJson = 'cwl2json';
+        if($scope.desc === 'wdl'){
+          toJson = 'wdl2json';
+        }
+
+        $scope.launchWith = 
+          "$> dockstore tool "+ $scope.desc + " --entry "+ tool_path +" > Dockstore."+$scope.desc+
+          "\n$> dockstore tool convert "+toJson+" --"+$scope.desc+" Dockstore."+$scope.desc+" > Dockstore.json"+
+          "\n$> dockstore tool launch --entry "+ tool_path +" \\ \n   --json Dockstore.json";
+
+        return $scope.validContent; //only show this when content is valid
       };
 
       $scope.loadContainerDetails = function(containerPath) {

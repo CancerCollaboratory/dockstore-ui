@@ -367,6 +367,20 @@
               </span>
             </div>
           </li>
+          <li ng-show="showLaunchWith()">
+            <strong>Launch With:</strong>
+            <div class="well well-sm">
+              <div class="pull-right" style="margin-left:5px">
+                <select class="descType" ng-model="desc" ng-change="showLaunchWith()">
+                  <option value="cwl" selected>cwl</option>
+                  <option value="wdl">wdl</option>
+                </select>
+              </div>
+              <div>
+                <pre>{{launchWith}}</pre>
+              </div>
+            </div>
+          </li>
         </ul>
         <div ng-if="!editMode">
           <hr />
