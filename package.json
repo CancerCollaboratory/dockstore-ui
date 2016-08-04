@@ -40,7 +40,7 @@
     "karma-jasmine": "^1.0.2",
     "karma-phantomjs-launcher": "^1.0.1",
     "phantomjs-prebuilt": "2.1.7",
-    "protractor": "^4.0.0",
+    "protractor": "^4.0.2",
     "serve-static": "^1.11.1",
     "time-grunt": "^1.0.0"
   },
