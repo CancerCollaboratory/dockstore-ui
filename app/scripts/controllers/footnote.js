@@ -10,8 +10,9 @@
 angular.module('dockstore.ui')
   .controller('FootnoteCtrl', [
     '$scope',
+    '$q',
     'TokenService',
-    function ($scope, TokenService) {
+    function ($scope, $q, TokenService) {
 
       $scope.metadata = function(){
         return TokenService.getWebServiceVersion()
