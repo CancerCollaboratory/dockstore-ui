@@ -28,6 +28,7 @@ angular.module('dockstore.ui')
       $scope.showEditDockerfile = true;
       $scope.launchWith = null;
       $scope.desc = 'cwl';
+      $scope.toolTag = '';
       //There are 5 tabs, and only 1 can be active
       // so there are 4 other tabs that are not active
       var notActiveTabs = 4;
@@ -59,7 +60,12 @@ angular.module('dockstore.ui')
         return $scope.validContent; //only show this when content is valid
       };
 
-      $scope.validVersions = function(element) {
+      $scope.tagLaunchWith = function(tag) {
+        $scope.toolTag = tag.trim();
+        console.log($scope.toolTag);
+      };
+
+      $scope.validTags = function(element) {
         if(element.valid){
           return true;
         }else{
