@@ -53,16 +53,16 @@ angular.module('dockstore.ui')
         }
 
         $scope.launchWith = 
-          "$> dockstore tool " + $scope.desc + " --entry " + tool_path + " > Dockstore." + $scope.desc +
+          "$> dockstore tool " + $scope.desc + " --entry " + tool_path + ":" + $scope.toolTag +" > Dockstore." + $scope.desc +
           "\n$> dockstore tool convert " + toJson + " --" + $scope.desc + " Dockstore." + $scope.desc + " > Dockstore.json" +
-          "\n$> dockstore tool launch --entry " + tool_path + " \\ \n   --json Dockstore.json";
+          "\n$> dockstore tool launch --entry " + tool_path + ":" + $scope.toolTag + " \\ \n   --json Dockstore.json";
 
         return $scope.validContent; //only show this when content is valid
       };
 
       $scope.tagLaunchWith = function(tag) {
-        $scope.toolTag = tag.trim();
-        console.log($scope.toolTag);
+        $scope.toolTag = tag.trim(); //somehow this gives back a lot of whitespaces
+        $scope.showLaunchWith();
       };
 
       $scope.validTags = function(element) {
@@ -507,7 +507,9 @@ angular.module('dockstore.ui')
       });
 
       $scope.$watch('containerToolname', function(newValue, oldValue) {
-        if (newValue) $scope.updateInfoURLs();
+        if (newValue) {
+          $scope.updateInfoURLs();
+        }
       });
 
   }]);
