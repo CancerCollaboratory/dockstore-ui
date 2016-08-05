@@ -24,6 +24,12 @@ describe('Service: TokenService', function () {
         "country": "CAN",
         "friendly-name": "Dockstore"
       });
+
+      TokenService.getWebServiceVersion()
+        .then(function(response){
+          expect(response.version).toBe("0.4-beta.5");
+        });
+      httpBackend.flush();
     });
   });
 
