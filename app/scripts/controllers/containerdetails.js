@@ -28,7 +28,7 @@ angular.module('dockstore.ui')
       $scope.showEditDockerfile = true;
       $scope.launchWith = null;
       $scope.desc = 'cwl';
-      $scope.toolTag = '';
+      $scope.toolTag = $scope.containerObj.tags[0].id;
       //There are 5 tabs, and only 1 can be active
       // so there are 4 other tabs that are not active
       var notActiveTabs = 4;
@@ -493,6 +493,7 @@ angular.module('dockstore.ui')
       $scope.$watch('containerPath', function(newValue, oldValue) {
         if (newValue) {
           $scope.setContainerDetailsError(null);
+          $scope.toolTag = $scope.containerObj.tags[0].id;
           if (!$scope.editMode) {
             $scope.loadContainerDetails($scope.containerPath)
               .then(function(containerObj) {

@@ -371,11 +371,17 @@
             <strong>Launch With:</strong>
             <div class="well well-sm">
               <div class="pull-right" style="margin-left:5px">
-                <select ng-model="toolTag" ng-change="tagLaunchWith(toolTag)">
-                  <option 
-                  ng-repeat="tag in containerObj.tags | filter: validTags">
+              <select class="tagVersion" 
+              ng-options="tag.id as tag.name for tag in containerObj.tags | filter: validTags" 
+              ng-model="toolTag">
+                <!--<select ng-model="toolTag" ng-init="containerObj.tags[0].name"
+                ng-change="tagLaunchWith(toolTag)">
+                   <option 
+                  ng-repeat="tag in containerObj.tags | filter: validTags"
+                  ng-selected = "tag.name === containerObj.tags[0].name"
+                  >
                   {{tag.name}}
-                  </option>
+                  </option> -->
                 </select>
               </div>
               <div class="pull-right" style="margin-left:5px">
