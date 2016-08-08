@@ -373,7 +373,7 @@
               <div class="pull-right" style="margin-left:5px">
               <select 
                 ng-model="toolTag"
-                ng-options="tag.id as tag.name for tag in containerObj.tags | filter: validTags" 
+                ng-options="tag.id as tag.name for tag in validTags" 
                 ng-change="tagLaunchWith(toolTag)">
                 </select>
               </div>

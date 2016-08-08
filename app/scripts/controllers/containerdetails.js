@@ -30,6 +30,7 @@ angular.module('dockstore.ui')
       $scope.desc = 'cwl';
       $scope.toolTag = $scope.containerObj.tags[0].id;
       $scope.toolTagName = $scope.containerObj.tags[0].name;
+      $scope.validTags = [];
       //There are 5 tabs, and only 1 can be active
       // so there are 4 other tabs that are not active
       var notActiveTabs = 4;
@@ -73,7 +74,7 @@ angular.module('dockstore.ui')
         $scope.showLaunchWith();
       };
 
-      $scope.validTags = function(element) {
+      $scope.isTagValid = function(element) {
         if(element.valid){
           return true;
         }else{
@@ -503,7 +504,16 @@ angular.module('dockstore.ui')
           $scope.setContainerDetailsError(null);
           $scope.missingContent = [];
           $scope.missingWarning = false;
-          $scope.toolTag = $scope.containerObj.tags[0].id;
+
+          //setup validTags array
+          $scope.validTags = [];
+          for(var i=0;i<$scope.containerObj.tags.length;i++){
+            if($scope.isTagValid($scope.containerObj.tags[i])){
+              $scope.validTags.push($scope.containerObj.tags[i]);
+            }
+          }
+          $scope.toolTag = $scope.validTags[0].id;
+
           if (!$scope.editMode) {
             $scope.loadContainerDetails($scope.containerPath)
               .then(function(containerObj) {
