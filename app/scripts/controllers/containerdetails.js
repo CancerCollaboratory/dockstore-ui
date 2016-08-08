@@ -44,6 +44,17 @@ angular.module('dockstore.ui')
         $scope.$broadcast('checkDescPageType');
       };
 
+      $scope.refreshLaunchWith = function() {
+        $scope.validTags = [];
+        for(var i=0;i<$scope.containerObj.tags.length;i++){
+          if($scope.isTagValid($scope.containerObj.tags[i])){
+            $scope.validTags.push($scope.containerObj.tags[i]);
+          }
+        }
+        $scope.toolTag = $scope.validTags[0].id;
+        $scope.toolTagName = $scope.validTags[0].name;
+      };
+
       $scope.showLaunchWith = function() {
         // assign default values
         var tool_path = $scope.containerObj.path;
@@ -54,9 +65,9 @@ angular.module('dockstore.ui')
           toJson = 'wdl2json';
         }
 
-        for(var i=0;i<$scope.containerObj.tags.length;i++){
-          if($scope.toolTag === $scope.containerObj.tags[i].id){
-            $scope.toolTagName = $scope.containerObj.tags[i].name;
+        for(var i=0;i<$scope.validTags.length;i++){
+          if($scope.toolTag === $scope.validTags[i].id){
+            $scope.toolTagName = $scope.validTags[i].name;
             break;
           }
         }
@@ -505,14 +516,7 @@ angular.module('dockstore.ui')
           $scope.missingContent = [];
           $scope.missingWarning = false;
 
-          //setup validTags array
-          $scope.validTags = [];
-          for(var i=0;i<$scope.containerObj.tags.length;i++){
-            if($scope.isTagValid($scope.containerObj.tags[i])){
-              $scope.validTags.push($scope.containerObj.tags[i]);
-            }
-          }
-          $scope.toolTag = $scope.validTags[0].id;
+          $scope.refreshLaunchWith();
 
           if (!$scope.editMode) {
             $scope.loadContainerDetails($scope.containerPath)
