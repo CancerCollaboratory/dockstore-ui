@@ -29,6 +29,7 @@ angular.module('dockstore.ui')
       $scope.launchWith = null;
       $scope.desc = 'cwl';
       $scope.toolTag = $scope.containerObj.tags[0].id;
+      $scope.toolTagName = $scope.containerObj.tags[0].name;
       //There are 5 tabs, and only 1 can be active
       // so there are 4 other tabs that are not active
       var notActiveTabs = 4;
@@ -52,16 +53,23 @@ angular.module('dockstore.ui')
           toJson = 'wdl2json';
         }
 
+        for(var i=0;i<$scope.containerObj.tags.length;i++){
+          if($scope.toolTag === $scope.containerObj.tags[i].id){
+            $scope.toolTagName = $scope.containerObj.tags[i].name;
+            break;
+          }
+        }
+
         $scope.launchWith = 
-          "$> dockstore tool " + $scope.desc + " --entry " + tool_path + ":" + $scope.toolTag +" > Dockstore." + $scope.desc +
+          "$> dockstore tool " + $scope.desc + " --entry " + tool_path + ":" + $scope.toolTagName +" > Dockstore." + $scope.desc +
           "\n$> dockstore tool convert " + toJson + " --" + $scope.desc + " Dockstore." + $scope.desc + " > Dockstore.json" +
-          "\n$> dockstore tool launch --entry " + tool_path + ":" + $scope.toolTag + " \\ \n   --json Dockstore.json";
+          "\n$> dockstore tool launch --entry " + tool_path + ":" + $scope.toolTagName + " \\ \n   --json Dockstore.json";
 
         return $scope.validContent; //only show this when content is valid
       };
 
       $scope.tagLaunchWith = function(tag) {
-        $scope.toolTag = tag.trim(); //somehow this gives back a lot of whitespaces
+        $scope.toolTag = tag;
         $scope.showLaunchWith();
       };
 
