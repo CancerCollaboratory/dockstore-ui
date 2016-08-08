@@ -501,6 +501,8 @@ angular.module('dockstore.ui')
       $scope.$watch('containerPath', function(newValue, oldValue) {
         if (newValue) {
           $scope.setContainerDetailsError(null);
+          $scope.missingContent = [];
+          $scope.missingWarning = false;
           $scope.toolTag = $scope.containerObj.tags[0].id;
           if (!$scope.editMode) {
             $scope.loadContainerDetails($scope.containerPath)
