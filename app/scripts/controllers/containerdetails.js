@@ -28,8 +28,8 @@ angular.module('dockstore.ui')
       $scope.showEditDockerfile = true;
       $scope.launchWith = null;
       $scope.desc = 'cwl';
-      $scope.toolTag = $scope.containerObj.tags[0].id;
-      $scope.toolTagName = $scope.containerObj.tags[0].name;
+      $scope.toolTag = '';
+      $scope.toolTagName = '';
       $scope.validTags = [];
       $scope.descAvailable = [];
       //There are 5 tabs, and only 1 can be active
@@ -602,17 +602,19 @@ angular.module('dockstore.ui')
           $scope.setContainerDetailsError(null);
           $scope.missingContent = [];
           $scope.missingWarning = false;
-          $scope.refreshTagLaunchWith();
-          $scope.refreshDescLaunchWith();
 
           if (!$scope.editMode) {
             $scope.loadContainerDetails($scope.containerPath)
               .then(function(containerObj) {
+                $scope.refreshTagLaunchWith();
+                $scope.refreshDescLaunchWith();
                 $scope.updateInfoURLs();
               });
           } else {
             $scope.labelsEditMode = false;
             $scope.resetContainerEditData($scope.containerObj);
+            $scope.refreshTagLaunchWith();
+            $scope.refreshDescLaunchWith();
             $scope.updateInfoURLs();
           }
         }
