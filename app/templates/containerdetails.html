@@ -369,8 +369,7 @@
           </li>
           <li ng-show="showLaunchWith()">
             <strong>Launch With:</strong>
-            <div class="well well-sm">
-              <div class="pull-right" style="margin-left:5px">
+            <div class="pull-right" style="margin-left:5px">
               <select id="tagVersion"
                 ng-model="toolTag"
                 ng-options="tag.id as tag.name for tag in validTags" 
@@ -378,11 +377,13 @@
                 </select>
               </div>
               <div class="pull-right" style="margin-left:5px">
-                <select class="descType" ng-model="desc" ng-change="showLaunchWith()">
-                  <option value="cwl" selected>cwl</option>
-                  <option value="wdl">wdl</option>
+                <select id="descType" 
+                ng-model="desc"
+                ng-options="descType for descType in descAvailable"
+                ng-change="descLaunchWith(desc)">
                 </select>
               </div>
+            <div class="well well-sm">
               <div>
                 <pre>{{launchWith}}</pre>
               </div>
