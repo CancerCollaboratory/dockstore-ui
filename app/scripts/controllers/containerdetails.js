@@ -75,6 +75,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.getDescriptorByTag = function(tagObject){
+        //get descriptor by tag chosen
         $scope.descAvailable = [];
         for(var j=0;j<tagObject.sourceFiles.length;j++){
           var fileType = tagObject.sourceFiles[j].type;
@@ -159,7 +160,6 @@ angular.module('dockstore.ui')
         $scope.toolTag = tag;
         for(var i=0;i<$scope.containerObj.tags.length;i++){
           if(tag === $scope.containerObj.tags[i].id){
-            //got the tag object
             $scope.getDescriptorByTag($scope.containerObj.tags[i]);
             break;
           }
@@ -168,6 +168,8 @@ angular.module('dockstore.ui')
       };
 
       $scope.descLaunchWith = function(descriptor) {
+        //method is called when descriptor is selected 
+        //to change the LaunchWith commands
         $scope.desc = descriptor;
         $scope.showLaunchWith();
       };
