@@ -371,7 +371,7 @@
             <strong>Launch With:</strong>
             <div class="well well-sm">
               <div class="pull-right" style="margin-left:5px">
-              <select 
+              <select id="tagVersion"
                 ng-model="toolTag"
                 ng-options="tag.id as tag.name for tag in validTags" 
                 ng-change="tagLaunchWith(toolTag)">

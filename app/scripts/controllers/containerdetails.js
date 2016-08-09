@@ -53,9 +53,16 @@ angular.module('dockstore.ui')
         }
         $scope.toolTag = $scope.validTags[0].id;
         $scope.toolTagName = $scope.validTags[0].name;
+        
       };
 
       $scope.showLaunchWith = function() {
+        if($scope.containerObj.tags.length === 0){
+          //no tags available in the container, do not show launchWith
+          //return false immediately to get out of this method
+          return false; 
+        }
+
         // assign default values
         var tool_path = $scope.containerObj.path;
         var description = $scope.containerObj.description;
@@ -70,6 +77,23 @@ angular.module('dockstore.ui')
             $scope.toolTagName = $scope.validTags[i].name;
             break;
           }
+        }
+
+        if(document.getElementById('tagVersion')[0].value === '?' || 
+          document.getElementById('tagVersion')[0].value === ''){
+          $scope.refreshLaunchWith();
+          var firstElement = $scope.toolTagName;
+          var validTagsArray =[];
+          for(var i=0;i<$scope.validTags.length;i++){
+            validTagsArray.push($scope.validTags[i].name);
+          }
+
+          $("#tagVersion option").filter(function(){
+            return $(this).text() === firstElement;
+          }).attr('selected',true);
+          $("#tagVersion option").filter(function(){
+            return jQuery.inArray($(this).text(),validTagsArray) === -1;
+          }).remove();
         }
 
         $scope.launchWith = 
@@ -515,7 +539,6 @@ angular.module('dockstore.ui')
           $scope.setContainerDetailsError(null);
           $scope.missingContent = [];
           $scope.missingWarning = false;
-
           $scope.refreshLaunchWith();
 
           if (!$scope.editMode) {
