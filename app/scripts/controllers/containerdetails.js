@@ -74,6 +74,21 @@ angular.module('dockstore.ui')
         $scope.desc = $scope.descAvailable[0];
       };
 
+      $scope.getDescriptorByTag = function(tagObject){
+        $scope.descAvailable = [];
+        for(var j=0;j<tagObject.sourceFiles.length;j++){
+          var fileType = tagObject.sourceFiles[j].type;
+          if($scope.descAvailable.indexOf(fileType)){
+            if(fileType === 'DOCKSTORE_CWL'){
+              $scope.descAvailable.push('cwl');
+            } else if(fileType === 'DOCKSTORE_WDL'){
+              $scope.descAvailable.push('wdl');
+            }
+          }
+        }
+        $scope.desc = $scope.descAvailable[0];
+      };
+
       $scope.showLaunchWith = function() {
         if($scope.containerObj.tags.length === 0){
           //no tags available in the container, do not show launchWith
@@ -83,7 +98,6 @@ angular.module('dockstore.ui')
 
         // assign default values
         var tool_path = $scope.containerObj.path;
-       // $scope.desc = document.getElementsByClassName('descType')[0].value;
         var toJson = 'cwl2json';
 
         if($scope.desc === 'wdl'){
@@ -119,7 +133,6 @@ angular.module('dockstore.ui')
         //get rid of blank option in  dropdown if exists
         if(document.getElementById('descType')[0].value === '?' || 
           document.getElementById('descType')[0].value === ''){
-          $scope.refreshDescLaunchWith();
           var firstElement = $scope.descAvailable[0];
           var descriptorAvailable = $scope.descAvailable;
 
@@ -134,7 +147,7 @@ angular.module('dockstore.ui')
         $scope.launchWith = 
           "$> dockstore tool " + $scope.desc + " --entry " + tool_path + ":" + $scope.toolTagName +" > Dockstore." + $scope.desc +
           "\n$> dockstore tool convert " + toJson + " --" + $scope.desc + " Dockstore." + $scope.desc + " > Dockstore.json" +
-          "\n# fill in the information of tool paths required in Dockstore.json"+
+          "\n$> gedit Dockstore.json"+
           "\n$> dockstore tool launch --entry " + tool_path + ":" + $scope.toolTagName + " --json Dockstore.json";
 
         return $scope.validContent; //only show LaunchWith when content is valid
@@ -152,21 +165,6 @@ angular.module('dockstore.ui')
           }
         }
         $scope.showLaunchWith();
-      };
-
-      $scope.getDescriptorByTag = function(tagObject){
-        $scope.descAvailable = [];
-        for(var j=0;j<tagObject.sourceFiles.length;j++){
-          var fileType = tagObject.sourceFiles[j].type;
-          if($scope.descAvailable.indexOf(fileType)){
-            if(fileType === 'DOCKSTORE_CWL'){
-              $scope.descAvailable.push('cwl');
-            } else if(fileType === 'DOCKSTORE_WDL'){
-              $scope.descAvailable.push('wdl');
-            }
-          }
-        }
-        $scope.desc = $scope.descAvailable[0];
       };
 
       $scope.descLaunchWith = function(descriptor) {
