@@ -178,7 +178,7 @@ angular.module('dockstore.ui')
             $scope.$emit('returnValid',v);
           },
           function(e){
-            console.log("error",e);
+            console.log("error get success result",e);
           });
 
       };
@@ -301,10 +301,14 @@ angular.module('dockstore.ui')
         $scope.secondaryDescriptors = extracted();
         $scope.selSecondaryDescriptorName = $scope.secondaryDescriptors[0];
         var file = $scope.getSecondaryDescriptorFile($scope.workflowObj.id, $scope.selVersionName, $scope.descriptor, $scope.selSecondaryDescriptorName);
-        file.then(function(s){
-          $scope.totalLines = s.split(/\n/).length;
-          $scope.getContentHTML();
-        });
+        file.then(
+          function(s){
+            $scope.totalLines = s.split(/\n/).length;
+            $scope.getContentHTML();
+          },
+          function(e){
+            console.log("error refreshDocumentType",e);
+          });
       };
 
       $scope.refreshDocument = function() {
@@ -312,10 +316,14 @@ angular.module('dockstore.ui')
         $scope.fileContents = null;
         $scope.expectedFilename = 'Descriptor';
         var file = $scope.getSecondaryDescriptorFile($scope.workflowObj.id, $scope.selVersionName, $scope.descriptor, $scope.selSecondaryDescriptorName);
-        file.then(function(s){
-          $scope.totalLines = s.split(/\n/).length;
-          $scope.getContentHTML();
-        });
+        file.then(
+          function(s){
+            $scope.totalLines = s.split(/\n/).length;
+            $scope.getContentHTML();
+          },
+          function(e){
+            console.log("error refreshDocument",e);
+          });
       };
 
       $scope.setDocument();
