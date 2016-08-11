@@ -148,7 +148,7 @@ angular.module('dockstore.ui')
         $scope.launchWith = 
           "$> dockstore tool " + $scope.desc + " --entry " + tool_path + ":" + $scope.toolTagName +" > Dockstore." + $scope.desc +
           "\n$> dockstore tool convert " + toJson + " --" + $scope.desc + " Dockstore." + $scope.desc + " > Dockstore.json" +
-          "\n$> gedit Dockstore.json"+
+          "\n$> vim Dockstore.json"+
           "\n$> dockstore tool launch --entry " + tool_path + ":" + $scope.toolTagName + " --json Dockstore.json";
 
         return $scope.validContent; //only show LaunchWith when content is valid
