@@ -22,48 +22,50 @@ angular.module('dockstore.ui')
       $scope.successContent = [];
       $scope.fileContent = null;
 
-      // $scope.getContentHTML = function() {
-      //   var pre = document.getElementsByTagName('pre');
-      //   var contentHTML = pre[0].innerHTML;
-      //   console.log(pre[0].innerHTML);
-      //   //console.log($scope.fileContents);   // fileContents is right, the pre is somehow does not change if i already change it manually
-      //   if(contentHTML !== "<code class=\"hljs\"></code>" && contentHTML !== "<code class=\"hljs yaml\"></code>" && contentHTML.indexOf('<span class="line-number">') === -1){
-      //     pre[0].innerHTML = '<span class="line-number"></span>' + contentHTML + '<span class="cl"></span>';
-      //     // console.log(pre[0].innerHTML);
-      //     var num = contentHTML.split(/\n/).length;
-      //     // console.log(num);
-      //     for (var j = 0; j < num; j++) {
-      //       var line_num = pre[0].getElementsByTagName('span')[0];
-      //       line_num.innerHTML += '<span>' + (j + 1) + '</span>';
-      //     }
-      //   }
-      //   console.log(pre[0].innerHTML);
-      // };
-
       $scope.getContentHTML = function() {
         var pre = document.getElementsByTagName('pre');
         var contentHTML = pre[0].innerHTML;
+        var firstChildNode = pre[0].firstChild;
+        var codeTag = document.getElementById('code');
+        
         if(contentHTML !== "<code class=\"hljs\"></code>" && contentHTML !== "<code class=\"hljs yaml\"></code>"){
-          // will only be here if content is loaded, not empty and does not have line numbers yet
-          // the content from <pre> tag will be copied to a newly created pre appended inside hljs div
-          // the reason is because if the generated pre is replaces, it somehow cannot be replaced to the new file when we switched to another workflow
-          contentHTML = '<span class="line-number"></span>' + contentHTML + '<span class="cl"></span>';
-          $(document).ready(function(){
-            if(pre.length === 1){
-              $('pre').hide();  //hide the descriptor file
-              $('#code').append('<pre class="copy">'+contentHTML+'</pre>'); //append the copy of the descriptor file
-            } else {
-              $('pre.copy').replaceWith('<pre class="copy">'+contentHTML+'</pre>');
-            }
-          });
+          if(pre.length === 1){
+            $('pre').hide(); //hide the original code
+            //create new elements/nodes for copy of pre
+            var preCopy = document.createElement("PRE");
+            var lineNumSpan = document.createElement("SPAN");
+            var closeSpan = document.createElement("SPAN");
 
-          //add the line numbers beside the descriptor file
-          var totalLines = contentHTML.split(/\n/).length;
-          for (var i = 1; i < totalLines; i++) {
-            var line = pre[1].getElementsByTagName('span')[0];
-            line.innerHTML += '<span>' + i + '</span>';
+            //set id and classes
+            preCopy.setAttribute("id","preCopy");
+            lineNumSpan.setAttribute("class","line-number");
+            closeSpan.setAttribute("class","cl");
+            
+            //append nodes to appropriate tags
+            preCopy.appendChild(lineNumSpan);
+            preCopy.appendChild(firstChildNode);
+            preCopy.appendChild(closeSpan);
+            codeTag.appendChild(preCopy);
           }
+
+          //get line numbers node and total line numbers
+          var lineNumNode = document.getElementsByClassName('line-number');
+          var lineNumLength = $('.line-number').children().length;
+          //reset line numbers for new file by removing the nodes of line numbers
+          if(lineNumLength > 0){
+            while(lineNumNode[0].firstChild){
+              lineNumNode[0].removeChild(lineNumNode[0].firstChild);
+            }
+          }
+          //add the line numbers beside the descriptor file
+          for (var i = 1; i <= $scope.totalLines; i++) {
+            var line = document.createElement("SPAN");
+            line.innerHTML = i;
+            $('.line-number').append(line);
+          }
+
         }
+
       };
 
       $scope.checkDescriptor = function() {
@@ -170,6 +172,7 @@ angular.module('dockstore.ui')
                 v = true;
               }
             }
+            $scope.totalLines = result.split(/\n/).length;
             $scope.getContentHTML();
             $scope.$emit('returnMissing',m);
             $scope.$emit('returnValid',v);
@@ -297,14 +300,22 @@ angular.module('dockstore.ui')
         $scope.expectedFilename = 'Descriptor';
         $scope.secondaryDescriptors = extracted();
         $scope.selSecondaryDescriptorName = $scope.secondaryDescriptors[0];
-        $scope.getSecondaryDescriptorFile($scope.workflowObj.id, $scope.selVersionName, $scope.descriptor, $scope.selSecondaryDescriptorName);
+        var file = $scope.getSecondaryDescriptorFile($scope.workflowObj.id, $scope.selVersionName, $scope.descriptor, $scope.selSecondaryDescriptorName);
+        file.then(function(s){
+          $scope.totalLines = s.split(/\n/).length;
+          $scope.getContentHTML();
+        });
       };
 
       $scope.refreshDocument = function() {
         $scope.fileLoaded = false;
         $scope.fileContents = null;
         $scope.expectedFilename = 'Descriptor';
-        $scope.getSecondaryDescriptorFile($scope.workflowObj.id, $scope.selVersionName, $scope.descriptor, $scope.selSecondaryDescriptorName);
+        var file = $scope.getSecondaryDescriptorFile($scope.workflowObj.id, $scope.selVersionName, $scope.descriptor, $scope.selSecondaryDescriptorName);
+        file.then(function(s){
+          $scope.totalLines = s.split(/\n/).length;
+          $scope.getContentHTML();
+        });
       };
 
       $scope.setDocument();
