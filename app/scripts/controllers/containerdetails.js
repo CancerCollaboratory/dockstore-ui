@@ -608,16 +608,16 @@ angular.module('dockstore.ui')
           if (!$scope.editMode) {
             $scope.loadContainerDetails($scope.containerPath)
               .then(function(containerObj) {
+                $scope.updateInfoURLs();
                 $scope.refreshTagLaunchWith();
                 $scope.refreshDescLaunchWith();
-                $scope.updateInfoURLs();
               });
           } else {
             $scope.labelsEditMode = false;
             $scope.resetContainerEditData($scope.containerObj);
+            $scope.updateInfoURLs();
             $scope.refreshTagLaunchWith();
             $scope.refreshDescLaunchWith();
-            $scope.updateInfoURLs();
           }
         }
       });
