@@ -53,9 +53,10 @@ angular.module('dockstore.ui')
             $scope.validTags.push($scope.containerObj.tags[i]);
           }
         }
-        $scope.toolTag = $scope.validTags[0].id;
-        $scope.toolTagName = $scope.validTags[0].name;
-        
+        if($scope.validTags.length !==0){
+          $scope.toolTag = $scope.validTags[0].id;
+          $scope.toolTagName = $scope.validTags[0].name;
+        }
       };
 
       $scope.refreshDescLaunchWith = function() {
@@ -71,7 +72,9 @@ angular.module('dockstore.ui')
             }
           }
         }
-        $scope.desc = $scope.descAvailable[0];
+        if($scope.descAvailable.length !==0){
+          $scope.desc = $scope.descAvailable[0];
+        }
       };
 
       $scope.getDescriptorByTag = function(tagObject){
@@ -87,11 +90,14 @@ angular.module('dockstore.ui')
             }
           }
         }
-        $scope.desc = $scope.descAvailable[0];
+        if($scope.descAvailable.length !==0){
+          $scope.desc = $scope.descAvailable[0];
+        }
       };
 
       $scope.showLaunchWith = function() {
-        if($scope.containerObj.tags.length === 0){
+        if($scope.containerObj.tags.length === 0
+          || $scope.validTags.length === 0){
           //no tags available in the container, do not show launchWith
           //return false immediately to get out of this method
           return false; 
@@ -131,7 +137,7 @@ angular.module('dockstore.ui')
           }).remove();
         }
 
-        //get rid of blank option in  dropdown if exists
+        //get rid of blank option in descriptor dropdown if exists
         if(document.getElementById('descType')[0].value === '?' || 
           document.getElementById('descType')[0].value === ''){
           var firstElement = $scope.descAvailable[0];
