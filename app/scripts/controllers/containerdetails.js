@@ -64,9 +64,9 @@ angular.module('dockstore.ui')
         for(var j=0;j<$scope.validTags[0].sourceFiles.length;j++){
           var fileType = $scope.validTags[0].sourceFiles[j].type;
           if($scope.descAvailable.indexOf(fileType)){
-            if(fileType === 'DOCKSTORE_CWL'){
+            if(fileType === 'DOCKSTORE_CWL' && $scope.descAvailable.indexOf('cwl') === -1){
               $scope.descAvailable.push('cwl');
-            } else if(fileType === 'DOCKSTORE_WDL'){
+            } else if(fileType === 'DOCKSTORE_WDL' && $scope.descAvailable.indexOf('wdl') === -1){
               $scope.descAvailable.push('wdl');
             }
           }
@@ -80,9 +80,9 @@ angular.module('dockstore.ui')
         for(var j=0;j<tagObject.sourceFiles.length;j++){
           var fileType = tagObject.sourceFiles[j].type;
           if($scope.descAvailable.indexOf(fileType)){
-            if(fileType === 'DOCKSTORE_CWL'){
+            if(fileType === 'DOCKSTORE_CWL' && $scope.descAvailable.indexOf('cwl') === -1){
               $scope.descAvailable.push('cwl');
-            } else if(fileType === 'DOCKSTORE_WDL'){
+            } else if(fileType === 'DOCKSTORE_WDL' && $scope.descAvailable.indexOf('wdl') === -1){
               $scope.descAvailable.push('wdl');
             }
           }
@@ -146,10 +146,10 @@ angular.module('dockstore.ui')
         }
 
         $scope.launchWith = 
-          "$> dockstore tool " + $scope.desc + " --entry " + tool_path + ":" + $scope.toolTagName +" > Dockstore." + $scope.desc +
-          "\n$> dockstore tool convert " + toJson + " --" + $scope.desc + " Dockstore." + $scope.desc + " > Dockstore.json" +
-          "\n$> vim Dockstore.json"+
-          "\n$> dockstore tool launch --entry " + tool_path + ":" + $scope.toolTagName + " --json Dockstore.json";
+          "dockstore tool " + $scope.desc + " --entry " + tool_path + ":" + $scope.toolTagName +" > Dockstore." + $scope.desc +
+          "\ndockstore tool convert " + toJson + " --" + $scope.desc + " Dockstore." + $scope.desc + " > Dockstore.json" +
+          "\nvim Dockstore.json"+
+          "\ndockstore tool launch --entry " + tool_path + ":" + $scope.toolTagName + " --json Dockstore.json";
 
         return $scope.validContent; //only show LaunchWith when content is valid
       };
