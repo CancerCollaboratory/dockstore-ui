@@ -58,7 +58,7 @@ angular.module('dockstore.ui')
             }
           }
           //add the line numbers beside the descriptor file
-          for (var i = 1; i <= $scope.totalLines; i++) {
+          for (var i = 1; i < $scope.totalLines; i++) {
             var line = document.createElement("SPAN");
             line.innerHTML = i;
             $('.line-number').append(line);
