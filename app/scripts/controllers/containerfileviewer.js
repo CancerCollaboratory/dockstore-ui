@@ -22,6 +22,46 @@ angular.module('dockstore.ui')
       $scope.successContent = [];
       $scope.fileContent = null;
 
+      $scope.getContentHTML = function(type) {
+        var pre = document.getElementsByTagName('pre');
+        var contentHTML = pre[0].outerHTML;
+        var firstChildNode = pre[0].firstChild;
+        var codeTag = document.getElementsByClassName('code')[0];
+        if(type === 'descriptor'){
+          contentHTML = pre[1].outerHTML;
+          firstChildNode = pre[1].firstChild;
+          codeTag = document.getElementsByClassName('code')[1];
+        }
+
+        if(contentHTML !== "<code class=\"hljs\"></code>" && contentHTML !== "<code class=\"hljs yaml\"></code>"){
+          if(pre.length === 2){
+            console.log("length is 2");
+            $('pre').hide();
+            
+            var preCopy = document.createElement("PRE");
+            var lineNumSpan = document.createElement("SPAN");
+            var closeSpan = document.createElement("SPAN");
+
+            //set id and classes
+            preCopy.setAttribute("id","preCopy");
+            lineNumSpan.setAttribute("class","line-number");
+            closeSpan.setAttribute("class","cl");
+
+            if(firstChildNode !== null){
+              preCopy.appendChild(lineNumSpan);
+              preCopy.appendChild(firstChildNode);
+              preCopy.appendChild(closeSpan);
+              console.log(preCopy);
+            }
+            codeTag.appendChild(preCopy);
+            console.log(codeTag);
+            
+          }
+        }
+        
+
+      };
+
       $scope.checkDescriptor = function() {
         $scope.containerTags = $scope.getContainerTags();
         $scope.successContent = [];
@@ -127,6 +167,7 @@ angular.module('dockstore.ui')
                 v = true;
               }
             }
+            //$scope.getContentHTML('descriptor');
             $scope.$emit('returnMissing',m);
             $scope.$emit('returnValid',v);
             $scope.refreshDocumentType();
@@ -280,13 +321,30 @@ angular.module('dockstore.ui')
           case 'dockerfile':
             $scope.expectedFilename = 'Dockerfile';
             $scope.getDockerFile($scope.containerObj.id, $scope.selTagName);
+            // file.then(function(s){
+            //   console.log("refreshDocumentType dockerfile");
+            //   $scope.totalLines = s.split(/\n/).length;
+            //   $scope.getContentHTML("dockerfile");
+            // },
+            // function(e){
+            //   console.log("error refreshDocument",e);
+            // });
             break;
           case 'descriptor':
             $scope.expectedFilename = 'Descriptor';
             // prepare Descriptor Imports drop-down
             $scope.secondaryDescriptors = extracted();
             $scope.selSecondaryDescriptorName = $scope.secondaryDescriptors[0];
-            $scope.getSecondaryDescriptorFile($scope.containerObj.id, $scope.selTagName, $scope.selDescriptorName, $scope.selSecondaryDescriptorName);
+            var file = $scope.getSecondaryDescriptorFile($scope.containerObj.id, $scope.selTagName, $scope.selDescriptorName, $scope.selSecondaryDescriptorName);
+            file.then(function(s){
+              console.log("refreshDocumentType descriptor");
+              $scope.totalLines = s.split(/\n/).length;
+              
+              $scope.getContentHTML("descriptor");
+            },
+            function(e){
+              console.log("error refreshDocument",e);
+            });
             break;
           default:
           // ...
@@ -303,7 +361,15 @@ angular.module('dockstore.ui')
             break;
           case 'descriptor':
             $scope.expectedFilename = 'Descriptor';
-            $scope.getSecondaryDescriptorFile($scope.containerObj.id, $scope.selTagName, $scope.selDescriptorName, $scope.selSecondaryDescriptorName);
+            var file = $scope.getSecondaryDescriptorFile($scope.containerObj.id, $scope.selTagName, $scope.selDescriptorName, $scope.selSecondaryDescriptorName);
+            file.then(function(s){
+              console.log("refreshDocument descriptor");
+              $scope.totalLines = s.split(/\n/).length;
+              $scope.getContentHTML("descriptor");
+            },
+            function(e){
+              console.log("error refreshDocument",e);
+            });
             break;
           default:
             // ...
