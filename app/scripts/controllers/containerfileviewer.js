@@ -35,7 +35,6 @@ angular.module('dockstore.ui')
 
         if(contentHTML !== "<code class=\"hljs\"></code>" && contentHTML !== "<code class=\"hljs yaml\"></code>"){
           if(pre.length === 2){
-            console.log("length is 2");
             $('pre').hide();
             
             var preCopy = document.createElement("PRE");
@@ -51,15 +50,27 @@ angular.module('dockstore.ui')
               preCopy.appendChild(lineNumSpan);
               preCopy.appendChild(firstChildNode);
               preCopy.appendChild(closeSpan);
-              console.log(preCopy);
             }
             codeTag.appendChild(preCopy);
-            console.log(codeTag);
             
           }
-        }
-        
 
+          //get line numbers node and total line numbers
+          var lineNumNode = document.getElementsByClassName('line-number');
+          var lineNumLength = $('.line-number').children().length;
+          //reset line numbers for new file by removing the nodes of line numbers
+          if(lineNumLength > 0){
+            while(lineNumNode[0].firstChild){
+              lineNumNode[0].removeChild(lineNumNode[0].firstChild);
+            }
+          }
+          //add the line numbers beside the descriptor file
+          for (var i = 1; i < $scope.totalLines; i++) {
+            var line = document.createElement("SPAN");
+            line.innerHTML = i;
+            $('.line-number').append(line);
+          }
+        }
       };
 
       $scope.checkDescriptor = function() {
@@ -321,14 +332,6 @@ angular.module('dockstore.ui')
           case 'dockerfile':
             $scope.expectedFilename = 'Dockerfile';
             $scope.getDockerFile($scope.containerObj.id, $scope.selTagName);
-            // file.then(function(s){
-            //   console.log("refreshDocumentType dockerfile");
-            //   $scope.totalLines = s.split(/\n/).length;
-            //   $scope.getContentHTML("dockerfile");
-            // },
-            // function(e){
-            //   console.log("error refreshDocument",e);
-            // });
             break;
           case 'descriptor':
             $scope.expectedFilename = 'Descriptor';
@@ -337,9 +340,7 @@ angular.module('dockstore.ui')
             $scope.selSecondaryDescriptorName = $scope.secondaryDescriptors[0];
             var file = $scope.getSecondaryDescriptorFile($scope.containerObj.id, $scope.selTagName, $scope.selDescriptorName, $scope.selSecondaryDescriptorName);
             file.then(function(s){
-              console.log("refreshDocumentType descriptor");
               $scope.totalLines = s.split(/\n/).length;
-              
               $scope.getContentHTML("descriptor");
             },
             function(e){
@@ -363,7 +364,6 @@ angular.module('dockstore.ui')
             $scope.expectedFilename = 'Descriptor';
             var file = $scope.getSecondaryDescriptorFile($scope.containerObj.id, $scope.selTagName, $scope.selDescriptorName, $scope.selSecondaryDescriptorName);
             file.then(function(s){
-              console.log("refreshDocument descriptor");
               $scope.totalLines = s.split(/\n/).length;
               $scope.getContentHTML("descriptor");
             },
