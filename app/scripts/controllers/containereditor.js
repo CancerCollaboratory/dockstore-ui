@@ -245,7 +245,7 @@ angular.module('dockstore.ui')
           mode: 'MANUAL_IMAGE_PATH',
           name: '',
           toolname: '',
-          namespace: namespace ? namespace : '',
+          namespace: namespace ? namespace.split('/')[1] : '',
           registry: '',
           gitUrl: '',
           default_dockerfile_path: '/Dockerfile',
