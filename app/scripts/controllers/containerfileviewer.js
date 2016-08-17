@@ -24,18 +24,18 @@ angular.module('dockstore.ui')
 
       $scope.getContentHTML = function(type) {
         var pre = document.getElementsByTagName('pre');
-        var contentHTML = pre[0].outerHTML;
-        var firstChildNode = pre[0].firstChild;
+        var contentHTML = pre[1].outerHTML;
+        var firstChildNode = pre[1].firstChild;
         var codeTag = document.getElementsByClassName('code')[0];
         if(type === 'descriptor'){
-          contentHTML = pre[1].outerHTML;
-          firstChildNode = pre[1].firstChild;
+          contentHTML = pre[2].outerHTML;
+          firstChildNode = pre[2].firstChild;
           codeTag = document.getElementsByClassName('code')[1];
         }
 
         if(contentHTML !== "<code class=\"hljs\"></code>" && contentHTML !== "<code class=\"hljs yaml\"></code>"){
-          if(pre.length === 2){
-            $('pre').hide();
+          if(pre.length === 3){
+            $('pre:not(.ng-binding)').hide();
             
             var preCopy = document.createElement("PRE");
             var lineNumSpan = document.createElement("SPAN");
