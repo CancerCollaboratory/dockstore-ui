@@ -31,6 +31,15 @@ angular.module('dockstore.ui')
         scope.$on('checkDescPageType', function(event) {
           scope.checkDescriptor();
         });
+        scope.$on('dockerfileTab', function(event){
+          console.log('dockerfileTab');
+          if(scope.type === 'dockerfile'){
+            console.log(scope.type);
+            console.log(scope.totalLinesDf);
+            scope.getContentHTML('dockerfile');
+          }
+          
+        });
         scope.$watchGroup(
           ['selTagName', 'selDescriptorName'],
           function(newValues, oldValues) {

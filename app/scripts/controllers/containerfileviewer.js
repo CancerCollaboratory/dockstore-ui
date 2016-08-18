@@ -22,53 +22,94 @@ angular.module('dockstore.ui')
       $scope.successContent = [];
       $scope.fileContent = null;
 
+      $scope.addLineNumbers = function(type){
+        //get line numbers node and total line numbers
+        var lineNumNode = document.getElementsByClassName('line-number-desc');
+        var lineNumLength = $('.line-number-desc').children().length;
+        var totalLines = $scope.totalLinesDesc;
+
+        if(type === 'dockerfile'){
+          lineNumNode = document.getElementsByClassName('line-number-dockerfile');
+          lineNumLength = $('.line-number-dockerfile').children().length;
+          totalLines = $scope.totalLinesDf;
+        } 
+
+        //reset line numbers for new file by removing the nodes of line numbers
+        if(lineNumLength > 0){
+          while(lineNumNode[0].firstChild){
+            lineNumNode[0].removeChild(lineNumNode[0].firstChild);
+          }
+        }
+
+        //add the line numbers beside the descriptor file
+        for (var i = 1; i < totalLines; i++) {
+          var line = document.createElement("SPAN");
+          line.innerHTML = i;
+          $(lineNumNode).append(line);
+        }
+          
+      };
+
       $scope.getContentHTML = function(type) {
         var pre = document.getElementsByTagName('pre');
         var contentHTML = pre[1].outerHTML;
         var firstChildNode = pre[1].firstChild;
         var codeTag = document.getElementsByClassName('code')[0];
+ 
         if(type === 'descriptor'){
+          $('#preCopyDockerfile').hide();
+          $('#preCopyDesc').show();
           contentHTML = pre[2].outerHTML;
           firstChildNode = pre[2].firstChild;
           codeTag = document.getElementsByClassName('code')[1];
+        }else if(type === 'dockerfile'){
+          $('#preCopyDesc').hide();
+          $('#preCopyDockerfile').show();
         }
 
         if(contentHTML !== "<code class=\"hljs\"></code>" && contentHTML !== "<code class=\"hljs yaml\"></code>"){
-          if(pre.length === 3){
-            $('pre:not(.ng-binding)').hide();
-            
-            var preCopy = document.createElement("PRE");
-            var lineNumSpan = document.createElement("SPAN");
-            var closeSpan = document.createElement("SPAN");
 
-            //set id and classes
-            preCopy.setAttribute("id","preCopy");
-            lineNumSpan.setAttribute("class","line-number");
-            closeSpan.setAttribute("class","cl");
+          if(type === 'descriptor'){
+            if($('#preCopyDesc').length === 0){
+              $('pre:not(.ng-binding)').hide();
+              var preCopy = document.createElement("PRE");
+              var lineNumSpan = document.createElement("SPAN");
+              var closeSpan = document.createElement("SPAN");
 
-            if(firstChildNode !== null){
-              preCopy.appendChild(lineNumSpan);
-              preCopy.appendChild(firstChildNode);
-              preCopy.appendChild(closeSpan);
+              //set id and classes
+              preCopy.setAttribute("id","preCopyDesc");
+              lineNumSpan.setAttribute("class","line-number-desc");
+              closeSpan.setAttribute("class","cl");
+
+              if(firstChildNode !== null){
+                preCopy.appendChild(lineNumSpan);
+                preCopy.appendChild(firstChildNode);
+                preCopy.appendChild(closeSpan);
+              }
+              codeTag.appendChild(preCopy);
             }
-            codeTag.appendChild(preCopy);
+            $scope.addLineNumbers('descriptor');
             
-          }
+          } else if(type === 'dockerfile'){
+            if($('#preCopyDockerfile').length === 0){
+              $('pre:not(.ng-binding)').hide();
+              var preCopy = document.createElement("PRE");
+              var lineNumSpan = document.createElement("SPAN");
+              var closeSpan = document.createElement("SPAN");
 
-          //get line numbers node and total line numbers
-          var lineNumNode = document.getElementsByClassName('line-number');
-          var lineNumLength = $('.line-number').children().length;
-          //reset line numbers for new file by removing the nodes of line numbers
-          if(lineNumLength > 0){
-            while(lineNumNode[0].firstChild){
-              lineNumNode[0].removeChild(lineNumNode[0].firstChild);
+              //set id and classes
+              preCopy.setAttribute("id","preCopyDockerfile");
+              lineNumSpan.setAttribute("class","line-number-dockerfile");
+              closeSpan.setAttribute("class","cl");
+
+              if(firstChildNode !== null){
+                preCopy.appendChild(lineNumSpan);
+                preCopy.appendChild(firstChildNode);
+                preCopy.appendChild(closeSpan);
+              }
+              codeTag.appendChild(preCopy);
             }
-          }
-          //add the line numbers beside the descriptor file
-          for (var i = 1; i < $scope.totalLines; i++) {
-            var line = document.createElement("SPAN");
-            line.innerHTML = i;
-            $('.line-number').append(line);
+            $scope.addLineNumbers('dockerfile');
           }
         }
       };
@@ -346,22 +387,35 @@ angular.module('dockstore.ui')
         $scope.fileContents = null;
         switch ($scope.type) {
           case 'dockerfile':
+          console.log("dockerfile refresh document type");
             $scope.expectedFilename = 'Dockerfile';
-            $scope.getDockerFile($scope.containerObj.id, $scope.selTagName);
+            var dockerfile = $scope.getDockerFile($scope.containerObj.id, $scope.selTagName);
+            if(dockerfile !== undefined){
+              dockerfile.then(function(s){
+                $scope.totalLinesDf = s.split(/\n/).length;
+                //$scope.getContentHTML("dockerfile");
+              },
+              function(e){
+                console.log("error refreshDocument",e);
+              });
+            }
             break;
           case 'descriptor':
+          console.log("descriptor refresh document");
             $scope.expectedFilename = 'Descriptor';
             // prepare Descriptor Imports drop-down
             $scope.secondaryDescriptors = extracted();
             $scope.selSecondaryDescriptorName = $scope.secondaryDescriptors[0];
             var file = $scope.getSecondaryDescriptorFile($scope.containerObj.id, $scope.selTagName, $scope.selDescriptorName, $scope.selSecondaryDescriptorName);
-            file.then(function(s){
-              $scope.totalLines = s.split(/\n/).length;
-              $scope.getContentHTML("descriptor");
-            },
-            function(e){
-              console.log("error refreshDocument",e);
-            });
+            if(file !== undefined){
+              file.then(function(s){
+                $scope.totalLinesDesc = s.split(/\n/).length;
+                $scope.getContentHTML("descriptor");
+              },
+              function(e){
+                console.log("error refreshDocument",e);
+              });
+            }
             break;
           default:
           // ...
@@ -373,19 +427,32 @@ angular.module('dockstore.ui')
         $scope.fileContents = null;
         switch ($scope.type) {
           case 'dockerfile':
+          console.log("dockerfile refresh document");
             $scope.expectedFilename = 'Dockerfile';
-            $scope.getDockerFile($scope.containerObj.id, $scope.selTagName);
+            var dockerfile = $scope.getDockerFile($scope.containerObj.id, $scope.selTagName);
+            if(dockerfile !== undefined){
+              dockerfile.then(function(s){
+                $scope.totalLinesDf = s.split(/\n/).length;
+                //$scope.getContentHTML("dockerfile");
+              },
+              function(e){
+                console.log("error refreshDocument",e);
+              });
+            }
             break;
           case 'descriptor':
+            console.log("descriptor refresh document");
             $scope.expectedFilename = 'Descriptor';
             var file = $scope.getSecondaryDescriptorFile($scope.containerObj.id, $scope.selTagName, $scope.selDescriptorName, $scope.selSecondaryDescriptorName);
-            file.then(function(s){
-              $scope.totalLines = s.split(/\n/).length;
-              $scope.getContentHTML("descriptor");
-            },
-            function(e){
-              console.log("error refreshDocument",e);
-            });
+            if(file !== undefined){
+              file.then(function(s){
+                $scope.totalLinesDesc = s.split(/\n/).length;
+                $scope.getContentHTML("descriptor");
+              },
+              function(e){
+                console.log("error refreshDocument",e);
+              });
+            }
             break;
           default:
             // ...
