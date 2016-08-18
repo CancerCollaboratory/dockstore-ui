@@ -20,8 +20,10 @@ angular.module('dockstore.ui')
       link: function postLink(scope, element, attrs) {
         scope.$watch('containerObj.path', function(newValue, oldValue) {
           if (newValue) {
+            console.log("changed containerObj path");
             scope.setDocument();
             scope.checkDescriptor();
+            scope.checkDockerfile();
           }
         });
         scope.$on('refreshFiles', function(event) {
@@ -32,10 +34,7 @@ angular.module('dockstore.ui')
           scope.checkDescriptor();
         });
         scope.$on('dockerfileTab', function(event){
-          console.log('dockerfileTab');
           if(scope.type === 'dockerfile'){
-            console.log(scope.type);
-            console.log(scope.totalLinesDf);
             scope.getContentHTML('dockerfile');
           }
           
