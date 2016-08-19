@@ -54,13 +54,11 @@ angular.module('dockstore.ui')
         var codeTag = document.getElementsByClassName('code')[0];
  
         if(type === 'descriptor'){
-          $('#preCopyDockerfile').hide();
           $('#preCopyDesc').show();
           contentHTML = pre[3].outerHTML;
           firstChildNode = pre[3].firstChild;
           codeTag = document.getElementsByClassName('code')[1];
         }else if(type === 'dockerfile'){
-          $('#preCopyDesc').hide();
           $('#preCopyDockerfile').show();
         }
 
@@ -90,21 +88,21 @@ angular.module('dockstore.ui')
           } else if(type === 'dockerfile'){
             if($('#preCopyDockerfile').length === 0){
               $('pre:not(.ng-binding)').hide();
-              var preCopy = document.createElement("PRE");
-              var lineNumSpan = document.createElement("SPAN");
-              var closeSpan = document.createElement("SPAN");
+              var preCopyDf = document.createElement("PRE");
+              var lineNumSpanDf = document.createElement("SPAN");
+              var closeSpanDf = document.createElement("SPAN");
 
               //set id and classes
-              preCopy.setAttribute("id","preCopyDockerfile");
-              lineNumSpan.setAttribute("class","line-number-dockerfile");
-              closeSpan.setAttribute("class","cl");
+              preCopyDf.setAttribute("id","preCopyDockerfile");
+              lineNumSpanDf.setAttribute("class","line-number-dockerfile");
+              closeSpanDf.setAttribute("class","cl");
 
               if(firstChildNode !== null){
-                preCopy.appendChild(lineNumSpan);
-                preCopy.appendChild(firstChildNode);
-                preCopy.appendChild(closeSpan);
+                preCopyDf.appendChild(lineNumSpanDf);
+                preCopyDf.appendChild(firstChildNode);
+                preCopyDf.appendChild(closeSpanDf);
               }
-              codeTag.appendChild(preCopy);
+              codeTag.appendChild(preCopyDf);
             }
             $scope.addLineNumbers('dockerfile');
           }
@@ -397,7 +395,6 @@ angular.module('dockstore.ui')
         $scope.fileContents = null;
         switch ($scope.type) {
           case 'dockerfile':
-          console.log("dockerfile refresh document type");
             $scope.expectedFilename = 'Dockerfile';
             var dockerfile = $scope.getDockerFile($scope.containerObj.id, $scope.selTagName);
             if(dockerfile !== undefined){
@@ -411,7 +408,6 @@ angular.module('dockstore.ui')
             }
             break;
           case 'descriptor':
-          console.log("descriptor refresh document");
             $scope.expectedFilename = 'Descriptor';
             // prepare Descriptor Imports drop-down
             $scope.secondaryDescriptors = extracted();
@@ -437,7 +433,6 @@ angular.module('dockstore.ui')
         $scope.fileContents = null;
         switch ($scope.type) {
           case 'dockerfile':
-          console.log("dockerfile refresh document");
             $scope.expectedFilename = 'Dockerfile';
             var dockerfile = $scope.getDockerFile($scope.containerObj.id, $scope.selTagName);
             if(dockerfile !== undefined){
@@ -451,7 +446,6 @@ angular.module('dockstore.ui')
             }
             break;
           case 'descriptor':
-            console.log("dockerfile refresh document");
             $scope.expectedFilename = 'Descriptor';
             var file = $scope.getSecondaryDescriptorFile($scope.containerObj.id, $scope.selTagName, $scope.selDescriptorName, $scope.selSecondaryDescriptorName);
             if(file !== undefined){

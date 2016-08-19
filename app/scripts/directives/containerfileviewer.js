@@ -34,10 +34,7 @@ angular.module('dockstore.ui')
           scope.checkDescriptor();
         });
         scope.$on('dockerfileTab', function(event){
-          if(scope.type === 'dockerfile'){
-            scope.getContentHTML('dockerfile');
-          }
-          
+          scope.checkDockerfile();
         });
         scope.$watchGroup(
           ['selTagName', 'selDescriptorName'],
