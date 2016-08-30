@@ -189,7 +189,7 @@ angular.module('dockstore.ui')
           method: 'GET',
           url: WebService.API_URI + '/workflows/' + workflowId + '/dag/' + workflowVersionId
         }).then(function(response) {
-          if (response != null) {
+          if (response !== null) {
             resolve(response.data);
           }
         }, function(response) {

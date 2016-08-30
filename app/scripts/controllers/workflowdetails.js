@@ -146,7 +146,7 @@ angular.module('dockstore.ui')
               return $q.reject(response);
              }
             );
-      }
+      };
 
       $scope.checkContentValid = function(){
         //will print this when the 'Publish' button is clicked
