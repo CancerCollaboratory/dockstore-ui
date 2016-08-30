@@ -251,14 +251,15 @@ angular.module('dockstore.ui')
           if ($scope.workflows[i].id === workflowObj.id) break;
         }
         $scope.workflows[i] = workflowObj;
-        $scope.orgWorkflows = $scope.sortORGWorkflows(
-          $scope.workflows,
-          $scope.userObj.username
-        );
-        $scope.updateWorkflowTooltips();
-        $scope.selectWorkflow(workflowObj.id);
-        $scope.activeTabs[activeTabIndex ? activeTabIndex : 0] = true;
-        $scope.reloadOrgList();
+
+        $scope.listUserWorkflows($scope.userObj.id).then(
+        function(workflows) {
+          $scope.orgWorkflows = $scope.sortORGWorkflows(workflows, $scope.userObj.username);
+          $scope.updateWorkflowTooltips();
+          $scope.selectWorkflow(workflowObj.id);
+          $scope.activeTabs[activeTabIndex ? activeTabIndex : 0] = true;
+        });
+
       };
 
       $scope.reloadOrgList = function () {
