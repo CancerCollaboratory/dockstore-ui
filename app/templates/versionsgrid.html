@@ -58,7 +58,7 @@
           </td>
           <td>
             <div class="git-ref">
-              <input ng-if="editMode && versionTag.name !== 'latest'" type="radio" name="defaultVersion" ng-model="$parent.containerObj.defaultVersion" ng-value="versionTag.reference" ng-click="updateDefaultVersion(versionTag.reference)"/>
+              <input class="radio-button-reference" ng-if="editMode && versionTag.name !== 'latest'" type="radio" name="defaultVersion" ng-model="$parent.containerObj.defaultVersion" ng-value="versionTag.reference" ng-click="updateDefaultVersion(versionTag.reference)"/>
               {{versionTag.reference ? versionTag.reference : 'n/a'}}
             </div>
           </td>
