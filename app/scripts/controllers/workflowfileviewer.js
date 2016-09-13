@@ -133,6 +133,7 @@ angular.module('dockstore.ui')
                 for (var counter = 0; counter < $scope.successContent.length; counter++) {
                   if ($scope.successContent[counter].version === $scope.workflowObj.defaultVersion) {
                     $scope.selVersionName = $scope.successContent[counter].version;
+                    break;
                   }
                 }
               }

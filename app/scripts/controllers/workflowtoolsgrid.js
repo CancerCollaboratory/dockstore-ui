@@ -42,7 +42,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.getTableContent = function(workflowId, workflowVersions) {
-        //this function will call the webservice to get 
+        //this function will call the webservice to get
         //the workflow and tool/task excerpt in form of json
         //and return here as a promise
 
@@ -96,7 +96,16 @@ angular.module('dockstore.ui')
 
       $scope.setDocument = function() {
         $scope.workflowVersions = $scope.getWorkflowVersions();
-        $scope.selVersionName = $scope.successContent[0];
+        if ($scope.workflowObj.defaultVersion === null) {
+          $scope.selVersionName = $scope.successContent[0];
+        } else {
+          for (var counter = 0; counter < $scope.successContent.length; counter++) {
+            if ($scope.successContent[counter] === $scope.workflowObj.defaultVersion) {
+              $scope.selVersionName = $scope.successContent[counter];
+              break;
+            }
+          }
+        }
 
       };
 
