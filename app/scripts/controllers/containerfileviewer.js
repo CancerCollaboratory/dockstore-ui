@@ -145,9 +145,9 @@ angular.module('dockstore.ui')
               if ($scope.containerObj.defaultVersion === null) {
                 $scope.selTagName = $scope.successContent[0].tag;
               } else {
-                for (i = 0; i < $scope.successContent.length; i++) {
-                  if ($scope.successContent[i].tag === $scope.containerObj.defaultVersion) {
-                    $scope.selTagName = $scope.successContent[i].tag;
+                for (var counter = 0; counter < $scope.successContent.length; counter++) {
+                  if ($scope.successContent[counter].tag === $scope.containerObj.defaultVersion) {
+                    $scope.selTagName = $scope.successContent[counter].tag;
                   }
                 }
               }
