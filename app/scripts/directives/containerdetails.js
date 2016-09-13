@@ -36,6 +36,10 @@ angular.module('dockstore.ui')
         scope.$on('invalidClass', function(event, invalid){
           scope.invalidClass = invalid;
         });
+
+        scope.$on('refreshFiles', function() {
+          scope.refreshTagLaunchWith();
+        });
       }
     };
   });

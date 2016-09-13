@@ -60,8 +60,18 @@ angular.module('dockstore.ui')
           }
         }
         if($scope.validTags.length !==0){
-          $scope.toolTag = $scope.validTags[0].id;
-          $scope.toolTagName = $scope.validTags[0].name;
+          if ($scope.containerObj.defaultVersion === null) {
+            $scope.toolTag = $scope.validTags[0].id;
+            $scope.toolTagName = $scope.validTags[0].name;
+          } else {
+            for (i = 0; i < $scope.validTags.length; i++) {
+              if ($scope.validTags[i].name === $scope.containerObj.defaultVersion) {
+                 $scope.toolTag = $scope.validTags[i].id;
+                 $scope.toolTagName = $scope.validTags[i].name;
+                break;
+              }
+            }
+          }
         }
       };
 

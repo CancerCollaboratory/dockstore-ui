@@ -141,7 +141,17 @@ angular.module('dockstore.ui')
         var successResult = checkSuccess(accumulator);
         successResult.then(
           function(){
-            $scope.selTagName = $scope.successContent[0].tag;
+            if ($scope.successContent.length !== 0) {
+              if ($scope.containerObj.defaultVersion === null) {
+                $scope.selTagName = $scope.successContent[0].tag;
+              } else {
+                for (i = 0; i < $scope.successContent.length; i++) {
+                  if ($scope.successContent[i].tag === $scope.containerObj.defaultVersion) {
+                    $scope.selTagName = $scope.successContent[i].tag;
+                  }
+                }
+              }
+            }
             $scope.selDescriptorName = $scope.successContent[0].descriptor;
             $scope.fileContent = $scope.successContent[0].content;
             var result = $scope.fileContent;
