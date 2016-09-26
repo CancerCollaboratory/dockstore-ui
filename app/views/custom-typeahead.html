@@ -1,0 +1,10 @@
+<div style="width:475px; overflow: hidden; padding-left:10px;">
+  <div style="float:left; width:325px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+    <a ng-show="match.model.entryType == 'workflow'" ng-bind-html="match.model.repository + (match.model.workflowName ? '/' + match.model.workflowName : '') | typeaheadHighlight:query"></a>
+    <a ng-show="match.model.entryType == 'tool'" ng-bind-html="match.model.name + (match.model.toolname ? '/' + match.model.toolname : '') | typeaheadHighlight:query"></a>
+  </div>
+  <div style="float:right; width:130px;  background:#f4f4f4; padding-left:15px; padding-right:15px; font-size: 10px;">
+    <strong ng-show="match.model.entryType == 'workflow'" ng-bind-html="match.model.entryType | uppercase" style="color:#4ab4a9;"></strong>
+    <strong ng-show="match.model.entryType == 'tool'" ng-bind-html="match.model.entryType | uppercase" style="color:#51aad8;"></strong>
+  </div>
+</div>

@@ -68,15 +68,15 @@ angular.module('dockstore.ui')
           );
       }
 
-      if (($location.search()).search) {
-        $rootScope.searchQueryWorkflow = ($location.search()).search;
+      if (($location.search()).query) {
+        $rootScope.searchQueryWorkflow = ($location.search()).query;
       } else {
         $rootScope.searchQueryWorkflow = '';
       }
 
       $scope.$watch('searchQueryWorkflow', function(newValue, oldValue) {
         $rootScope.searchQueryWorkflow = newValue;
-        $location.search('search', newValue);
+        $location.search('query', newValue);
               $("#workflowSearch").focus();
 
       });

@@ -68,15 +68,15 @@ angular.module('dockstore.ui')
           );
       }
 
-      if (($location.search()).search) {
-        $rootScope.searchQueryContainer = ($location.search()).search;
+      if (($location.search()).query) {
+        $rootScope.searchQueryContainer = ($location.search()).query;
       } else {
         $rootScope.searchQueryContainer = '';
       }
 
       $scope.$watch('searchQueryContainer', function(newValue, oldValue) {
         $rootScope.searchQueryContainer = newValue;
-        $location.search('search', newValue);
+        $location.search('query', newValue);
       });
 
       $scope.$on('$routeChangeStart', function(event, next, current) {
