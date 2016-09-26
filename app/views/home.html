@@ -27,7 +27,8 @@
                  class="search left fully-rounded search-home form-control"
                  uib-typeahead="entry.path for entry in filteredEntries = (identifyWorkflow(workflows).concat(identifyTool(containers)) | filter:searchQuery) | orderBy:random | limitTo:5"
                  typeahead-on-select="onSelect($item, $model, $label)"
-                 typeahead-template-url="views/custom-typeahead.html">
+                 typeahead-template-url="views/custom-typeahead.html"
+                 typeahead-popup-template-url="views/custom-typeahead-popup.html">
         </div>
       </div>
       <div class="col-md-3">

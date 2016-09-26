@@ -57,14 +57,14 @@ angular.module('dockstore.ui')
 
       $scope.identifyWorkflow = function(workflows) {
         angular.forEach(workflows, function(obj) {
-          obj["entryType"] = "workflow";
+          obj.entryType = "workflow";
         });
         return workflows;
       };
 
       $scope.identifyTool = function(tools) {
         angular.forEach(tools, function(obj) {
-          obj["entryType"] = "tool";
+          obj.entryType = "tool";
         });
         return tools;
       };
