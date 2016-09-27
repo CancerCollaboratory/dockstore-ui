@@ -40,6 +40,7 @@ angular.module('dockstore.ui')
         ContainerService, UserService, TokenService, NtfnService) {
 
       $scope.userObj = UserService.getUserObj();
+      $scope.containers = [];
 
       $scope.listPublishedContainers = function() {
         return ContainerService.getPublishedContainerList()

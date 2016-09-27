@@ -40,6 +40,7 @@ angular.module('dockstore.ui')
         WorkflowService, UserService, TokenService, NtfnService) {
 
       $scope.userObj = UserService.getUserObj();
+      $scope.workflows = [];
 
       $scope.listPublishedWorkflows = function() {
         return WorkflowService.getPublishedWorkflowList()
