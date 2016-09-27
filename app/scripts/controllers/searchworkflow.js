@@ -77,9 +77,11 @@ angular.module('dockstore.ui')
 
       $scope.$watch('searchQueryWorkflow', function(newValue, oldValue) {
         $rootScope.searchQueryWorkflow = newValue;
-        $location.search('query', newValue);
-              $("#workflowSearch").focus();
-
+        if (newValue === null || newValue === '') {
+          $location.search('query', null);
+        } else {
+          $location.search('query', newValue);
+        }
       });
 
       $scope.$on('$routeChangeStart', function(event, next, current) {

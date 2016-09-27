@@ -77,7 +77,11 @@ angular.module('dockstore.ui')
 
       $scope.$watch('searchQueryContainer', function(newValue, oldValue) {
         $rootScope.searchQueryContainer = newValue;
-        $location.search('query', newValue);
+        if (newValue === null || newValue === '') {
+          $location.search('query', null);
+        } else {
+          $location.search('query', newValue);
+        }
       });
 
       $scope.$on('$routeChangeStart', function(event, next, current) {
