@@ -51,6 +51,8 @@ angular.module('dockstore.ui')
         $rootScope.searchQuery = newValue;
       });
 
+      // Random is used to randomize search results since only up to 5 results are shown and we want an even mix of tools and workflows.
+      // In the future it would make more sense to use a more relevant metric (ex. most popular, most downloads, etc.)
       $scope.random = function() {
         return 0.5 - Math.random();
       };
