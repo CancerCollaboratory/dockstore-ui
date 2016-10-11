@@ -97,7 +97,7 @@ angular.module('dockstore.ui')
             gitUrl = 'https://github.com/';
             break;
           case 'GitLab':
-            gitUrl = 'https://gitlab.com/'
+            gitUrl = 'https://gitlab.com/';
             break;
           case 'Bitbucket':
             /* falls through */
