@@ -10,21 +10,21 @@ Dockstore provides a few simple tools to share workflows, similar to how Docksto
 
 The steps to accomplish this task, at a high level, are:
 
-0. create a new repository on GitHub or Bitbucket
+0. create a new repository on GitHub, Bitbucket or GitLab
 0. describe your workflow as either a [CWL workflow](http://www.commonwl.org/draft-3/Workflow.html) or a [WDL workflow](https://github.com/broadinstitute/wdl/blob/develop/SPEC.md#workflow-definition)
 0. test your workflow using an environment that supports full CWL workflows or WDL
-0. use the release process on GitHub or Bitbucket to make distinct release tags, we like the  [HubFlow](https://datasift.github.io/gitflow/) process in our group for managing releases in git
+0. use the release process on GitHub, Bitbucket or GitLab to make distinct release tags, we like the  [HubFlow](https://datasift.github.io/gitflow/) process in our group for managing releases in git
 0. create an entry on Dockstore and then publish it
 
 <!-- insert a good example here -->
 
-## Create Workflow Stubs from GitHub and Bitbucket
+## Create Workflow Stubs from GitHub, Bitbucket, and GitLab
 
-The first step is to create a CWL or WDL workflow descriptor for your workflow and then check it into GitHub or Bitbucket in a repo, we recommend the filename `Dockstore.cwl` at the root of your repository for simplicity but anything else with a consistent extension should work just as well. The details as to how to write a workflow are somewhat beyond the scope of this tutorial but we can recommend the [Introduction to the CWL](http://www.commonwl.org/draft-3/UserGuide.html) and [Getting Started with WDL](https://github.com/broadinstitute/wdl/tree/master#getting-started-with-wdl).
+The first step is to create a CWL or WDL workflow descriptor for your workflow and then check it into GitHub, Bitbucket or GitLab in a repo, we recommend the filename `Dockstore.cwl` at the root of your repository for simplicity but anything else with a consistent extension should work just as well. The details as to how to write a workflow are somewhat beyond the scope of this tutorial but we can recommend the [Introduction to the CWL](http://www.commonwl.org/draft-3/UserGuide.html) and [Getting Started with WDL](https://github.com/broadinstitute/wdl/tree/master#getting-started-with-wdl).
 
 <!-- this following markdown link/anchor does not seem to work properly -->
 
-The second step is to log in to the Dockstore. Make sure that you properly [link bitbucket](docs/getting-started#Linking-services) to your account if you are using workflows hosted on bitbucket. After successfully linking your GitHub and Bitbucket credentials (if applicable), you will be able to refresh your account on dockstore and list your available repos on GitHub and Bitbucket. 
+The second step is to log in to the Dockstore. Make sure that you properly [link bitbucket and/or gitlab](docs/getting-started#Linking-services) to your account if you are using workflows hosted on bitbucket/gitlab. After successfully linking your GitHub and Bitbucket credentials (if applicable), you will be able to refresh your account on dockstore and list your available repos on GitHub, Bitbucket and GitLab. 
 
 ![My Workflows](docs/workflow_ui.png)
 
@@ -54,13 +54,13 @@ The Source Code Repository field must be filled out and is in the format `namesp
 
 Upon successful submission and publishing of the workflow, a resynchronization call will be made to fetch all available data from the given sources.
 
-The user may then browse to the 'Versions' tab of the new container, where tags (corresponding to GitHub/Bitbucket tag names) may be edited.
+The user may then browse to the 'Versions' tab of the new container, where tags (corresponding to GitHub/Bitbucket/GitLab tag names) may be edited.
 
-The fields in the form should correspond to the actual values on GitHub/Bitbucket in order for the information to be useful to other users. Selecting `Hidden` will prevent the tag from appearing in the public listing of tags for the workflow.
+The fields in the form should correspond to the actual values on GitHub/Bitbucket/GitLab in order for the information to be useful to other users. Selecting `Hidden` will prevent the tag from appearing in the public listing of tags for the workflow.
 
 ### CLI Client
 
-The `dockstore` command line has several options. When working with workflows, use `dockstore workflow` to get a full list of options. We recommend you first use `dockstore workflow refresh` to ensure the latest GitHub, Bitbucket and Quay.io information is indexed properly.
+The `dockstore` command line has several options. When working with workflows, use `dockstore workflow` to get a full list of options. We recommend you first use `dockstore workflow refresh` to ensure the latest GitHub, Bitbucket, GitLab and Quay.io information is indexed properly.
 
 You can then use `dockstore publish` to see the list of available workflows you can register with Dockstore and then register them. This is for you to publish workflows with the simplest structure. For now, use manual registration if your workflow has a different structure. The key is that workflows you wish to (simply) publish have the following qualities:
 
