@@ -31,7 +31,7 @@ angular.module('dockstore.ui')
     'NotificationService',
     function ($scope, $q, WorkflowService, FrmttSrvc, NtfnService) {
       $scope.dagJson = null;
-      var cy;
+      $scope.cy;
       $scope.successContent = [];
       $scope.missingTool = false;
       $scope.notFound = false;
@@ -126,6 +126,10 @@ angular.module('dockstore.ui')
 
       };
 
+      $scope.reloadDAG = function() {
+        cy.fit();
+      };
+
       $scope.refreshDocument = function() {
         $scope.dagJson = $scope.nodesAndEdges($scope.workflowObj.id, $scope.workflowObj.workflowVersions);
         //$scope.dagJson is a promise returned by the web service from nodesAndEdges function
@@ -163,10 +167,11 @@ angular.module('dockstore.ui')
         				selector: 'node',
         				style: {
         					'content': 'data(name)',
-                  'font-size': '12px',
+                  'font-size': '16px',
         					'text-valign': 'center',
         					'text-halign': 'center',
-        					'background-opacity': '0'
+        					'background-opacity': '10',
+        					'background-color' : '#7a88a9'
         				}
         			},
 
@@ -178,6 +183,30 @@ angular.module('dockstore.ui')
         					'line-color': '#9dbaea',
         					'target-arrow-color': '#9dbaea',
                   'curve-style': 'bezier'
+        				}
+        			},
+
+              {
+        				selector: 'node[id = "UniqueBeginKey"]',
+        				style: {
+        					'content': 'Start',
+                  'font-size': '16px',
+        					'text-valign': 'center',
+        					'text-halign': 'center',
+        					'background-opacity': '10',
+        					'background-color': 'green'
+        				}
+        			},
+
+              {
+        				selector: 'node[id = "UniqueEndKey"]',
+        				style: {
+        					'content': 'end',
+                  'font-size': '16px',
+        					'text-valign': 'center',
+        					'text-halign': 'center',
+        					'background-opacity': '10',
+        					'background-color': 'red'
         				}
         			}
         		],
@@ -196,7 +225,6 @@ angular.module('dockstore.ui')
               }
             }
           });
-
         } else {
           cy = window.cy = null;
         }
