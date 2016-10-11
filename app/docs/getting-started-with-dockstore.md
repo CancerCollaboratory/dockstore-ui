@@ -2,7 +2,7 @@
 
 ## [Linking GitHub, Bitbucket, GitLab and Quay.io](#Linking-services)
 
-The first step is to log in to the Dockstore which will link your accounts for GitHub, Bitbucket, GitLab, and Quay.io along with providing you the command line tool we will use for most of the tasks in this tutorial.  Make sure you have your GitHub, Bitbucket and/or Quay.io accounts established and follow the onboarding wizard:
+The first step is to log in to the Dockstore which will link your accounts for GitHub, Bitbucket, GitLab, and Quay.io along with providing you the command line tool we will use for most of the tasks in this tutorial.  Make sure you have your GitHub, Bitbucket, GitLab and/or Quay.io accounts established and follow the onboarding wizard:
 
 https://www.dockstore.org/login
 
@@ -173,7 +173,7 @@ You can then use `dockstore tool publish` to see the list of available Docker im
 
 0. public
 0. at least one valid tag. In order to be valid, a tag has to:
-    * be automated from a GitHub, Bitbucket, or  GitLab reference
+    * be automated from a GitHub, Bitbucket, or GitLab reference
     * have the reference be linked to the `Dockerfile`
     * have the reference be linked a corresponding `Dockstore.cwl`
     

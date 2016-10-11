@@ -24,11 +24,11 @@ The first step is to create a CWL or WDL workflow descriptor for your workflow a
 
 <!-- this following markdown link/anchor does not seem to work properly -->
 
-The second step is to log in to the Dockstore. Make sure that you properly [link bitbucket and/or gitlab](docs/getting-started#Linking-services) to your account if you are using workflows hosted on bitbucket/gitlab. After successfully linking your GitHub and Bitbucket credentials (if applicable), you will be able to refresh your account on dockstore and list your available repos on GitHub, Bitbucket and GitLab. 
+The second step is to log in to the Dockstore. Make sure that you properly [link bitbucket and/or gitlab](docs/getting-started#Linking-services) to your account if you are using workflows hosted on bitbucket/gitlab. After successfully linking your GitHub, Bitbucket and GitLab credentials (if applicable), you will be able to refresh your account on dockstore and list your available repos on GitHub, Bitbucket and GitLab. 
 
 ![My Workflows](docs/workflow_ui.png)
 
-The above image shows the general structure of the UI that you should see after visiting "My Workflows." You can hit "Refresh All Workflows" in order to update information on published workflows or create new stubs for repos that you are about to publish. Workflows are a bit different from tools in that we create a stub entry for all your GitHub repos (and bitbucket repos). You can then promote these to full entries by publishing and editing them. It is only at this point that the Dockstore will reach out and populate information such as available tags and source files. Workflows are handled differently from Tools in this regard since users may often have many more tags and repos on GitHub than Docker images on Quay.io. 
+The above image shows the general structure of the UI that you should see after visiting "My Workflows." You can hit "Refresh All Workflows" in order to update information on published workflows or create new stubs for repos that you are about to publish. Workflows are a bit different from tools in that we create a stub entry for all your GitHub repos (and bitbucket/gitlab repos). You can then promote these to full entries by publishing and editing them. It is only at this point that the Dockstore will reach out and populate information such as available tags and source files. Workflows are handled differently from Tools in this regard since users may often have many more tags and repos on GitHub than Docker images on Quay.io. 
 
 ## Register Your Workflow in Dockstore
 
@@ -36,7 +36,7 @@ Now that you have linked your credentials and refreshed, there should be one stu
 
 ### Quick Registration via the Web UI 
 
-In the authenticated Web UI, navigate to 'My Workflows' to begin managing workflows imported through your linked account(s). These pages will allow you to quickly register workflows that follow a particularly simple format (look below to manual registration for more complex formats). For quick registration, we look through your GitHub and Bitbucket accounts and create a stub for each one. You can publish each repo that you identify as a real workflow in order to get, edit, and display additional information such as available versions.  
+In the authenticated Web UI, navigate to 'My Workflows' to begin managing workflows imported through your linked account(s). These pages will allow you to quickly register workflows that follow a particularly simple format (look below to manual registration for more complex formats). For quick registration, we look through your GitHub, Bitbucket and GitLab accounts and create a stub for each one. You can publish each repo that you identify as a real workflow in order to get, edit, and display additional information such as available versions.  
 
 In the above image, the left side menu is a list of all workflow repositories associated with the user, grouped lexicographically by namespace. Words encapsulated in parentheses denotes a custom toolname if provided. Detailed information and links for each Workflow is located on the 'Info' tab. The 'Labels' tab allows editing of keywords to be associated with a workflow for efficient searching and grouping. Settings such as the path to the CWL/WDL descriptor can be modified on a per-tag basis in the 'Versions' tab. The Descriptor may be viewed in the last tabs, by the Version tag (corresponding to a Git tag/branch).
 
