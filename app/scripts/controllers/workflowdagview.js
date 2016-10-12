@@ -31,7 +31,7 @@ angular.module('dockstore.ui')
     'NotificationService',
     function ($scope, $q, WorkflowService, FrmttSrvc, NtfnService) {
       $scope.dagJson = null;
-      $scope.cy;
+      $scope.cy = null;
       $scope.successContent = [];
       $scope.missingTool = false;
       $scope.notFound = false;
@@ -126,21 +126,19 @@ angular.module('dockstore.ui')
 
       };
 
-      $scope.reloadDAG = function() {
-        cy.fit();
-      };
-
       $scope.expandDAG = function() {
+        // Activated on fullscreen
         $("#dag-holder").toggleClass('fullscreen');
-        $("#cy").toggleClass('fullscreen-element');
-        $("#cy").toggleClass('mini-dag');
-        $("#cy").toggleClass('large-dag');
-        $("#cy").toggleClass('fullscreen-border');
-        $("#dag-version-bar").toggleClass('fullscreen-dropdown');
         $("#dag-col").toggleClass('fullscreen-element');
+        $("#dag-version-bar").toggleClass('fullscreen-dropdown');
+        $("#cy").toggleClass('fullscreen-element');
+        $("#cy").toggleClass('large-dag');
         $("#resize-full-button").toggleClass('no-display');
+
+        // Activated on normal screen
+        $("#cy").toggleClass('mini-dag');
         $("#resize-small-button").toggleClass('no-display');
-        cy.reset();
+        $scope.refreshDocument();
       };
 
       $scope.refreshDocument = function() {
@@ -165,7 +163,7 @@ angular.module('dockstore.ui')
             $scope.missingTool = false;
           }
         );
-          cy = window.cy = cytoscape({
+          $scope.cy = window.cy = cytoscape({
         	  container: document.getElementById('cy'),
 
             boxSelectionEnabled: false,
@@ -214,7 +212,7 @@ angular.module('dockstore.ui')
               {
         				selector: 'node[id = "UniqueEndKey"]',
         				style: {
-        					'content': 'end',
+        					'content': 'End',
                   'font-size': '16px',
         					'text-valign': 'center',
         					'text-halign': 'center',
@@ -227,7 +225,7 @@ angular.module('dockstore.ui')
         		elements: $scope.dagJson,
       		});
 
-        	cy.on('tap', 'node', function(){
+        	$scope.cy.on('tap', 'node', function(){
             try { // your browser may block popups
               if(this.data('tool') !== "https://hub.docker.com/_/" && this.data('tool') !== ""){
                 window.open(this.data('tool'));
@@ -239,7 +237,7 @@ angular.module('dockstore.ui')
             }
           });
         } else {
-          cy = window.cy = null;
+          $scope.cy = window.cy = null;
         }
       };
 

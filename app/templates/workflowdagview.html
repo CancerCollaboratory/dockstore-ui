@@ -26,8 +26,8 @@
             {{version}}
           </option>
         </select>
-        <button ng-show="dagJSON !== null" ng-click="reloadDAG()" class="dag-button"><span class="glyphicon glyphicon-screenshot"></span></button>
-        <button ng-show="dagJSON !== null" ng-click="expandDAG()" class="dag-button">
+        <button ng-show="dagJSON !== null && !notFound && !missingTool" ng-click="refreshDocument()" class="dag-button"><span class="glyphicon glyphicon-screenshot"></span></button>
+        <button ng-show="dagJSON !== null && !notFound && !missingTool" ng-click="expandDAG()" class="dag-button">
           <span class="glyphicon glyphicon-resize-full" id="resize-full-button"></span>
           <span class="glyphicon glyphicon-resize-small no-display" id="resize-small-button"></span>
         </button>
