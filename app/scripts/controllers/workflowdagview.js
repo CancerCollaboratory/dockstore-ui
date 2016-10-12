@@ -130,6 +130,19 @@ angular.module('dockstore.ui')
         cy.fit();
       };
 
+      $scope.expandDAG = function() {
+        $("#dag-holder").toggleClass('fullscreen');
+        $("#cy").toggleClass('fullscreen-element');
+        $("#cy").toggleClass('mini-dag');
+        $("#cy").toggleClass('large-dag');
+        $("#cy").toggleClass('fullscreen-border');
+        $("#dag-version-bar").toggleClass('fullscreen-dropdown');
+        $("#dag-col").toggleClass('fullscreen-element');
+        $("#resize-full-button").toggleClass('no-display');
+        $("#resize-small-button").toggleClass('no-display');
+        cy.reset();
+      };
+
       $scope.refreshDocument = function() {
         $scope.dagJson = $scope.nodesAndEdges($scope.workflowObj.id, $scope.workflowObj.workflowVersions);
         //$scope.dagJson is a promise returned by the web service from nodesAndEdges function

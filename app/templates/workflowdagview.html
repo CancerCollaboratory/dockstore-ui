@@ -14,10 +14,10 @@
   ~    limitations under the License.
   -->
 
-<div class="row">
-  <div class="col-md-12">
+<div class="row" id="dag-holder">
+  <div class="col-md-12" id="dag-col">
     <div class="ds-holder">
-      <div class="ds-version-selector">
+      <div class="ds-version-selector" id="dag-version-bar">
         <strong>Workflow Version</strong>:
         <select class="ds-version" ng-model="selVersionName">
           <option
@@ -26,7 +26,11 @@
             {{version}}
           </option>
         </select>
-        <button ng-show="dagJSON !== null" ng-click="reloadDAG()" class="dag-reload"><span class="glyphicon glyphicon-refresh"></span></button>
+        <button ng-show="dagJSON !== null" ng-click="reloadDAG()" class="dag-button"><span class="glyphicon glyphicon-screenshot"></span></button>
+        <button ng-show="dagJSON !== null" ng-click="expandDAG()" class="dag-button">
+          <span class="glyphicon glyphicon-resize-full" id="resize-full-button"></span>
+          <span class="glyphicon glyphicon-resize-small no-display" id="resize-small-button"></span>
+        </button>
       </div>
     </div>
     <div class="alert alert-warning"
@@ -47,6 +51,6 @@
       <span class="glyphicon glyphicon-warning-sign"></span>&nbsp;
       DAG cannot be created because some required tools are missing from Github repo.
     </div>
-    <div id="cy" ng-show="dagJson !== null && !missingTool"></div>
+    <div id="cy" ng-show="dagJson !== null && !missingTool" class="mini-dag"></div>
   </div>
 </div>
