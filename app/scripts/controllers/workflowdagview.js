@@ -35,6 +35,15 @@ angular.module('dockstore.ui')
       $scope.successContent = [];
       $scope.missingTool = false;
       $scope.notFound = false;
+      $scope.showPopover = false;
+
+      $scope.dynamicPopover = {
+          link: '',
+          title: '',
+          type: '',
+          docker: '',
+          run: ''
+        };
 
       $scope.getWorkflowVersions = function() {
         var sortedVersionObjs = $scope.workflowObj.workflowVersions;
@@ -126,6 +135,14 @@ angular.module('dockstore.ui')
 
       };
 
+      $scope.checkLink = function() {
+        if ($scope.dynamicPopover.link === "https://hub.docker.com/_/") {
+          return false;
+        } else {
+          return true;
+        }
+      };
+
       $scope.expandDAG = function() {
         // Activated on fullscreen
         $("#dag-holder").toggleClass('fullscreen');
@@ -142,6 +159,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.refreshDocument = function() {
+      $scope.showPopover = false;
         $scope.dagJson = $scope.nodesAndEdges($scope.workflowObj.id, $scope.workflowObj.workflowVersions);
         //$scope.dagJson is a promise returned by the web service from nodesAndEdges function
         if ($scope.dagJson !== null){
@@ -219,13 +237,49 @@ angular.module('dockstore.ui')
         					'background-opacity': '10',
         					'background-color': 'red'
         				}
+        			},
+
+              {
+        				selector: 'node[type = "workflow"]',
+        				style: {
+        					'content': 'data(name)',
+                  'font-size': '16px',
+        					'text-valign': 'center',
+        					'text-halign': 'center',
+        					'background-opacity': '10',
+        					'background-color': '#4ab4a9'
+        				}
+        			},
+
+              {
+        				selector: 'node[type = "tool"]',
+        				style: {
+        					'content': 'data(name)',
+                  'font-size': '16px',
+        					'text-valign': 'center',
+        					'text-halign': 'center',
+        					'background-opacity': '10',
+        					'background-color': '#51aad8'
+        				}
+        			},
+
+              {
+        				selector: 'node[type = "expressionTool"]',
+        				style: {
+        					'content': 'data(name)',
+                  'font-size': '16px',
+        					'text-valign': 'center',
+        					'text-halign': 'center',
+        					'background-opacity': '10',
+        					'background-color': '#9966FF'
+        				}
         			}
         		],
 
         		elements: $scope.dagJson,
       		});
 
-        	$scope.cy.on('tap', 'node', function(){
+        	$scope.cy.on('tap', 'node[id!="UniqueBeginKey"][id!="UniqueEndKey"]', function(){
             try { // your browser may block popups
               if(this.data('tool') !== "https://hub.docker.com/_/" && this.data('tool') !== ""){
                 window.open(this.data('tool'));
@@ -234,6 +288,51 @@ angular.module('dockstore.ui')
               if(this.data('tool') !== "https://hub.docker.com/_/" && this.data('tool') !== ""){
                 window.location.href = this.data('tool');
               }
+            }
+          });
+
+//          cy.on('mouseover', 'node', function(event) {
+//              $('#cy').qtip({
+//                content: this.data('name'),
+//                position: {
+//                  target: 'mouse',
+//                  adjust: { mouse: false }
+//                },
+//                style: {
+//                  classes: 'qtip-bootstrap'
+//                },
+//                show: {
+//                  event: event.type
+//                },
+//                hide: {
+//                  event: 'mouseout'
+//                }
+//              }, event);
+//          });
+
+          $scope.cy.on('mouseover mouseup', 'node[id!="UniqueBeginKey"][id!="UniqueEndKey"]', function(){
+            try { // your browser may block popups
+              $scope.dynamicPopover.title = this.data('name');
+              $scope.dynamicPopover.link = this.data('tool');
+              $scope.dynamicPopover.type = this.data('type');
+              $scope.dynamicPopover.docker = this.data('docker');
+              $scope.dynamicPopover.run = this.data('run');
+              var left = this.renderedPosition('x');
+              var top = this.renderedPosition('y');
+              $('#dag-popover').show();
+              $('#dag-popover').css('left', (left + 25) + 'px');
+              $('#dag-popover').css('top', (top-(150/2)+75) + 'px');
+              $scope.showPopover = true;
+              $scope.$apply();
+            } catch(e){ // fall back on url change
+            }
+          });
+
+          $scope.cy.on('mouseout mousedown', 'node[id!="UniqueBeginKey"][id!="UniqueEndKey"]', function(){
+            try { // your browser may block popups
+              $scope.showPopover = false;
+              $scope.$apply();
+            } catch(e){ // fall back on url change
             }
           });
         } else {

@@ -915,7 +915,7 @@ div.tabs > div:target > div, :target #info > div, #info > div {
 }
 
 .fullscreen {
-    z-index: 9999;
+    z-index: 9998;
     width: 100%;
     height: 100%;
     position: fixed;
@@ -948,6 +948,12 @@ div.tabs > div:target > div, :target #info > div, #info > div {
 
 .no-display {
   display:none;
+}
+
+#dag-popover {
+  z-index: 9999;
+  position: absolute;
+  max-width:250px;
 }
 
 html, body {
