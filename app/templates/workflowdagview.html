@@ -58,7 +58,7 @@
       <div class="panel-body">
           <div><b>Type:</b> <span ng-bind="dynamicPopover.type | lowercase"></span></div>
           <div ng-show="checkLink()"><b>Run:</b> <span ng-bind="dynamicPopover.run"></span></div>
-          <div ng-show="checkLink()"><b>Docker:</b> <a ng-href="dynamicPopover.link">{{dynamicPopover.docker}}</a></div>
+          <div ng-show="checkLink()"><b>Docker:</b> <a ng-href="{{dynamicPopover.link}}">{{dynamicPopover.docker}}</a></div>
       </div>
     </div>
     <div id="cy" ng-show="dagJson !== null && !missingTool" class="mini-dag"></div>

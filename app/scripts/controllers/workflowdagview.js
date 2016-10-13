@@ -291,25 +291,6 @@ angular.module('dockstore.ui')
             }
           });
 
-//          cy.on('mouseover', 'node', function(event) {
-//              $('#cy').qtip({
-//                content: this.data('name'),
-//                position: {
-//                  target: 'mouse',
-//                  adjust: { mouse: false }
-//                },
-//                style: {
-//                  classes: 'qtip-bootstrap'
-//                },
-//                show: {
-//                  event: event.type
-//                },
-//                hide: {
-//                  event: 'mouseout'
-//                }
-//              }, event);
-//          });
-
           $scope.cy.on('mouseover mouseup', 'node[id!="UniqueBeginKey"][id!="UniqueEndKey"]', function(){
             try { // your browser may block popups
               $scope.dynamicPopover.title = this.data('name');
