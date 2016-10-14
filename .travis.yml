@@ -23,9 +23,10 @@ install:
   - 'bower update'
   - 'node_modules/protractor/bin/webdriver-manager update --standalone --chrome'
   - 'sleep 5'
+  - 'node_modules/grunt-protractor-runner/scripts/webdriver-manager-update'
+  - 'sleep 5'
   - 'node_modules/protractor/bin/webdriver-manager start --standalone &'
   - 'sleep 5'
-  - 'node_modules/grunt-protractor-runner/scripts/webdriver-manager-update'
 after_script:
 - cat ./build/coverage/**/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 after_success: grunt coveralls
