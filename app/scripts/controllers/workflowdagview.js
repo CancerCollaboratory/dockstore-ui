@@ -293,11 +293,11 @@ angular.module('dockstore.ui')
 
            $scope.cy.on('mouseover mouseup', 'node[id!="UniqueBeginKey"][id!="UniqueEndKey"]', function(e){
               var node = e.cyTarget;
-              $scope.dynamicPopover.title = node.data('name');
-              $scope.dynamicPopover.link = node.data('tool');
-              $scope.dynamicPopover.type = node.data('type');
-              $scope.dynamicPopover.docker = node.data('docker');
-              $scope.dynamicPopover.run = node.data('run');
+              $scope.dynamicPopover.title = this.data('name');
+              $scope.dynamicPopover.link = this.data('tool');
+              $scope.dynamicPopover.type = this.data('type');
+              $scope.dynamicPopover.docker = this.data('docker');
+              $scope.dynamicPopover.run = this.data('run');
               $scope.$apply();
 
               var tooltip = node.qtip({
@@ -319,6 +319,7 @@ angular.module('dockstore.ui')
               var api = node.qtip('api');
               api.toggle(false);
           });
+
         } else {
           $scope.cy = window.cy = null;
         }
