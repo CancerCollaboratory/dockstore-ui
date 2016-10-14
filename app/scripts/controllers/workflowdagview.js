@@ -303,11 +303,7 @@ angular.module('dockstore.ui')
               var tooltip = node.qtip({
                 content: {text: $('#tooltiptext'), title: node.data('name')},
                 style: {
-                  classes: 'qtip-bootstrap',
-                  tip: {
-                    width: 16,
-                    height: 16
-                  }
+                  classes: 'qtip-bootstrap'
                 }
               });
               var api = tooltip.qtip('api');
