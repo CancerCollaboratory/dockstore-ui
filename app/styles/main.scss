@@ -956,6 +956,10 @@ div.tabs > div:target > div, :target #info > div, #info > div {
   max-width:250px;
 }
 
+#tooltiptext {
+  display:none;
+}
+
 html, body {
   height:100%;
 }

@@ -51,14 +51,11 @@
       <span class="glyphicon glyphicon-warning-sign"></span>&nbsp;
       DAG cannot be created because some required tools are missing from Github repo.
     </div>
-    <div id="dag-popover" ng-show="showPopover" class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title" ng-bind="dynamicPopover.title | lowercase"></h3>
-      </div>
-      <div class="panel-body">
-          <div><b>Type:</b> <span ng-bind="dynamicPopover.type | lowercase"></span></div>
-          <div ng-show="checkLink()"><b>Run:</b> <span ng-bind="dynamicPopover.run"></span></div>
-          <div ng-show="checkLink()"><b>Docker:</b> <a ng-href="{{dynamicPopover.link}}">{{dynamicPopover.docker}}</a></div>
+    <div id="tooltiptext">
+      <div>
+        <div><b>Type:</b> <span ng-bind="dynamicPopover.type | lowercase"></span></div>
+        <div ng-show="checkLink()"><b>Run:</b> <span ng-bind="dynamicPopover.run"></span></div>
+        <div ng-show="checkLink()"><b>Docker:</b> <a ng-href="{{dynamicPopover.link}}">{{dynamicPopover.docker}}</a></div>
       </div>
     </div>
     <div id="cy" ng-show="dagJson !== null && !missingTool" class="mini-dag"></div>

@@ -291,30 +291,33 @@ angular.module('dockstore.ui')
             }
           });
 
-          $scope.cy.on('mouseover mouseup', 'node[id!="UniqueBeginKey"][id!="UniqueEndKey"]', function(){
-            try { // your browser may block popups
-              $scope.dynamicPopover.title = this.data('name');
-              $scope.dynamicPopover.link = this.data('tool');
-              $scope.dynamicPopover.type = this.data('type');
-              $scope.dynamicPopover.docker = this.data('docker');
-              $scope.dynamicPopover.run = this.data('run');
-              var left = this.renderedPosition('x');
-              var top = this.renderedPosition('y');
-              $('#dag-popover').show();
-              $('#dag-popover').css('left', (left + 25) + 'px');
-              $('#dag-popover').css('top', (top-(150/2)+75) + 'px');
-              $scope.showPopover = true;
+           $scope.cy.on('mouseover mouseup', 'node[id!="UniqueBeginKey"][id!="UniqueEndKey"]', function(e){
+              var node = e.cyTarget;
+              $scope.dynamicPopover.title = node.data('name');
+              $scope.dynamicPopover.link = node.data('tool');
+              $scope.dynamicPopover.type = node.data('type');
+              $scope.dynamicPopover.docker = node.data('docker');
+              $scope.dynamicPopover.run = node.data('run');
               $scope.$apply();
-            } catch(e){ // fall back on url change
-            }
+
+              var tooltip = node.qtip({
+                content: {text: $('#tooltiptext'), title: node.data('name')},
+                style: {
+                  classes: 'qtip-bootstrap',
+                  tip: {
+                    width: 16,
+                    height: 16
+                  }
+                }
+              });
+              var api = tooltip.qtip('api');
+              api.toggle(true);
           });
 
-          $scope.cy.on('mouseout mousedown', 'node[id!="UniqueBeginKey"][id!="UniqueEndKey"]', function(){
-            try { // your browser may block popups
-              $scope.showPopover = false;
-              $scope.$apply();
-            } catch(e){ // fall back on url change
-            }
+          $scope.cy.on('mouseout mousedown', 'node[id!="UniqueBeginKey"][id!="UniqueEndKey"]', function(e){
+              var node = e.cyTarget;
+              var api = node.qtip('api');
+              api.toggle(false);
           });
         } else {
           $scope.cy = window.cy = null;
