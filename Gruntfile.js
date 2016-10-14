@@ -547,7 +547,6 @@ module.exports = function (grunt) {
       e2e: {
         options: {
           // Stops Grunt process if a test fails
-          configFile: "e2e.conf.js",
           keepAlive: false
         }
       }
