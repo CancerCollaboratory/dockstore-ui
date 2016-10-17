@@ -18,7 +18,7 @@ exports.config = {
 
 	allScriptsTimeout: 99999,
 
-	directConnect: true,
+	seleniumAddress: 'http://localhost:4444/wd/hub',
 
 	// Capabilities to be passed to the webdriver instance.
 	capabilities: {
