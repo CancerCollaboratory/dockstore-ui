@@ -295,24 +295,6 @@ angular.module('dockstore.ui')
         				}
         			},
 
-        			{
-        			  selector: 'edge.outgoer-highlighted',
-        			  style: {
-        			    'line-color': '#e57373',
-        			    'target-arrow-color': '#e57373',
-        			    'width': 5
-        			  }
-        			},
-
-              {
-        			  selector: 'edge.incomer-highlighted',
-        			  style: {
-        			    'line-color': '#81c784',
-        			    'target-arrow-color': '#81c784',
-        			    'width': 5
-        			  }
-        			},
-
               {
         			  selector: 'edge.notselected',
         			  style: {
@@ -365,15 +347,39 @@ angular.module('dockstore.ui')
           $scope.cy.on('mouseout', 'node', function(e) {
             var node = e.cyTarget;
             $scope.cy.elements().removeClass('notselected');
-            node.connectedEdges().removeClass('outgoer-highlighted');
-            node.connectedEdges().removeClass('incomer-highlighted');
+            node.connectedEdges().animate({
+                style: {
+        			    'line-color': '#9dbaea',
+        			    'target-arrow-color': '#9dbaea',
+        			    'width': 3
+        			    }
+        			  }, {
+        			  duration: 150
+        			  });
           });
 
           $scope.cy.on('mouseover', 'node', function(e) {
             var node = e.cyTarget;
             $scope.cy.elements().difference(node.connectedEdges()).not(node).addClass('notselected');
-            node.outgoers().addClass('outgoer-highlighted');
-            node.incomers().addClass('incomer-highlighted');
+
+            node.outgoers('edge').animate({
+                style: {
+        			    'line-color': '#e57373',
+        			    'target-arrow-color': '#e57373',
+        			    'width': 5
+        			    }
+        			  }, {
+        			  duration: 150
+        			  });
+            node.incomers('edge').animate({
+                style: {
+        			    'line-color': '#81c784',
+        			    'target-arrow-color': '#81c784',
+        			    'width': 5
+        			    }
+        			  }, {
+        			  duration: 150
+        			  });
           });
 
         } else {
