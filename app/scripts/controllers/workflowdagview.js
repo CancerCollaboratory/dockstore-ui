@@ -223,7 +223,7 @@ angular.module('dockstore.ui')
         					'text-valign': 'center',
         					'text-halign': 'center',
         					'background-opacity': '10',
-        					'background-color': 'green'
+        					'background-color': '#4caf50'
         				}
         			},
 
@@ -235,7 +235,7 @@ angular.module('dockstore.ui')
         					'text-valign': 'center',
         					'text-halign': 'center',
         					'background-opacity': '10',
-        					'background-color': 'red'
+        					'background-color': '#f44336'
         				}
         			},
 
@@ -276,10 +276,20 @@ angular.module('dockstore.ui')
         			},
 
         			{
-        			  selector: 'edge.highlighted',
+        			  selector: 'edge.outgoer-highlighted',
         			  style: {
         			    'line-color': '#9dbaea',
-        			    'width': 5,
+        			    'target-arrow-color': '#9dbaea',
+        			    'width': 5
+        			  }
+        			},
+
+              {
+        			  selector: 'edge.incomer-highlighted',
+        			  style: {
+        			    'line-color': '#9dbaea',
+        			    'target-arrow-color': '#9dbaea',
+        			    'width': 5
         			  }
         			},
 
@@ -334,14 +344,15 @@ angular.module('dockstore.ui')
           $scope.cy.on('mouseout', 'node', function(e) {
             var node = e.cyTarget;
             cy.elements().removeClass('notselected');
-            node.removeClass('highlighted').connectedEdges().removeClass('highlighted');
-            node.removeClass('highlighted').connectedEdges().removeClass('highlighted');
+            node.connectedEdges().removeClass('outgoer-highlighted');
+            node.connectedEdges().removeClass('incomer-highlighted');
           });
 
           $scope.cy.on('mouseover', 'node', function(e) {
             var node = e.cyTarget;
             cy.elements().difference(node.connectedEdges()).not(node).addClass('notselected');
-            node.addClass('highlighted').connectedEdges().addClass('highlighted');
+            node.outgoers().addClass('outgoer-highlighted');
+            node.incomers().addClass('incomer-highlighted')
           });
 
         } else {
