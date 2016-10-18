@@ -173,7 +173,7 @@ angular.module('dockstore.ui')
       };
 
       $("#exportLink").on("click", function() {
-        var pngDAG = $scope.cy.png({ full: true });
+        var pngDAG = $scope.cy.png({ full: true, scale: 2 });
         var uriContent = pngDAG;
         $(this).attr("href", uriContent).attr("download", "DAG-" + $scope.workflowObj.repository + "_" + $scope.selVersionName + ".png");
       });
