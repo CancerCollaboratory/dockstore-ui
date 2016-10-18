@@ -136,12 +136,26 @@ angular.module('dockstore.ui')
       };
 
       $scope.checkLink = function() {
-        if ($scope.dynamicPopover.link === "https://hub.docker.com/_/") {
-          return false;
-        } else {
-          return true;
-        }
+        return $scope.dynamicPopover.link !== undefined;
       };
+
+      $scope.checkDocker = function() {
+        return $scope.dynamicPopover.docker !== undefined;
+      };
+
+      $scope.checkRun = function() {
+        return $scope.dynamicPopover.run !== undefined;
+      };
+
+      $scope.clearPopover = function() {
+        $scope.dynamicPopover = {
+          link: '',
+          title: '',
+          type: '',
+          docker: '',
+          run: ''
+        };
+      }
 
       $scope.expandDAG = function() {
         // Activated on fullscreen
@@ -318,6 +332,7 @@ angular.module('dockstore.ui')
 
            $scope.cy.on('mouseover mouseup', 'node[id!="UniqueBeginKey"][id!="UniqueEndKey"]', function(e){
               var node = e.cyTarget;
+              $scope.clearPopover();
               $scope.dynamicPopover.title = this.data('name');
               $scope.dynamicPopover.link = this.data('tool');
               $scope.dynamicPopover.type = this.data('type');
