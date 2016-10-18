@@ -172,6 +172,12 @@ angular.module('dockstore.ui')
         $scope.refreshDocument();
       };
 
+      $("#exportLink").on("click", function() {
+        var pngDAG = $scope.cy.png({ full: true });
+        var uriContent = pngDAG;
+        $(this).attr("href", uriContent).attr("download", "DAG-" + $scope.workflowObj.repository + "_" + $scope.selVersionName + ".png");
+      });
+
       $scope.refreshDocument = function() {
       $scope.showPopover = false;
         $scope.dagJson = $scope.nodesAndEdges($scope.workflowObj.id, $scope.workflowObj.workflowVersions);
