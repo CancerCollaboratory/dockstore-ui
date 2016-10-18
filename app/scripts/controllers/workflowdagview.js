@@ -155,7 +155,7 @@ angular.module('dockstore.ui')
           docker: '',
           run: ''
         };
-      }
+      };
 
       $scope.expandDAG = function() {
         // Activated on fullscreen
