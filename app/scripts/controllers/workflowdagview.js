@@ -292,8 +292,8 @@ angular.module('dockstore.ui')
         			{
         			  selector: 'edge.outgoer-highlighted',
         			  style: {
-        			    'line-color': '#9dbaea',
-        			    'target-arrow-color': '#9dbaea',
+        			    'line-color': '#e57373',
+        			    'target-arrow-color': '#e57373',
         			    'width': 5
         			  }
         			},
@@ -301,8 +301,8 @@ angular.module('dockstore.ui')
               {
         			  selector: 'edge.incomer-highlighted',
         			  style: {
-        			    'line-color': '#9dbaea',
-        			    'target-arrow-color': '#9dbaea',
+        			    'line-color': '#81c784',
+        			    'target-arrow-color': '#81c784',
         			    'width': 5
         			  }
         			},
