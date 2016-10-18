@@ -343,16 +343,16 @@ angular.module('dockstore.ui')
 
           $scope.cy.on('mouseout', 'node', function(e) {
             var node = e.cyTarget;
-            cy.elements().removeClass('notselected');
+            $scope.cy.elements().removeClass('notselected');
             node.connectedEdges().removeClass('outgoer-highlighted');
             node.connectedEdges().removeClass('incomer-highlighted');
           });
 
           $scope.cy.on('mouseover', 'node', function(e) {
             var node = e.cyTarget;
-            cy.elements().difference(node.connectedEdges()).not(node).addClass('notselected');
+            $scope.cy.elements().difference(node.connectedEdges()).not(node).addClass('notselected');
             node.outgoers().addClass('outgoer-highlighted');
-            node.incomers().addClass('incomer-highlighted')
+            node.incomers().addClass('incomer-highlighted');
           });
 
         } else {
