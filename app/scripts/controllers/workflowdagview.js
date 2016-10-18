@@ -273,6 +273,21 @@ angular.module('dockstore.ui')
         					'background-opacity': '10',
         					'background-color': '#9966FF'
         				}
+        			},
+
+        			{
+        			  selector: 'edge.highlighted',
+        			  style: {
+        			    'line-color': '#9dbaea',
+        			    'width': 5,
+        			  }
+        			},
+
+              {
+        			  selector: 'edge.notselected',
+        			  style: {
+        			    'opacity': '0.4'
+        			  }
         			}
         		],
 
@@ -314,6 +329,19 @@ angular.module('dockstore.ui')
               var node = e.cyTarget;
               var api = node.qtip('api');
               api.toggle(false);
+          });
+
+          $scope.cy.on('mouseout', 'node', function(e) {
+            var node = e.cyTarget;
+            cy.elements().removeClass('notselected');
+            node.removeClass('highlighted').connectedEdges().removeClass('highlighted');
+            node.removeClass('highlighted').connectedEdges().removeClass('highlighted');
+          });
+
+          $scope.cy.on('mouseover', 'node', function(e) {
+            var node = e.cyTarget;
+            cy.elements().difference(node.connectedEdges()).not(node).addClass('notselected');
+            node.addClass('highlighted').connectedEdges().addClass('highlighted');
           });
 
         } else {
