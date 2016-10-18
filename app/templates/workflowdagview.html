@@ -26,7 +26,7 @@
             {{version}}
           </option>
         </select>
-        <a id="exportLink" href="#"><span class="glyphicon glyphicon-export"></span>Export to PNG</a>
+        <a id="exportLink" href="#" ng-show="dagJSON !== null && !notFound && !missingTool"><span class="glyphicon glyphicon-export"></span>Export to PNG</a>
         <button ng-show="dagJSON !== null && !notFound && !missingTool" ng-click="refreshDocument()" class="dag-button" uib-tooltip="Reset"><span class="glyphicon glyphicon-screenshot"></span></button>
         <button ng-show="dagJSON !== null && !notFound && !missingTool" ng-click="expandDAG()" uib-tooltip="Toggle fullscreen" class="dag-button">
           <span class="glyphicon glyphicon-resize-full" id="resize-full-button"></span>
