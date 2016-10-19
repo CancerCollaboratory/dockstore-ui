@@ -308,17 +308,17 @@ angular.module('dockstore.ui')
 
         	$scope.cy.on('tap', 'node[id!="UniqueBeginKey"][id!="UniqueEndKey"]', function(){
             try { // your browser may block popups
-              if(this.data('tool') !== "https://hub.docker.com/_/" && this.data('tool') !== ""){
+              if(this.data('tool') !== "https://hub.docker.com/_/" && this.data('tool') !== "" && this.data('tool') !== undefined){
                 window.open(this.data('tool'));
               }
             } catch(e){ // fall back on url change
-              if(this.data('tool') !== "https://hub.docker.com/_/" && this.data('tool') !== ""){
+              if(this.data('tool') !== "https://hub.docker.com/_/" && this.data('tool') !== "" && this.data('tool') !== undefined){
                 window.location.href = this.data('tool');
               }
             }
           });
 
-           $scope.cy.on('mouseover mouseup', 'node[id!="UniqueBeginKey"][id!="UniqueEndKey"]', function(e){
+           $scope.cy.on('mouseover', 'node[id!="UniqueBeginKey"][id!="UniqueEndKey"]', function(e){
               var node = e.cyTarget;
               $scope.clearPopover();
               $scope.dynamicPopover.title = this.data('name');
@@ -332,6 +332,9 @@ angular.module('dockstore.ui')
                 content: {text: $('#tooltiptext'), title: node.data('name')},
                 style: {
                   classes: 'qtip-bootstrap'
+                },
+                show: {
+                  solo: true
                 }
               });
               var api = tooltip.qtip('api');
