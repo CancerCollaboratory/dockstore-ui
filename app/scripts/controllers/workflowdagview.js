@@ -320,7 +320,6 @@ angular.module('dockstore.ui')
 
            $scope.cy.on('mouseover', 'node[id!="UniqueBeginKey"][id!="UniqueEndKey"]', function(e){
               var node = e.cyTarget;
-              $scope.clearPopover();
               $scope.dynamicPopover.title = this.data('name');
               $scope.dynamicPopover.link = this.data('tool');
               $scope.dynamicPopover.type = this.data('type');
