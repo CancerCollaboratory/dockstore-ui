@@ -84,7 +84,7 @@
       </div>
     </div>
 
-    <p class="update" title="{{ workflowObj.lastUpdated ? getDateTimeString(workflowObj.lastUpdated) : 'n/a' }}">
+    <p class="update" title="{{ workflowObj.lastUpdated ? getDateTimeString(workflowObj.lastUpdated) : 'n/a' }}" uib-tooltip>
       Last Modified:
       {{ workflowObj.lastUpdated ? getTimeAgoString(workflowObj.lastUpdated) : 'n/a' }}
     </p>
