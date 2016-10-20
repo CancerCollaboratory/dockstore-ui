@@ -86,7 +86,7 @@
 
     <p class="update" title="{{ workflowObj.lastUpdated ? getDateTimeString(workflowObj.lastUpdated) : 'n/a' }}">
       Last Modified:
-      {{ workflowObj.lastUpdated ? getDaysAgoString(workflowObj.lastUpdated) : 'n/a' }}
+      {{ workflowObj.lastUpdated ? getTimeAgoString(workflowObj.lastUpdated) : 'n/a' }}
     </p>
   </div>
   <div class="col-md-5"
