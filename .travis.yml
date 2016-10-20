@@ -2,7 +2,7 @@ sudo: true
 dist: trusty
 language: node_js
 node_js:
-  - '6.7.0'
+  - 'latest'
   - '4.2.1'
 addons:
   firefox: "latest"
@@ -16,7 +16,7 @@ before_install:
   - 'npm config set registry http://registry.npmjs.org/'
   - 'export DISPLAY=:99.0'
   - 'sh -e /etc/init.d/xvfb start'
-  - 'sleep 3'
+  - 'sleep 3' # https://docs.travis-ci.com/user/gui-and-headless-browsers/#Using-xvfb-to-Run-Tests-That-Require-a-GUI
 install:
   - 'npm install --global grunt-cli bower yo generator-karma generator-angular'
   - 'npm install karma jasmine-core'
