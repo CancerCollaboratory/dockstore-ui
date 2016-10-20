@@ -135,16 +135,19 @@ angular.module('dockstore.ui')
 
       };
 
-      $scope.checkLink = function() {
-        return $scope.dynamicPopover.link !== undefined;
-      };
-
-      $scope.checkDocker = function() {
-        return $scope.dynamicPopover.docker !== undefined;
-      };
-
-      $scope.checkRun = function() {
-        return $scope.dynamicPopover.run !== undefined;
+      $scope.updateUndefinedPopoverContent = function() {
+        if ($scope.dynamicPopover.title === undefined) {
+          $scope.dynamicPopover.title = "n/a";
+        }
+        if ($scope.dynamicPopover.type === undefined) {
+          $scope.dynamicPopover.type = "n/a";
+        }
+        if ($scope.dynamicPopover.docker === undefined) {
+          $scope.dynamicPopover.docker = "n/a";
+        }
+        if ($scope.dynamicPopover.run === undefined) {
+          $scope.dynamicPopover.run = "n/a";
+        }
       };
 
       $scope.clearPopover = function() {
@@ -319,16 +322,18 @@ angular.module('dockstore.ui')
 
            $scope.cy.on('mouseover', 'node[id!="UniqueBeginKey"][id!="UniqueEndKey"]', function(){
               var node = this;
-              console.log(this.data('name') + this.data('tool') + this.data('type') + this.data('docker') + this.data('run'));
               $scope.dynamicPopover.title = this.data('name');
               $scope.dynamicPopover.link = this.data('tool');
               $scope.dynamicPopover.type = this.data('type');
               $scope.dynamicPopover.docker = this.data('docker');
               $scope.dynamicPopover.run = this.data('run');
+
+              $scope.updateUndefinedPopoverContent();
+
               $scope.$apply();
 
               var tooltip = node.qtip({
-                content: {text: $('#tooltiptext'), title: node.data('name')},
+                content: {text: $('#tooltiptext').html(), title: node.data('name')},
                 style: {
                   classes: 'qtip-bootstrap'
                 },
@@ -343,8 +348,7 @@ angular.module('dockstore.ui')
           $scope.cy.on('mouseout mousedown', 'node[id!="UniqueBeginKey"][id!="UniqueEndKey"]', function(){
               var node = this;
               var api = node.qtip('api');
-              api.toggle(false);
-              api.disable();
+              api.destroy();
           });
 
           $scope.cy.on('mouseout', 'node', function() {
