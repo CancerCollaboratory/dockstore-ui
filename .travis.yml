@@ -2,7 +2,7 @@ sudo: true
 dist: trusty
 language: node_js
 node_js:
-  - 'latest'
+  - 'stable'
   - '4.2.1'
 addons:
   firefox: "latest"
