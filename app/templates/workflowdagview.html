@@ -54,9 +54,9 @@
     </div>
     <div id="tooltiptext">
       <div>
-        <div><b>Type:</b> <span ng-bind="dynamicPopover.type | lowercase"></span></div>
-        <div ng-show="checkRun()"><b>Run:</b> <span ng-bind="dynamicPopover.run"></span></div>
-        <div ng-show="checkLink() && checkDocker()"><b>Docker:</b> <a ng-href="{{dynamicPopover.link}}">{{dynamicPopover.docker}}</a></div>
+        <div><b>Type:</b> {{ dynamicPopover.type | lowercase }}</div>
+        <div ng-show="checkRun()"><b>Run:</b> {{ dynamicPopover.run }}</div>
+        <div ng-show="checkLink() && checkDocker()"><b>Docker:</b> <a ng-href="{{dynamicPopover.link}}"> {{dynamicPopover.docker}}</a></div>
         <div ng-show="!checkLink() && checkDocker()"><b>Docker:</b> {{dynamicPopover.docker}}</div>
       </div>
     </div>

@@ -148,13 +148,12 @@ angular.module('dockstore.ui')
       };
 
       $scope.clearPopover = function() {
-        $scope.dynamicPopover = {
-          link: '',
-          title: '',
-          type: '',
-          docker: '',
-          run: ''
-        };
+        $scope.dynamicPopover.link = '';
+        $scope.dynamicPopover.title = '';
+        $scope.dynamicPopover.type = '';
+        $scope.dynamicPopover.docker = '';
+        $scope.dynamicPopover.run = '';
+        $scope.$apply();
       };
 
       $scope.expandDAG = function() {
@@ -318,8 +317,9 @@ angular.module('dockstore.ui')
             }
           });
 
-           $scope.cy.on('mouseover', 'node[id!="UniqueBeginKey"][id!="UniqueEndKey"]', function(e){
-              var node = e.cyTarget;
+           $scope.cy.on('mouseover', 'node[id!="UniqueBeginKey"][id!="UniqueEndKey"]', function(){
+              var node = this;
+              console.log(this.data('name') + this.data('tool') + this.data('type') + this.data('docker') + this.data('run'));
               $scope.dynamicPopover.title = this.data('name');
               $scope.dynamicPopover.link = this.data('tool');
               $scope.dynamicPopover.type = this.data('type');
@@ -340,14 +340,15 @@ angular.module('dockstore.ui')
               api.toggle(true);
           });
 
-          $scope.cy.on('mouseout mousedown', 'node[id!="UniqueBeginKey"][id!="UniqueEndKey"]', function(e){
-              var node = e.cyTarget;
+          $scope.cy.on('mouseout mousedown', 'node[id!="UniqueBeginKey"][id!="UniqueEndKey"]', function(){
+              var node = this;
               var api = node.qtip('api');
               api.toggle(false);
+              api.disable();
           });
 
-          $scope.cy.on('mouseout', 'node', function(e) {
-            var node = e.cyTarget;
+          $scope.cy.on('mouseout', 'node', function() {
+            var node = this;
             $scope.cy.elements().removeClass('notselected');
             node.connectedEdges().animate({
                 style: {
@@ -360,8 +361,8 @@ angular.module('dockstore.ui')
         			  });
           });
 
-          $scope.cy.on('mouseover', 'node', function(e) {
-            var node = e.cyTarget;
+          $scope.cy.on('mouseover', 'node', function() {
+            var node = this;
             $scope.cy.elements().difference(node.connectedEdges()).not(node).addClass('notselected');
 
             node.outgoers('edge').animate({
