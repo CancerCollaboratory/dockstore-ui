@@ -340,8 +340,12 @@ angular.module('dockstore.ui')
           timeAgo = $scope.getTimeAgo(timestamp, (1000 * 60 * 60));
           if (timeAgo < 1) {
             timeAgo = $scope.getTimeAgo(timestamp, (1000 * 60));
-            return timeAgo.toString() +
-                  ((timeAgo === 1) ? ' minute ago' : ' minutes ago');
+            if (timeAgo === 0) {
+              return '<1 minute ago';
+            } else {
+              return timeAgo.toString() +
+                    ((timeAgo === 1) ? ' minute ago' : ' minutes ago');
+            }
           } else {
             return timeAgo.toString() +
                   ((timeAgo === 1) ? ' hour ago' : ' hours ago');
