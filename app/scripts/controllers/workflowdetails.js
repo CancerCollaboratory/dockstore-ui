@@ -544,7 +544,7 @@ angular.module('dockstore.ui')
       });
 
       $scope.getRegistry = function(gitUrl) {
-        if (gitUrl !== undefined) {
+        if (gitUrl !== undefined && gitUrl !== null) {
           if (gitUrl.indexOf('github.com') !== -1) {
             return 'GitHub';
           } else if (gitUrl.indexOf('bitbucket.org') !== -1) {
@@ -560,7 +560,7 @@ angular.module('dockstore.ui')
       };
 
      $scope.getRepoUrl = function(organization, repository, registry) {
-      if (registry !== undefined) {
+      if (registry !== undefined && registry !== null) {
         if (registry.toLowerCase() === "github") {
           return 'https://github.com/' + organization + '/' + repository;
         } else if (registry.toLowerCase() === "bitbucket") {
