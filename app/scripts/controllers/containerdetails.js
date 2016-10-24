@@ -27,10 +27,11 @@ angular.module('dockstore.ui')
   .controller('ContainerDetailsCtrl', [
     '$scope',
     '$q',
+    '$sce',
     'ContainerService',
     'FormattingService',
     'NotificationService',
-    function ($scope, $q, ContainerService, FrmttSrvc) {
+    function ($scope, $q, $sce, ContainerService, FrmttSrvc) {
       $scope.labelsEditMode = false;
       $scope.dockerfileEnabled = false;
       $scope.descriptorEnabled = false;
@@ -48,6 +49,8 @@ angular.module('dockstore.ui')
       $scope.toolTagName = '';
       $scope.validTags = [];
       $scope.descAvailable = [];
+      $scope.buildTooltip = $sce.trustAsHtml('Fully-Automated: All tags are automated builds.<br>Partially-Automated: At least one tag is an automated build.<br>Manual: No tags are automated builds.<br>Unknown: Build information not known.');
+
       //There are 5 tabs, and only 1 can be active
       // so there are 4 other tabs that are not active
       var notActiveTabs = 4;

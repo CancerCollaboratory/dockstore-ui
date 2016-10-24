@@ -20,42 +20,35 @@
       <thead>
       <tr>
         <th>
-          Tag
-            <span class="glyphicon pull-right"
-                  ng-class="getIconClass('name')"
-                  ng-click="clickSortColumn('name')">
-            </span>
-        </th>
-        <th>
-          Git Reference
+          <span uib-tooltip="Git branch/tag.">Git Reference</span>
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('reference')"
                   ng-click="clickSortColumn('reference')">
             </span>
         </th>
         <th>
-          Workflow Path
+          <span uib-tooltip="Default workflow path for given Git reference.">Workflow Path</span>
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('workflow_path')"
                   ng-click="clickSortColumn('workflow_path')">
             </span>
         </th>
         <th>
-          Date Modified
+          <span uib-tooltip="Date of last update to Git reference.">Date Modified</span>
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('last_modified')"
                   ng-click="clickSortColumn('last_modified')">
             </span>
         </th>
         <th>
-          Valid
+          <span uib-tooltip="A version is valid if it has a valid descriptor file.">Valid</span>
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('valid')"
                   ng-click="clickSortColumn('valid')">
             </span>
         </th>
         <th>
-          Actions
+          <span uib-tooltip="View more information about the given Git reference.">Actions</span>
         </th>
       </tr>
       </thead>
@@ -67,11 +60,10 @@
       </tr>
       <tr ng-repeat="versionTag in (filteredVersionTags = (versionTags | HiddenTagsFilter:editMode | orderBy:sortColumn:sortReverse))" ng-hide="!editMode && versionTag.hidden">
         <td>
-          {{versionTag.name}}
-        </td>
-        <td>
           <div class="git-ref">
-            <input class="radio-button-reference" ng-if="editMode" type="radio" name="defaultVersion" ng-model="$parent.workflowObj.defaultVersion" ng-value="versionTag.reference" ng-click="updateDefaultVersion(versionTag.reference)"/>
+            <input class="radio-button-reference" ng-if="editMode" type="radio" name="defaultVersion"
+                   ng-model="$parent.workflowObj.defaultVersion" ng-value="versionTag.reference"
+                   ng-click="updateDefaultVersion(versionTag.reference)" uib-tooltip="Set as default branch."/>
             {{versionTag.reference ? versionTag.reference : 'n/a'}}
             </span>
           </div>
