@@ -329,17 +329,21 @@ angular.module('dockstore.ui')
         }
       };
 
-      $scope.getTimeAgo = function(timestamp, timenum) {
+      $scope.getTimeAgo = function(timestamp, timeConversion) {
         var timeDiff = (new Date()).getTime() - timestamp;
-        return Math.floor(timeDiff / timenum);
+        return Math.floor(timeDiff / timeConversion);
       };
 
       $scope.getTimeAgoString = function(timestamp) {
-        var timeAgo = $scope.getTimeAgo(timestamp, (1000 * 60 * 60 * 24));
-        if(timeAgo < 1){
-          timeAgo = $scope.getTimeAgo(timestamp, (1000 * 60 * 60));
+        var msToDays = 1000 * 60 * 60 * 24;
+        var msToHours = 1000 * 60 * 60;
+        var msToMins = 1000 * 60;
+
+        var timeAgo = $scope.getTimeAgo(timestamp, msToDays);
+        if (timeAgo < 1){
+          timeAgo = $scope.getTimeAgo(timestamp, msToHours);
           if (timeAgo < 1) {
-            timeAgo = $scope.getTimeAgo(timestamp, (1000 * 60));
+            timeAgo = $scope.getTimeAgo(timestamp, msToMins);
             if (timeAgo === 0) {
               return '<1 minute ago';
             } else {
