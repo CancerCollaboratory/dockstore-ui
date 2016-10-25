@@ -354,6 +354,12 @@
             </form>
           </li>
           <li>
+            <strong uib-tooltip="Path in Git repository to the tool's CWL test.json file.">CWL Test Json Path</strong>:
+            {{containerObj.default_cwl_test_json_path}}
+          <li>
+            <strong uib-tooltip="Path in Git repository to the tool's WDL test.json file.">WDL Test Json Path</strong>:
+            {{containerObj.default_wdl_test_json_path}}
+          </li>
             <strong>Build Mode</strong>:
             {{getContainerModeString(containerObj.mode)}}
           </li>
@@ -462,7 +468,7 @@
           </div>
         </form>
       </uib-tab>
-      <uib-tab  active="activeTabs[2]">
+      <uib-tab active="activeTabs[2]">
         <uib-tab-heading>Versions</uib-tab-heading>
         <div versions-grid
             container-obj="containerObj"
@@ -484,6 +490,14 @@
             type="descriptor"
             container-obj="containerObj"
             ng-if="containerObj">
+        </div>
+      </uib-tab>
+      <uib-tab active="activeTabs[5]">
+        <uib-tab-heading ng-click="checkPage()">Test Json</uib-tab-heading>
+        <div container-file-viewer
+             type="testjson"
+             container-obj="containerObj"
+             ng-if="containerObj">
         </div>
       </uib-tab>
     </uib-tabset>

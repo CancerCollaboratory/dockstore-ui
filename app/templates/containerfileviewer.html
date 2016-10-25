@@ -36,7 +36,7 @@
     </select>
   </div>
 
-  <div class="ds-descriptor-selector" ng-hide="isDockerfile()">
+  <div class="ds-descriptor-selector" ng-hide="isDockerfile() || isTestJson()">
     <strong>File</strong>:
     <select class="ds-wide-descriptor" ng-model="selSecondaryDescriptorName">
       <option
@@ -83,6 +83,21 @@
 
   pre .line-number-dockerfile span {
     display:block;
+  }
+
+  pre .line-number-testjson {
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-size:inherit;
+  color:#444;
+  float:left;
+  margin:7px 2px 0 0;
+  border-right:1px solid #444;
+  text-align:left;
+  padding:0 10px 2px 0;
+  }
+
+  pre .line-number-testjson span {
+  display:block;
   }
 
   pre .cl {

@@ -312,6 +312,23 @@ angular.module('dockstore.ui')
       });
     };
 
+    this.getTestJson = function(containerId, tagName, descType) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'GET',
+          url: WebService.API_URI + '/containers/' + containerId + '/testjson',
+          params: {
+            tag: tagName,
+            type: descType
+          }
+        }).then(function(response) {
+          resolve(response.data.content);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
     this.getDescriptorFile = function(containerId, tagName, type) {
       return $q(function(resolve, reject) {
         $http({

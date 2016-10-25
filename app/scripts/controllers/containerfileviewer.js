@@ -48,6 +48,10 @@ angular.module('dockstore.ui')
           lineNumNode = document.getElementsByClassName('line-number-dockerfile');
           lineNumLength = $('.line-number-dockerfile').children().length;
           totalLines = $scope.totalLinesDf;
+        }if(type === 'testjson'){
+          lineNumNode = document.getElementsByClassName('line-number-testjson');
+          lineNumLength = $('.line-number-testjson').children().length;
+          totalLines = $scope.totalLinesDf;
         }
         //reset line numbers for new file by removing the nodes of line numbers
         if(lineNumLength > 0){
@@ -72,6 +76,9 @@ angular.module('dockstore.ui')
         } else if (type === 'dockerfile') {
           selectedElement = $('*[type="container-file-viewer-dockerfile"] > pre')[0];
           className = "line-number-dockerfile";
+        } else if (type === 'testjson') {
+          selectedElement = $('*[type="container-file-viewer-testjson"] > pre')[0];
+          className = "line-number-testjson";
         }
         if (selectedElement.children.length === 1) {
           // have not inserted line number span yet
@@ -263,6 +270,10 @@ angular.module('dockstore.ui')
         return $scope.type === 'dockerfile';
       };
 
+      $scope.isTestJson = function() {
+        return $scope.type === 'testjson';
+      };
+
       $scope.getContainerTags = function() {
         var sortedTagObjs = $scope.containerObj.tags;
         sortedTagObjs.sort(function(a, b) {
@@ -289,6 +300,22 @@ angular.module('dockstore.ui')
             function(dockerFile) {
               $scope.fileContents = dockerFile;
               return dockerFile;
+            },
+            function(response) {
+              return $q.reject(response);
+            }
+          )
+          .finally(
+            function() { $scope.fileLoaded = true; }
+          );
+      };
+
+      $scope.getTestJson = function(containerId, tagName, descType) {
+        return ContainerService.getTestJson(containerId, tagName, descType)
+          .then(
+            function(testJson) {
+              $scope.fileContents = testJson;
+              return testJson;
             },
             function(response) {
               return $q.reject(response);
@@ -417,6 +444,19 @@ angular.module('dockstore.ui')
               });
             }
             break;
+          case 'testjson':
+            $scope.expectedFilename = 'TestJson';
+            var testjson = $scope.getTestJson($scope.containerObj.id, $scope.selTagName, $scope.selDescriptorName);
+            if(testjson !== undefined){
+              testjson.then(function(s){
+                $scope.totalLinesDf = s.split(/\n/).length;
+                $scope.getContentHTML("testjson");
+              },
+              function(e){
+                console.log("error refreshDocument",e);
+              });
+            }
+            break;
           default:
           // ...
         }
@@ -446,6 +486,19 @@ angular.module('dockstore.ui')
               file.then(function(s){
                 $scope.totalLinesDesc = s.split(/\n/).length;
                 $scope.getContentHTML("descriptor");
+              },
+              function(e){
+                console.log("error refreshDocument",e);
+              });
+            }
+            break;
+            case 'testjson':
+            $scope.expectedFilename = 'TestJson';
+            var testjson = $scope.getTestJson($scope.containerObj.id, $scope.selTagName, $scope.selDescriptorName);
+            if(testjson !== undefined){
+              testjson.then(function(s){
+                $scope.totalLinesDf = s.split(/\n/).length;
+                $scope.getContentHTML("testjson");
               },
               function(e){
                 console.log("error refreshDocument",e);
