@@ -220,6 +220,10 @@
               </div>
             </form>
           </li>
+          <li>
+            <strong uib-tooltip="Path in Git repository to the workflows's test.json file.">Test Json Path</strong>:
+            {{workflowObj.default_test_json_path}}
+          <li>
           <li ng-show="editMode">
             <strong>Mode</strong>:
             {{workflowObj.mode | lowercase}}
@@ -349,13 +353,21 @@
         </div>
       </uib-tab>
       <uib-tab active="activeTabs[4]" disable="!isWorkflowFull()" style="min-width: 145px !important;">
+        <uib-tab-heading ng-click="checkPage()">Test Json</uib-tab-heading>
+        <div workflow-file-viewer
+             type="testjson"
+             workflow-obj="workflowObj"
+             ng-if="workflowObj">
+        </div>
+      </uib-tab>
+      <uib-tab active="activeTabs[5]" disable="!isWorkflowFull()" style="min-width: 145px !important;">
         <uib-tab-heading ng-click="getTools()">Tools</uib-tab-heading>
         <div workflow-tools-grid
             ng-if="workflowObj"
             workflow-obj="workflowObj">
         </div>
       </uib-tab>
-      <uib-tab active="activeTabs[5]" disable="!isWorkflowFull()" style="min-width: 145px !important;">
+      <uib-tab active="activeTabs[6]" disable="!isWorkflowFull()" style="min-width: 145px !important;">
         <uib-tab-heading ng-click="openDAG()">DAG</uib-tab-heading>
         <div workflow-dag-view
              ng-if="workflowObj"

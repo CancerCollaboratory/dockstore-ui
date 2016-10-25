@@ -56,7 +56,7 @@ angular.module('dockstore.ui')
         scope.$watchGroup(
           ['selTagName', 'selDescriptorName'],
           function() {
-            scope.refreshDocumentType();
+            scope.refreshDocument();
           });
         scope.$watchGroup(
           ['containerObj.id', 'selSecondaryDescriptorName'],

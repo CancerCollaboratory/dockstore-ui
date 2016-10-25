@@ -214,6 +214,22 @@ angular.module('dockstore.ui')
       });
     };
 
+    this.getTestJson = function(workflowId, versionName) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'GET',
+          url: WebService.API_URI + '/workflows/' + workflowId + '/testjson',
+          params: {
+            version: versionName
+          }
+        }).then(function(response) {
+          resolve(response.data.content);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
     this.setWorkflowLabels = function(workflowId, labels) {
       return $q(function(resolve, reject) {
         $http({

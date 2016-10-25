@@ -43,6 +43,7 @@ angular.module('dockstore.ui')
         scope.$on('refreshFiles', function(event) {
           scope.setDocument();
           scope.refreshDocument();
+          scope.checkDescriptor();
         });
         scope.$on('checkDescPageType', function(event) {
           scope.checkDescriptor();
@@ -50,7 +51,7 @@ angular.module('dockstore.ui')
         scope.$watchGroup(
           ['selVersionName','descriptor'],
           function(newValues, oldValues) {
-            scope.refreshDocumentType();
+            scope.refreshDocument();
           });
         scope.$watchGroup(
           ['workflowObj.id', 'selSecondaryDescriptorName'],

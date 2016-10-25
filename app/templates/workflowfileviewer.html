@@ -26,7 +26,7 @@
     </select>
   </div>
 
-  <div class="ds-descriptor-selector">
+  <div class="ds-descriptor-selector" ng-hide="isTestJson()">
     <strong>File</strong>:
     <select class="ds-wide-descriptor" ng-model="selSecondaryDescriptorName">
       <option
@@ -45,19 +45,34 @@
   A {{expectedFilename}} associated with this workflow could not be found.
 </div>
 <style>
-  pre .line-number {
-    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
-    font-size:inherit;
-    color:#444;
-    float:left;
-    margin:7px 2px 0 0;
-    border-right:1px solid #444;
-    text-align:left;
-    padding:0 10px 2px 0;
+  pre .line-number-desc {
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-size:inherit;
+  color:#444;
+  float:left;
+  margin:7px 2px 0 0;
+  border-right:1px solid #444;
+  text-align:left;
+  padding:0 10px 2px 0;
   }
 
-  pre .line-number span {
-    display:block;
+  pre .line-number-desc span {
+  display:block;
+  }
+
+  pre .line-number-testjson {
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-size:inherit;
+  color:#444;
+  float:left;
+  margin:7px 2px 0 0;
+  border-right:1px solid #444;
+  text-align:left;
+  padding:0 10px 2px 0;
+  }
+
+  pre .line-number-testjson span {
+  display:block;
   }
 
   pre .cl {
@@ -70,8 +85,9 @@
     /*this will create a horizontal scrollbar if the line is longer than the specified content width*/
   }
 </style>
-<div hljs id="code"
+<div hljs class="code"
      source="fileContents"
      hljs-language="yaml"
+     type="workflow-file-viewer-{{type}}"
      ng-show="fileLoaded && fileContents">
 </div>
