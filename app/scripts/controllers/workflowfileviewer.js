@@ -36,7 +36,6 @@ angular.module('dockstore.ui')
       $scope.fileLoaded = false;
       $scope.fileContents = null;
       $scope.successContent = [];
-      $scope.fileContent = null;
 
       $scope.addLineNumbers = function(type){
         //get line numbers node and total line numbers
@@ -93,7 +92,7 @@ angular.module('dockstore.ui')
           return;
         }
         $scope.successContent = [];
-        $scope.fileContent = null;
+        $scope.fileContents = null;
         var accumulator = [];
         var index = 0;
         var m = [];
@@ -149,27 +148,28 @@ angular.module('dockstore.ui')
             if ($scope.successContent.length !== 0) {
               if ($scope.workflowObj.defaultVersion === null) {
                 $scope.selVersionName = $scope.successContent[0].version;
-                $scope.fileContent = $scope.successContent[0].content;
+                $scope.fileContents = $scope.successContent[0].content;
               } else {
                 for (var counter = 0; counter < $scope.successContent.length; counter++) {
                   if ($scope.successContent[counter].version === $scope.workflowObj.defaultVersion) {
                     $scope.selVersionName = $scope.successContent[counter].version;
-                    $scope.fileContent = $scope.successContent[counter].content;
+                    $scope.fileContents = $scope.successContent[counter].content;
                     isVersionValid = true;
                     break;
                   }
                 }
                 if (!isVersionValid) {
                   $scope.selVersionName = $scope.successContent[0].version;
-                  $scope.fileContent = $scope.successContent[0].content;
+                  $scope.fileContents = $scope.successContent[0].content;
                 }
               }
             }
 
-            var result = $scope.fileContent;
+            var result = $scope.fileContents;
             m = [];
             v = false;
             count = 0;
+            if (result !== null){
 
             if($scope.descriptor === "cwl"){
               //Descriptor: CWL
@@ -210,10 +210,12 @@ angular.module('dockstore.ui')
                 v = true;
               }
             }
+
             $scope.totalLines = result.split(/\n/).length;
-            $scope.getContentHTML();
+            $scope.getContentHTML('descriptor');
             $scope.$emit('returnMissing',m);
             $scope.$emit('returnValid',v);
+            }
           },
           function(e){
             console.log("error get success result",e);
@@ -333,14 +335,16 @@ angular.module('dockstore.ui')
         $scope.selSecondaryDescriptorName = $scope.secondaryDescriptors[0];
       };
 
-      $scope.refreshDocument = function() {
+      $scope.refreshDocument = function(versionChange) {
         $scope.fileLoaded = false;
         $scope.fileContents = null;
         switch ($scope.type) {
           case 'descriptor':
             $scope.expectedFilename = 'Descriptor';
             $scope.secondaryDescriptors = extracted();
-            $scope.selSecondaryDescriptorName = $scope.secondaryDescriptors[0];
+            if (versionChange == true) {
+                $scope.selSecondaryDescriptorName = $scope.secondaryDescriptors[0];
+            }
             var descriptor = $scope.getSecondaryDescriptorFile($scope.workflowObj.id, $scope.selVersionName, $scope.descriptor, $scope.selSecondaryDescriptorName);
             if (descriptor) {
               descriptor.then(

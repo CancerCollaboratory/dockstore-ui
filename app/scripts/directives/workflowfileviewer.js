@@ -42,7 +42,7 @@ angular.module('dockstore.ui')
         });
         scope.$on('refreshFiles', function(event) {
           scope.setDocument();
-          scope.refreshDocument();
+          scope.refreshDocument(false);
           scope.checkDescriptor();
         });
         scope.$on('checkDescPageType', function(event) {
@@ -51,12 +51,12 @@ angular.module('dockstore.ui')
         scope.$watchGroup(
           ['selVersionName','descriptor'],
           function(newValues, oldValues) {
-            scope.refreshDocument();
+            scope.refreshDocument(true);
           });
         scope.$watchGroup(
           ['workflowObj.id', 'selSecondaryDescriptorName'],
           function(newValues, oldValues) {
-            scope.refreshDocument();
+            scope.refreshDocument(false);
           });
       }
     };
