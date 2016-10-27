@@ -218,7 +218,7 @@ angular.module('dockstore.ui')
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
-          url: WebService.API_URI + '/workflows/' + workflowId + '/testjson',
+          url: WebService.API_URI + '/workflows/' + workflowId + '/testparameter',
           params: {
             version: versionName
           }

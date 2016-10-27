@@ -316,7 +316,7 @@ angular.module('dockstore.ui')
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
-          url: WebService.API_URI + '/containers/' + containerId + '/testjson',
+          url: WebService.API_URI + '/containers/' + containerId + '/testparameter',
           params: {
             tag: tagName,
             type: descType

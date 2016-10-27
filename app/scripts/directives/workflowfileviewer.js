@@ -28,7 +28,7 @@ angular.module('dockstore.ui')
       restrict: 'AE',
       controller: 'WorkflowFileViewerCtrl',
       scope: {
-        type: '@',
+        type: '=',
         workflowObj: '=',
         isEnabled: '='
       },
@@ -56,6 +56,7 @@ angular.module('dockstore.ui')
         scope.$watchGroup(
           ['workflowObj.id', 'selSecondaryDescriptorName'],
           function(newValues, oldValues) {
+            scope.setType('descriptor');
             scope.refreshDocument(false);
           });
       }

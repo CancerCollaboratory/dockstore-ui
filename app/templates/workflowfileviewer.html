@@ -13,6 +13,9 @@
   ~    See the License for the specific language governing permissions and
   ~    limitations under the License.
   -->
+<ul class="nav nav-tabs" id="file_tabs">
+  <li ng-repeat="fileTab in fileTabs" ng-click="setType(fileTab)"><a data-toggle="tab">{{fileTab}}</a></li>
+</ul>
 
 <div class="ds-holder">
   <div class="ds-version-selector">

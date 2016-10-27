@@ -161,7 +161,7 @@
 </div>
 <div class="row" ng-show="containerObj">
   <div class="ds-tabs" ng-class="editMode ? 'col-md-12' : 'col-md-9'">
-    <uib-tabset>
+    <uib-tabset >
       <uib-tab active="activeTabs[0]">
         <uib-tab-heading>Info</uib-tab-heading>
         <ul class="list-unstyled container-info">
@@ -355,10 +355,10 @@
           </li>
           <li>
             <strong uib-tooltip="Path in Git repository to the tool's CWL test.json file.">CWL Test Json Path</strong>:
-            {{containerObj.default_cwl_test_json_path}}
+            {{containerObj.default_cwl_test_parameter_file}}
           <li>
             <strong uib-tooltip="Path in Git repository to the tool's WDL test.json file.">WDL Test Json Path</strong>:
-            {{containerObj.default_wdl_test_json_path}}
+            {{containerObj.default_wdl_test_parameter_file}}
           </li>
             <strong>Build Mode</strong>:
             {{getContainerModeString(containerObj.mode)}}

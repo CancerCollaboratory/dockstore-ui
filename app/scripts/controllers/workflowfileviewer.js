@@ -36,6 +36,7 @@ angular.module('dockstore.ui')
       $scope.fileLoaded = false;
       $scope.fileContents = null;
       $scope.successContent = [];
+      $scope.fileTabs = ['descriptor', 'testjson'];
 
       $scope.addLineNumbers = function(type){
         //get line numbers node and total line numbers
@@ -59,6 +60,11 @@ angular.module('dockstore.ui')
           line.innerHTML = i;
           $(lineNumNode).append(line);
         }
+      };
+
+      $scope.setType = function(type) {
+        $scope.type = type;
+        $scope.refreshDocument(false);
       };
 
       $scope.getContentHTML = function (type) {
