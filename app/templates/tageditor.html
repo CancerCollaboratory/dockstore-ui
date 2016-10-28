@@ -246,7 +246,7 @@
                 ng-model="tagObj.wdl_test_parameter_file"
                 ng-minlength="3"
                 ng-maxlength="128"
-                ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.json$/i"
+                ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.(json|yml|yaml)$/i"
                 required
                 data-toggle="tooltip"
                 title="Relative path to the WDL Test Parameter File in the Git repository."

@@ -352,7 +352,7 @@ angular.module('dockstore.ui')
               }
               break;
           case 'testparameter':
-            $scope.expectedFilename = 'TestParameter';
+            $scope.expectedFilename = 'Test Parameter File';
             var testparameter = $scope.getTestParameterFile($scope.workflowObj.id, $scope.selVersionName);
             if (testparameter) {
               testparameter.then(

@@ -28,7 +28,7 @@ angular.module('dockstore.ui')
       restrict: 'AE',
       controller: 'ContainerFileViewerCtrl',
       scope: {
-        type: '@',
+        type: '=',
         containerObj: '=',
         isEnabled: '='
       },
@@ -44,7 +44,7 @@ angular.module('dockstore.ui')
         });
         scope.$on('refreshFiles', function() {
           scope.setDocument();
-          scope.refreshDocument();
+          scope.refreshDocument(false);
           scope.checkDescriptor();
         });
         scope.$on('checkDescPageType', function() {
@@ -56,12 +56,19 @@ angular.module('dockstore.ui')
         scope.$watchGroup(
           ['selTagName', 'selDescriptorName'],
           function() {
-            scope.refreshDocument();
+            scope.refreshDocument(true);
           });
         scope.$watchGroup(
-          ['containerObj.id', 'selSecondaryDescriptorName'],
+          ['selSecondaryDescriptorName'],
           function() {
-            scope.refreshDocument();
+            scope.setType('descriptor');
+            scope.refreshDocument(false);
+          });
+        scope.$watchGroup(
+          ['containerObj.id'],
+          function() {
+            scope.setType('dockerfile');
+            scope.refreshDocument(false);
           });
       }
     };

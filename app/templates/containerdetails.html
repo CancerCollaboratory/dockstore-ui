@@ -477,27 +477,11 @@
         </div>
       </uib-tab>
       <uib-tab active="activeTabs[3]">
-        <uib-tab-heading ng-click="dockerfileTab()">Dockerfile</uib-tab-heading>
+        <uib-tab-heading ng-click="dockerfileTab()">Files</uib-tab-heading>
         <div container-file-viewer
             type="dockerfile"
             container-obj="containerObj"
             ng-if="containerObj">
-        </div>
-      </uib-tab>
-      <uib-tab active="activeTabs[4]">
-        <uib-tab-heading ng-click="checkPage()">Descriptor</uib-tab-heading>
-        <div container-file-viewer
-            type="descriptor"
-            container-obj="containerObj"
-            ng-if="containerObj">
-        </div>
-      </uib-tab>
-      <uib-tab active="activeTabs[5]">
-        <uib-tab-heading ng-click="checkPage()">Test Json</uib-tab-heading>
-        <div container-file-viewer
-             type="testjson"
-             container-obj="containerObj"
-             ng-if="containerObj">
         </div>
       </uib-tab>
     </uib-tabset>
