@@ -32,29 +32,40 @@ angular.module('dockstore.ui')
     function ($scope, $q, WorkflowService, NtfnService) {
 
       $scope.descriptor = $scope.workflowObj.descriptorType;
-
       $scope.fileLoaded = false;
       $scope.fileContents = null;
       $scope.successContent = [];
-      $scope.fileTabs = ['descriptor', 'testjson'];
+      $scope.fileTabs = ['descriptor', 'testparameter'];
 
-      $scope.addLineNumbers = function(type){
-        //get line numbers node and total line numbers
-        var lineNumNode = document.getElementsByClassName('line-number-desc');
-        var lineNumLength = $('.line-number-desc').children().length;
-        var totalLines = $scope.totalLines;
+      $scope.setupLineNumbers = function () {
+        var selectedElement = $('*[type="workflow-file-viewer"] > pre')[0];
+        var className = "line-number";
 
-        if(type === 'testjson'){
-          lineNumNode = document.getElementsByClassName('line-number-testjson');
-          lineNumLength = $('.line-number-testjson').children().length;
-        }
-        //reset line numbers for new file by removing the nodes of line numbers
-        if(lineNumLength > 0){
-          while(lineNumNode[0].firstChild){
-            lineNumNode[0].removeChild(lineNumNode[0].firstChild);
+        if (selectedElement !== undefined) {
+          if (selectedElement.children.length === 1) {
+            // Insert line num span
+            var lineNumSpan = document.createElement("SPAN");
+            var closeSpan = document.createElement("SPAN");
+            selectedElement.appendChild(closeSpan);
+            selectedElement.insertBefore(lineNumSpan, selectedElement.children[0]);
+
+            // Setup attributes
+            lineNumSpan.setAttribute("class", className);
+            closeSpan.setAttribute("class", "cl");
           }
         }
-        //add the line numbers beside the descriptor file
+        $scope.addLineNumbers();
+      };
+
+      $scope.addLineNumbers = function(){
+        // Get line numbers node and total line numbers
+        var lineNumNode = $('.line-number');
+        var totalLines = $scope.totalLines;
+
+        // Remove any existing line numbers
+        lineNumNode.children().remove();
+
+        // Add the line numbers beside the descriptor file
         for (var i = 1; i < totalLines; i++) {
           var line = document.createElement("SPAN");
           line.innerHTML = i;
@@ -65,31 +76,6 @@ angular.module('dockstore.ui')
       $scope.setType = function(type) {
         $scope.type = type;
         $scope.refreshDocument(false);
-      };
-
-      $scope.getContentHTML = function (type) {
-        var selectedElement;
-        var className;
-        if (type === 'descriptor') {
-          selectedElement = $('*[type="workflow-file-viewer-descriptor"] > pre')[0];
-          className = "line-number-desc";
-        } else if (type === 'testjson') {
-          selectedElement = $('*[type="workflow-file-viewer-testjson"] > pre')[0];
-          className = "line-number-testjson";
-        }
-        if (selectedElement !== undefined) {
-          if (selectedElement.children.length === 1) {
-            // have not inserted line number span yet
-            var lineNumSpan = document.createElement("SPAN");
-            var closeSpan = document.createElement("SPAN");
-            selectedElement.appendChild(closeSpan);
-            selectedElement.insertBefore(lineNumSpan, selectedElement.children[0]);
-            //set id and classes
-            lineNumSpan.setAttribute("class", className);
-            closeSpan.setAttribute("class", "cl");
-          }
-        }
-        $scope.addLineNumbers(type);
       };
 
       $scope.checkDescriptor = function() {
@@ -218,7 +204,7 @@ angular.module('dockstore.ui')
             }
 
             $scope.totalLines = result.split(/\n/).length;
-            $scope.getContentHTML('descriptor');
+            $scope.setupLineNumbers('descriptor');
             $scope.$emit('returnMissing',m);
             $scope.$emit('returnValid',v);
             }
@@ -241,8 +227,8 @@ angular.module('dockstore.ui')
         }
       };
 
-      $scope.isTestJson = function() {
-        return $scope.type === 'testjson';
+      $scope.isTestParameter = function() {
+        return $scope.type === 'testparameter';
       };
 
       $scope.getWorkflowVersions = function() {
@@ -301,7 +287,7 @@ angular.module('dockstore.ui')
           );
       };
 
-      $scope.getTestJson = function(workflowId, versionName) {
+      $scope.getTestParameterFile = function(workflowId, versionName) {
         return WorkflowService.getTestJson(workflowId, versionName)
           .then(
             function(testJson) {
@@ -313,7 +299,9 @@ angular.module('dockstore.ui')
             }
           )
           .finally(
-            function() { $scope.fileLoaded = true; }
+            function() {
+              $scope.fileLoaded = true;
+            }
           );
       };
 
@@ -348,7 +336,7 @@ angular.module('dockstore.ui')
           case 'descriptor':
             $scope.expectedFilename = 'Descriptor';
             $scope.secondaryDescriptors = extracted();
-            if (versionChange == true) {
+            if (versionChange === true) {
                 $scope.selSecondaryDescriptorName = $scope.secondaryDescriptors[0];
             }
             var descriptor = $scope.getSecondaryDescriptorFile($scope.workflowObj.id, $scope.selVersionName, $scope.descriptor, $scope.selSecondaryDescriptorName);
@@ -356,21 +344,21 @@ angular.module('dockstore.ui')
               descriptor.then(
               function(s){
                 $scope.totalLines = s.split(/\n/).length;
-                $scope.getContentHTML('descriptor');
+                $scope.setupLineNumbers();
               },
                 function(e){
 //                console.log("error refreshDocument",e);
               });
               }
               break;
-          case 'testjson':
-            $scope.expectedFilename = 'TestJson';
-            var testjson = $scope.getTestJson($scope.workflowObj.id, $scope.selVersionName);
-            if (testjson) {
-              testjson.then(
+          case 'testparameter':
+            $scope.expectedFilename = 'TestParameter';
+            var testparameter = $scope.getTestParameterFile($scope.workflowObj.id, $scope.selVersionName);
+            if (testparameter) {
+              testparameter.then(
               function(s){
                 $scope.totalLines = s.split(/\n/).length;
-                $scope.getContentHTML('testjson');
+                $scope.setupLineNumbers();
               },
                 function(e){
 //                console.log("error refreshDocument",e);
