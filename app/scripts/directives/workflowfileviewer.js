@@ -46,6 +46,7 @@ angular.module('dockstore.ui')
           scope.checkDescriptor();
         });
         scope.$on('checkDescPageType', function(event) {
+          scope.refreshDocument(false);
           scope.checkDescriptor();
         });
         scope.$watchGroup(

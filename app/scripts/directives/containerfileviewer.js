@@ -48,6 +48,7 @@ angular.module('dockstore.ui')
           scope.checkDescriptor();
         });
         scope.$on('checkDescPageType', function() {
+          scope.refreshDocument(false);
           scope.checkDescriptor();
         });
         scope.$on('dockerfileTab', function(){
