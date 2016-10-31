@@ -556,7 +556,7 @@ angular.module('dockstore.ui')
         return ContainerService.updateToolDefaults(containerId, $scope.containerObj)
           .then(
             function(containerObj){
-              $scope.updateToolInfoWithDatabaseInfo();
+              $scope.updateToolInfoWithDatabaseInfo(containerObj);
               $scope.updateContainerObj();
               return containerObj;
             },
@@ -578,7 +578,7 @@ angular.module('dockstore.ui')
         return ContainerService.updateToolPathTag(containerId, $scope.containerObj)
           .then(
             function(containerObj){
-              $scope.updateToolInfoWithDatabaseInfo();
+              $scope.updateToolInfoWithDatabaseInfo(containerObj);
               $scope.updateContainerObj();
               return containerObj;
             },
@@ -596,7 +596,7 @@ angular.module('dockstore.ui')
           );
       };
 
-      $scope.updateToolInfoWithDatabaseInfo = function() {
+      $scope.updateToolInfoWithDatabaseInfo = function(containerObj) {
         if($scope.containerObj.default_cwl_path !== containerObj.default_cwl_path){
           $scope.containerObj.default_cwl_path = containerObj.default_cwl_path;
         } else if($scope.containerObj.default_wdl_path !== containerObj.default_wdl_path){
