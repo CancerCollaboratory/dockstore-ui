@@ -256,17 +256,19 @@ angular.module('dockstore.ui')
     };
 
     // this is actually a partial update, see https://github.com/ga4gh/dockstore/issues/274
-    this.setDefaultToolPath = function(containerId,cwlPath,wdlPath,dfPath,toolname,giturl){
+    this.updateToolDefaults = function(containerId,containerObj){
       return $q(function(resolve, reject) {
         $http({
           method: 'PUT',
           url: WebService.API_URI + '/containers/' + containerId,
           data: {
-            default_cwl_path: cwlPath,
-            default_wdl_path: wdlPath,
-            default_dockerfile_path: dfPath,
-            toolname: toolname,
-            gitUrl: giturl
+            default_cwl_path: containerObj.default_cwl_path,
+            default_wdl_path: containerObj.default_wdl_path,
+            default_dockerfile_path: containerObj.default_dockerfile_path,
+            toolname: containerObj.toolname,
+            gitUrl: containerObj.gitUrl,
+            default_cwl_test_parameter_file: containerObj.default_cwl_test_parameter_file,
+            default_wdl_test_parameter_file: containerObj.default_wdl_test_parameter_file
           }
         }).then(function(response) {
           resolve(response.data);
@@ -276,17 +278,19 @@ angular.module('dockstore.ui')
       });
     };
 
-    this.updateToolPathTag = function(containerId,cwlPath,wdlPath,dfPath,toolname,giturl){
+    this.updateToolPathTag = function(containerId,containerObj){
       return $q(function(resolve, reject) {
         $http({
           method: 'PUT',
           url: WebService.API_URI + '/containers/' + containerId + '/updateTagPaths',
           data: {
-            default_cwl_path: cwlPath,
-            default_wdl_path: wdlPath,
-            default_dockerfile_path: dfPath,
-            toolname: toolname,
-            gitUrl: giturl
+            default_cwl_path: containerObj.default_cwl_path,
+            default_wdl_path: containerObj.default_wdl_path,
+            default_dockerfile_path: containerObj.default_dockerfile_path,
+            toolname: containerObj.toolname,
+            gitUrl: containerObj.gitUrl,
+            default_cwl_test_parameter_file: containerObj.default_cwl_test_parameter_file,
+            default_wdl_test_parameter_file: containerObj.default_wdl_test_parameter_file
           }
         }).then(function(response) {
           resolve(response.data);
