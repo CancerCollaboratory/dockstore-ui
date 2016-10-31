@@ -169,7 +169,7 @@ angular.module('dockstore.ui')
             workflowName: workflowObj.workflowName,
             descriptorType: workflowObj.descriptorType,
             path: workflowObj.path,
-            gitUrl: workflowObj.giturl,
+            gitUrl: workflowObj.gitUrl,
             default_test_parameter_file: workflowObj.default_test_parameter_file
           }
         }).then(function(response) {
@@ -190,7 +190,7 @@ angular.module('dockstore.ui')
             workflowName: workflowObj.workflowName,
             descriptorType: workflowObj.descriptorType,
             path: workflowObj.path,
-            gitUrl: workflowObj.giturl,
+            gitUrl: workflowObj.gitUrl,
             default_test_parameter_file: workflowObj.default_test_parameter_file
           }
         }).then(function(response) {
