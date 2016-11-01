@@ -20,45 +20,45 @@
       <thead>
         <tr>
           <th style="width:10.5% !important">
-            <span uib-tooltip="Tag from Docker registry repository.">Tag</span>
+            <span uib-tooltip="Tags from Docker repository">Tag</span>
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('name')"
                   ng-click="clickSortColumn('name')">
             </span>
           </th>
           <th style="width:8% !important">
-            <span uib-tooltip="Git branch/tag associated with Docker registry tag.">Git Reference</span>
+            <span uib-tooltip-html="gitReferenceTooltip">Git Reference</span>
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('reference')"
                   ng-click="clickSortColumn('reference')">
             </span>
           </th>
           <th style="width:21.5% !important">
-            <span uib-tooltip="Default tool paths for given tag.">Tool Path</span>
+            <span uib-tooltip="Tool paths for given version">Tool Path</span>
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('name')"
                   ng-click="clickSortColumn('name')">
             </span>
           </th>
           <th style="width:16.5% !important">
-            <span uib-tooltip="Date of last update to tag.">Date Modified</span>
+            <span uib-tooltip="Date of last build of the Docker image">Date Built</span>
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('last_modified')"
                   ng-click="clickSortColumn('last_modified')">
             </span>
           </th>
           <th style="width:7.5% !important">
-            <span uib-tooltip="A tag is valid if it has at least one valid descriptor file.">Valid</span>
+            <span uib-tooltip="A version is valid if it has at least one valid descriptor file and Dockerfile">Valid</span>
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('valid')"
                   ng-click="clickSortColumn('valid')">
             </span>
           </th>
           <th style="width:6.5% !important">
-            <span uib-tooltip="View more information about the given tag.">Actions</span>
+            <span uib-tooltip="View more information about the given version">Actions</span>
           </th>
           <th>
-            <span uib-tooltip="Docker pull command.">Docker Pull</span>
+            <span uib-tooltip="Docker pull command">Docker Pull</span>
           </th>
         </tr>
       </thead>

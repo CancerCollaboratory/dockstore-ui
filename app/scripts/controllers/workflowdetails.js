@@ -42,7 +42,7 @@ angular.module('dockstore.ui')
       $scope.showEditWorkflowPath = true;
       $scope.showEditDescriptorType = true;
       $scope.pathExtensions = ['cwl','wdl','yml','yaml'];
-      $scope.modeTooltip = $sce.trustAsHtml('Stub: Workflow only contains basic metadata.<br>Full: Workflow contains versions and sourcefiles.');
+      $scope.modeTooltip = $sce.trustAsHtml('Stub: Private workflow only containing basic metadata<br>Full:  Publishable workflow that can contain versions and sourcefiles');
 
       //there are 6 tabs, and only 1 tab can be active
       //so there are 5 tabs that are not active

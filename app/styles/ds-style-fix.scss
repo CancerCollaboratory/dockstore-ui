@@ -63,18 +63,15 @@ table.containers-grid {
 }
 
 table.tokens-grid {
-  th:nth-child(1) {
-    width: 15%;
-  }
-  th:nth-child(2) {
-    width: 20%;
-  }
-  th:nth-child(3) {
-    width: 45%;
-  }
-  th:nth-child(4) {
-    width: 20%;
-  }
+    th:nth-child(1) {
+      width: 25%;
+    }
+    th:nth-child(2) {
+      width: 60%;
+    }
+    th:nth-child(3) {
+      width: 15%;
+    }
 }
 
 table.versions-grid {
@@ -481,15 +478,12 @@ button.contact-button {
   }
   table.tokens-grid {
     th:nth-child(1) {
-      width: 20%;
-    }
-    th:nth-child(2) {
       width: 25%;
     }
-    th:nth-child(3) {
-      width: 40%;
+    th:nth-child(2) {
+      width: 60%;
     }
-    th:nth-child(4) {
+    th:nth-child(3) {
       width: 15%;
     }
   }

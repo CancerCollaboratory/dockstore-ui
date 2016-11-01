@@ -20,35 +20,35 @@
       <thead>
       <tr>
         <th>
-          <span uib-tooltip="Git branch/tag.">Git Reference</span>
+          <span uib-tooltip-html="gitReferenceTooltip">Git Reference</span>
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('reference')"
                   ng-click="clickSortColumn('reference')">
             </span>
         </th>
         <th>
-          <span uib-tooltip="Default workflow path for given Git reference.">Workflow Path</span>
+          <span uib-tooltip="Workflow path for the given Git reference">Workflow Path</span>
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('workflow_path')"
                   ng-click="clickSortColumn('workflow_path')">
             </span>
         </th>
         <th>
-          <span uib-tooltip="Date of last update to Git reference.">Date Modified</span>
+          <span uib-tooltip="Date of last update to Git reference">Date Modified</span>
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('last_modified')"
                   ng-click="clickSortColumn('last_modified')">
             </span>
         </th>
         <th>
-          <span uib-tooltip="A version is valid if it has a valid descriptor file.">Valid</span>
+          <span uib-tooltip="A version is valid if it has a valid descriptor file">Valid</span>
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('valid')"
                   ng-click="clickSortColumn('valid')">
             </span>
         </th>
         <th>
-          <span uib-tooltip="View more information about the given Git reference.">Actions</span>
+          <span uib-tooltip="View more information about the given Git reference">Actions</span>
         </th>
       </tr>
       </thead>
@@ -63,7 +63,7 @@
           <div class="git-ref">
             <input class="radio-button-reference" ng-if="editMode" type="radio" name="defaultVersion"
                    ng-model="$parent.workflowObj.defaultVersion" ng-value="versionTag.reference"
-                   ng-click="updateDefaultVersion(versionTag.reference)" uib-tooltip="Set as default branch."/>
+                   ng-click="updateDefaultVersion(versionTag.reference)" uib-tooltip="Set as default branch"/>
             {{versionTag.reference ? versionTag.reference : 'n/a'}}
             </span>
           </div>
