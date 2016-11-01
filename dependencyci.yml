@@ -3,4 +3,4 @@ platform:
   npm:
     grunt-usemin:
       tests:
-        outdated: skip
+        unmaintained: skip
