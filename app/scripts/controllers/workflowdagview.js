@@ -37,6 +37,7 @@ angular.module('dockstore.ui')
       $scope.missingTool = false;
       $scope.notFound = false;
       $scope.showPopover = false;
+      $scope.isFullscreen = false;
 
       $scope.dynamicPopover = {
           link: '',
@@ -177,6 +178,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.expandDAG = function() {
+        $scope.isFullscreen = !$scope.isFullscreen;
         // Activated on fullscreen
         $("#dag-holder").toggleClass('fullscreen');
         $("#dag-col").toggleClass('fullscreen-element');
@@ -416,6 +418,12 @@ angular.module('dockstore.ui')
           $scope.cy = window.cy = null;
         }
       };
+
+      $(document).on('keyup', function(e) {
+        if (e.keyCode == 27 && $scope.isFullscreen) {
+          $scope.expandDAG();
+        }
+      });
 
       $scope.setDocument();
 
