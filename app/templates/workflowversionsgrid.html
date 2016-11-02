@@ -16,39 +16,39 @@
 
 <div class="row">
   <div class="col-md-12">
-    <table class="table versions-grid table-bordered table-condensed table-striped">
+    <table class="table workflow-versions-grid table-bordered table-condensed table-striped">
       <thead>
       <tr>
-        <th>
-          <span uib-tooltip-html="gitReferenceTooltip">Git Reference</span>
+        <th uib-tooltip-html="gitReferenceTooltip" tooltip-append-to-body="true">
+          <span>Git Reference</span>
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('reference')"
                   ng-click="clickSortColumn('reference')">
             </span>
         </th>
-        <th>
-          <span uib-tooltip="Workflow path for the given Git reference">Workflow Path</span>
+        <th uib-tooltip="Workflow path for the given Git reference" tooltip-append-to-body="true">
+          <span>Workflow Path</span>
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('workflow_path')"
                   ng-click="clickSortColumn('workflow_path')">
             </span>
         </th>
-        <th>
-          <span uib-tooltip="Date of last update to Git reference">Date Modified</span>
+        <th uib-tooltip="Date of last update to Git reference" tooltip-append-to-body="true">
+          <span>Date Modified</span>
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('last_modified')"
                   ng-click="clickSortColumn('last_modified')">
             </span>
         </th>
-        <th>
-          <span uib-tooltip="A version is valid if it has a valid descriptor file">Valid</span>
+        <th uib-tooltip="A version is valid if it has a valid descriptor file" tooltip-append-to-body="true">
+          <span>Valid</span>
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('valid')"
                   ng-click="clickSortColumn('valid')">
             </span>
         </th>
-        <th>
-          <span uib-tooltip="View more information about the given Git reference">Actions</span>
+        <th uib-tooltip="View more information about the given Git reference" tooltip-append-to-body="true">
+          <span>Actions</span>
         </th>
       </tr>
       </thead>

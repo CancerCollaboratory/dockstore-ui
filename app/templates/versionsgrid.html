@@ -19,46 +19,46 @@
     <table class="table versions-grid table-bordered table-condensed table-striped">
       <thead>
         <tr>
-          <th style="width:10.5% !important">
-            <span uib-tooltip="Tags from Docker repository">Tag</span>
+          <th uib-tooltip="Tags from Docker repository" tooltip-append-to-body="true">
+            <span>Tag</span>
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('name')"
                   ng-click="clickSortColumn('name')">
             </span>
           </th>
-          <th style="width:8% !important">
-            <span uib-tooltip-html="gitReferenceTooltip">Git Reference</span>
+          <th uib-tooltip-html="gitReferenceTooltip" tooltip-append-to-body="true">
+            <span>Git Reference</span>
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('reference')"
                   ng-click="clickSortColumn('reference')">
             </span>
           </th>
-          <th style="width:21.5% !important">
-            <span uib-tooltip="Tool paths for given version">Tool Path</span>
+          <th uib-tooltip="Tool paths for given version" tooltip-append-to-body="true">
+            <span>Tool Path</span>
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('name')"
                   ng-click="clickSortColumn('name')">
             </span>
           </th>
-          <th style="width:16.5% !important">
-            <span uib-tooltip="Date of last build of the Docker image">Date Built</span>
+          <th uib-tooltip="Date of last build of the Docker image" tooltip-append-to-body="true">
+            <span>Date Built</span>
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('last_modified')"
                   ng-click="clickSortColumn('last_modified')">
             </span>
           </th>
-          <th style="width:7.5% !important">
-            <span uib-tooltip="A version is valid if it has at least one valid descriptor file and Dockerfile">Valid</span>
+          <th uib-tooltip="A version is valid if it has at least one valid descriptor file and Dockerfile" tooltip-append-to-body="true">
+            <span>Valid</span>
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('valid')"
                   ng-click="clickSortColumn('valid')">
             </span>
           </th>
-          <th style="width:6.5% !important">
-            <span uib-tooltip="View more information about the given version">Actions</span>
+          <th uib-tooltip="View more information about the given version" tooltip-append-to-body="true">
+            <span>Actions</span>
           </th>
-          <th>
-            <span uib-tooltip="Docker pull command">Docker Pull</span>
+          <th uib-tooltip="Docker pull command" tooltip-append-to-body="true">
+            <span>Docker Pull</span>
           </th>
         </tr>
       </thead>

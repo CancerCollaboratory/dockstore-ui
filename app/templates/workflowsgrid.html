@@ -45,7 +45,7 @@
           </thead>
           <tbody id="search-table-body">
           <!-- need a to write a 'smart search' filter -->
-          <tr ng-repeat-start="workflow in filteredWorkflows | orderBy:sortColumn:sortReverse | PreviewFilter:contLimit | PaginationFilter:getListRange()">
+          <tr ng-repeat="workflow in filteredWorkflows | orderBy:sortColumn:sortReverse | PreviewFilter:contLimit | PaginationFilter:getListRange()">
             <td>
               <a ng-href="/workflows/{{workflow.path}}">{{workflow.repository + (workflow.workflowName ? ' (' + workflow.workflowName + ')' : '')}}</a>
             </td>
@@ -64,9 +64,6 @@
                     {{getGitReposProviderName(gitReposProvider)}}</a>
                 </span>
             </td>
-          </tr>
-          <tr ng-repeat-end>
-            <td colspan="4">{{workflow.description}}</td>
           </tr>
           <tr ng-show="previewMode && filteredWorkflows.length !== 0">
             <td colspan="4" class="browse-all">
