@@ -971,6 +971,17 @@ div.tabs > div:target > div, :target #info > div, #info > div {
   color: #808080;
 }
 
+.code-holder {
+  position:relative;
+  overflow:visible;
+}
+
+.code-copy-button {
+  top:2px;
+  right:2px;
+  position:absolute;
+}
+
 html, body {
   height:100%;
 }

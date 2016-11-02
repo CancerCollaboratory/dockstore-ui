@@ -420,7 +420,7 @@ angular.module('dockstore.ui')
       };
 
       $(document).on('keyup', function(e) {
-        if (e.keyCode == 27 && $scope.isFullscreen) {
+        if (e.keyCode === 27 && $scope.isFullscreen) {
           $scope.expandDAG();
         }
       });
