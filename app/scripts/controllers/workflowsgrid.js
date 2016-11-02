@@ -119,5 +119,4 @@ angular.module('dockstore.ui')
         $scope.filteredWorkflows = $filter('filter')($scope.workflows, $scope.searchQueryWorkflow);
         $scope.entryCount = $scope.filteredWorkflows.length;
       });
-
   }]);

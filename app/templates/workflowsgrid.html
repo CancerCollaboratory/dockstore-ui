@@ -43,7 +43,7 @@
             </th>
           </tr>
           </thead>
-          <tbody>
+          <tbody id="search-table-body">
           <!-- need a to write a 'smart search' filter -->
           <tr ng-repeat-start="workflow in filteredWorkflows | orderBy:sortColumn:sortReverse | PreviewFilter:contLimit | PaginationFilter:getListRange()" ng-class="hasDescription(workflow.description)">
             <td>
