@@ -41,6 +41,7 @@ angular.module('dockstore.ui')
       $scope.invalidClass = false;
       $scope.showEditWorkflowPath = true;
       $scope.showEditDescriptorType = true;
+      $scope.showEditTestParameterPath = true;
       $scope.pathExtensions = ['cwl','wdl','yml','yaml'];
       $scope.modeTooltip = $sce.trustAsHtml('Stub: Private workflow only containing basic metadata<br>Full:  Publishable workflow that can contain versions and sourcefiles');
 
@@ -212,75 +213,6 @@ angular.module('dockstore.ui')
         }
       };
 
-      $scope.setDefaultWorkflowPath = function(workflowId, path){
-        return WorkflowService.setDefaultWorkflowPath(workflowId, path, $scope.workflowObj.workflowName, $scope.workflowObj.descriptorType,
-          $scope.workflowObj.path, $scope.workflowObj.gitUrl)
-          .then(
-            function(workflowObj){
-              $scope.workflowObj.workflow_path = workflowObj.workflow_path;
-              $scope.updateWorkflowObj();
-              return workflowObj;
-            },
-            function(response) {
-              $scope.setWorkflowDetailsError(
-                'The webservice encountered an error trying to modify default path ' +
-                'for this workflow, please ensure that the path is valid, ' +
-                'properly-formatted and does not contain prohibited ' +
-                'characters of words.',
-                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
-                response.data
-              );
-              return $q.reject(response);
-            }
-          );
-      };
-
-      $scope.setDescriptorType = function(workflowId){
-        //we are calling setDefaultWorkflowPath because PUT in this service will also change the descriptor type
-        //and required to change the same values as when changing the default path
-        return WorkflowService.setDefaultWorkflowPath(workflowId, $scope.workflowObj.workflow_path, $scope.workflowObj.workflowName,
-          $scope.workflowObj.descriptorType, $scope.workflowObj.path, $scope.workflowObj.gitUrl)
-          .then(
-            function(workflowObj){
-              $scope.workflowObj.descriptorType = workflowObj.descriptorType;
-              $scope.updateWorkflowObj();
-              return workflowObj;
-            },
-            function(response) {
-              $scope.setWorkflowDetailsError(
-                'The webservice encountered an error trying to modify descriptor type ' +
-                'for this workflow.',
-                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
-                response.data
-              );
-              return $q.reject(response);
-            }
-          );
-      };
-
-      $scope.updateWorkflowPathVersion = function(workflowId, path){
-        return WorkflowService.updateWorkflowPathVersion(workflowId, path, $scope.workflowObj.workflowName, $scope.workflowObj.descriptorType,
-          $scope.workflowObj.path, $scope.workflowObj.gitUrl)
-          .then(
-            function(workflowObj){
-              $scope.workflowObj.workflow_path = workflowObj.workflow_path;
-              $scope.updateWorkflowObj();
-              return workflowObj;
-            },
-            function(response) {
-              $scope.setWorkflowDetailsError(
-                'The webservice encountered an error trying to modify default path ' +
-                'for this workflow, please ensure that the path is valid, ' +
-                'properly-formatted and does not contain prohibited ' +
-                'characters of words.',
-                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
-                response.data
-              );
-              return $q.reject(response);
-            }
-          );
-      };
-
       $scope.setWorkflowLabels = function(workflowId, labels) {
         $scope.setWorkflowDetailsError(null);
         return WorkflowService.setWorkflowLabels(workflowId, labels)
@@ -331,18 +263,35 @@ angular.module('dockstore.ui')
         }
       };
 
-      $scope.getDaysAgo = function(timestamp) {
+      $scope.getTimeAgo = function(timestamp, timeConversion) {
         var timeDiff = (new Date()).getTime() - timestamp;
-        return Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+        return Math.floor(timeDiff / timeConversion);
       };
 
-      $scope.getDaysAgoString = function(timestamp) {
-        var daysAgo = $scope.getDaysAgo(timestamp);
-        if(daysAgo < 0){
-          daysAgo = 0;
+      $scope.getTimeAgoString = function(timestamp) {
+        var msToDays = 1000 * 60 * 60 * 24;
+        var msToHours = 1000 * 60 * 60;
+        var msToMins = 1000 * 60;
+
+        var timeAgo = $scope.getTimeAgo(timestamp, msToDays);
+        if (timeAgo < 1){
+          timeAgo = $scope.getTimeAgo(timestamp, msToHours);
+          if (timeAgo < 1) {
+            timeAgo = $scope.getTimeAgo(timestamp, msToMins);
+            if (timeAgo === 0) {
+              return '<1 minute ago';
+            } else {
+              return timeAgo.toString() +
+                    ((timeAgo === 1) ? ' minute ago' : ' minutes ago');
+            }
+          } else {
+            return timeAgo.toString() +
+                  ((timeAgo === 1) ? ' hour ago' : ' hours ago');
+          }
+        } else {
+          return timeAgo.toString() +
+                ((timeAgo === 1) ? ' day ago' : ' days ago');
         }
-        return daysAgo.toString() +
-                ((daysAgo === 1) ? ' day ago' : ' days ago');
       };
 
       $scope.getGitReposProvider = FrmttSrvc.getGitReposProvider;
@@ -403,16 +352,13 @@ angular.module('dockstore.ui')
         if($scope.workflowObj.workflow_path !== 'undefined'){
           //get the extension of the workflow path and check if it's within the extensions array
           $scope.checkExtension($scope.workflowObj.workflow_path, 'path');
+          $scope.updateWorkflowAndVersions();
+        }
+      };
 
-          //change on the webservice
-          $scope.setDefaultWorkflowPath($scope.workflowObj.id, $scope.workflowObj.workflow_path)
-            .then(function(workflowObj) {
-              $scope.updateWorkflowPathVersion($scope.workflowObj.id, $scope.workflowObj.workflow_path)
-                .then(function(workflowObj) {
-                  $scope.labelsEditMode = false;
-                  $scope.refreshWorkflow($scope.workflowObj.id,0);
-                });
-            });
+      $scope.submitTestParameterPathEdits = function(){
+        if($scope.workflowObj.default_test_parameter_file !== 'undefined'){
+          $scope.updateWorkflowAndVersions();
         }
       };
 
@@ -424,11 +370,22 @@ angular.module('dockstore.ui')
         $scope.setDescriptorType($scope.workflowObj.id)
           .then(
             function(workflowObj){
-              $scope.updateWorkflowPathVersion($scope.workflowObj.id, $scope.workflowObj.workflow_path)
+              $scope.updateWorkflowPathVersion($scope.workflowObj.id)
               .then(function(workflowObj) {
                 $scope.refreshWorkflow($scope.workflowObj.id,0);
               });
             });
+      };
+
+      $scope.updateWorkflowAndVersions = function() {
+        $scope.setDefaultWorkflowPath($scope.workflowObj.id)
+          .then(function(workflowObj) {
+            $scope.updateWorkflowPathVersion($scope.workflowObj.id)
+              .then(function(workflowObj) {
+                $scope.labelsEditMode = false;
+                $scope.refreshWorkflow($scope.workflowObj.id,0);
+              });
+          });
       };
 
       $scope.submitWorkflowEdits = function() {
@@ -490,6 +447,94 @@ angular.module('dockstore.ui')
         }
       };
 
+      $scope.setDefaultWorkflowPath = function(workflowId){
+        return WorkflowService.updateWorkflowDefaults(workflowId, $scope.workflowObj)
+          .then(
+            function(workflowObj){
+              $scope.workflowObj.workflow_path = workflowObj.workflow_path;
+              $scope.updateWorkflowObj();
+              return workflowObj;
+            },
+            function(response) {
+              $scope.setWorkflowDetailsError(
+                'The webservice encountered an error trying to modify default path ' +
+                'for this workflow, please ensure that the path is valid, ' +
+                'properly-formatted and does not contain prohibited ' +
+                'characters of words.',
+                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                response.data
+              );
+              return $q.reject(response);
+            }
+          );
+      };
+
+      $scope.setDefaultTestParameterPath = function(workflowId){
+        return WorkflowService.updateWorkflowDefaults(workflowId, $scope.workflowObj)
+          .then(
+            function(workflowObj){
+              $scope.workflowObj.default_test_parameter_file = workflowObj.default_test_parameter_file;
+              $scope.updateWorkflowObj();
+              return workflowObj;
+            },
+            function(response) {
+              $scope.setWorkflowDetailsError(
+                'The webservice encountered an error trying to modify default path ' +
+                'for this workflow, please ensure that the path is valid, ' +
+                'properly-formatted and does not contain prohibited ' +
+                'characters of words.',
+                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                response.data
+              );
+              return $q.reject(response);
+            }
+          );
+      };
+
+      $scope.setDescriptorType = function(workflowId){
+        //we are calling setDefaultWorkflowPath because PUT in this service will also change the descriptor type
+        //and required to change the same values as when changing the default path
+        return WorkflowService.setDefaultWorkflowPath(workflowId, $scope.workflowObj)
+          .then(
+            function(workflowObj){
+              $scope.workflowObj.descriptorType = workflowObj.descriptorType;
+              $scope.updateWorkflowObj();
+              return workflowObj;
+            },
+            function(response) {
+              $scope.setWorkflowDetailsError(
+                'The webservice encountered an error trying to modify descriptor type ' +
+                'for this workflow.',
+                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                response.data
+              );
+              return $q.reject(response);
+            }
+          );
+      };
+
+      $scope.updateWorkflowPathVersion = function(workflowId){
+        return WorkflowService.updateWorkflowPathVersion(workflowId, $scope.workflowObj)
+          .then(
+            function(workflowObj){
+              $scope.workflowObj.workflow_path = workflowObj.workflow_path;
+              $scope.updateWorkflowObj();
+              return workflowObj;
+            },
+            function(response) {
+              $scope.setWorkflowDetailsError(
+                'The webservice encountered an error trying to modify default path ' +
+                'for this workflow, please ensure that the path is valid, ' +
+                'properly-formatted and does not contain prohibited ' +
+                'characters of words.',
+                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                response.data
+              );
+              return $q.reject(response);
+            }
+          );
+      };
+
       $scope.isWorkflowValid = function() {
         if ($scope.workflowObj.is_published) {
           return true;
@@ -533,7 +578,7 @@ angular.module('dockstore.ui')
       });
 
       $scope.getRegistry = function(gitUrl) {
-        if (gitUrl !== undefined) {
+        if (gitUrl !== undefined && gitUrl !== null) {
           if (gitUrl.indexOf('github.com') !== -1) {
             return 'GitHub';
           } else if (gitUrl.indexOf('bitbucket.org') !== -1) {
@@ -549,7 +594,7 @@ angular.module('dockstore.ui')
       };
 
      $scope.getRepoUrl = function(organization, repository, registry) {
-      if (registry !== undefined) {
+      if (registry !== undefined && registry !== null) {
         if (registry.toLowerCase() === "github") {
           return 'https://github.com/' + organization + '/' + repository;
         } else if (registry.toLowerCase() === "bitbucket") {
