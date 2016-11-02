@@ -43,7 +43,7 @@ angular.module('dockstore.ui')
       $scope.getDateModified = FrmttSrvc.getDateModified;
 
       $scope.hasDescription = function(description) {
-        if (description !== undefined && description !== null && description !== '') {
+        if (description !== undefined && description !== null && description !== '' && $scope.homePage === false) {
           return 'search-with-description';
         } else {
           return '';

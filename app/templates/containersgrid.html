@@ -72,9 +72,9 @@
                 <div copy-text>{{dockerPullCmd}}</div>
               </td>
             </tr>
-            <tr ng-repeat-end ng-if="container.description !== '' && container.description !== null && container.description !== undefined" class="search-description-row">
+            <tr ng-repeat-end ng-if="container.description !== '' && container.description !== null && container.description !== undefined && homePage === false" class="search-description-row">
               <td class="search-description" colspan="4" style="font-size:90%">
-                <span style="color: #808080;">{{getDateModified(container.lastUpdated)}} </span> {{container.description | limitTo:descriptionLimit}}{{container.description.length >= descriptionLimit ? '...' : ''}}
+                <span class="search-date">{{getDateModified(container.lastUpdated)}} </span> {{container.description | limitTo:descriptionLimit}}{{container.description.length >= descriptionLimit ? '...' : ''}}
               </td>
             </tr>
             <tr ng-show="previewMode && filteredContainers.length !== 0">

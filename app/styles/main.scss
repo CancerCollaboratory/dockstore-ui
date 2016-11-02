@@ -960,10 +960,15 @@ div.tabs > div:target > div, :target #info > div, #info > div {
 .search-description {
   padding: 0px 35px 10px 35px;
   line-height: 1.5;
+  font-size:90%;
 }
 
 .search-with-description td {
   border-bottom: 0px;
+}
+
+.search-date {
+  color: #808080;
 }
 
 html, body {
