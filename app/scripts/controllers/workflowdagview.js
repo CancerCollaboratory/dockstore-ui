@@ -420,6 +420,7 @@ angular.module('dockstore.ui')
       };
 
       $(document).on('keyup', function(e) {
+        // Keycode 27 is the ESC key
         if (e.keyCode === 27 && $scope.isFullscreen) {
           $scope.expandDAG();
         }
