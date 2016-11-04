@@ -47,10 +47,7 @@ angular.module('dockstore.ui')
       $scope.validVersions = [];
       $scope.workflowVersion = '';
       $scope.workflowVersionName = '';
-      $scope.descAvailable = [];
 
-      //there are 6 tabs, and only 1 tab can be active
-      //so there are 5 tabs that are not active
       var notActiveTabs = 5;
       if (!$scope.activeTabs) {
         $scope.activeTabs = [true];
@@ -710,8 +707,6 @@ angular.module('dockstore.ui')
       };
 
       $scope.versionLaunchWith = function(version) {
-        //method is called when specific version is selected
-        //to change the LaunchWith commands
         $scope.workflowVersion = version;
         $scope.showLaunchWith();
       };
