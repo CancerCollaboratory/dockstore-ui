@@ -338,7 +338,7 @@
                 <pre>{{launchWith}}</pre>
               </div>
             </div>
-            <div class="well well-sm" uib-tooltip="Commands for launching tool through CWLtool (Does not support file provisioning)">
+            <div ng-show="workflowObj.descriptorType === 'cwl'" class="well well-sm" uib-tooltip="Commands for launching workflow through CWLtool (Does not support file provisioning)">
               <div>
                 <pre>{{launchWithCWLTool}}</pre>
               </div>
