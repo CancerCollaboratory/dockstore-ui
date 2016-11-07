@@ -48,6 +48,7 @@ angular.module('dockstore.ui')
       $scope.workflowVersion = '';
       $scope.workflowVersionName = '';
 
+      // There are 6 tabs, and only 1 tab can be active
       var notActiveTabs = 5;
       if (!$scope.activeTabs) {
         $scope.activeTabs = [true];
