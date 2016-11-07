@@ -198,7 +198,11 @@ angular.module('dockstore.ui')
           "\ndockstore tool convert entry2json --entry " + tool_path + ":" + $scope.toolTagName +" > Dockstore.json" +
           "\nvim Dockstore.json"+
           "\n# run it locally with the Dockstore CLI" +
-          "\ndockstore tool launch --entry " + tool_path + ":" + $scope.toolTagName + " --json Dockstore.json --descriptor " + $scope.desc;
+          "\ndockstore tool launch --entry " + tool_path + ":" + $scope.toolTagName + " --json Dockstore.json";
+
+        if ($scope.desc === 'wdl') {
+          $scope.launchWith += " --descriptor " + $scope.desc;
+        }
 
         var escapedPath = encodeURIComponent(tool_path);
         var escapedVersion = encodeURIComponent($scope.toolTagName);
