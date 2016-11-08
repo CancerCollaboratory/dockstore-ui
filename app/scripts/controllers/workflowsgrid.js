@@ -35,7 +35,7 @@ angular.module('dockstore.ui')
       $scope.numContsPage = 10;
       $scope.currPage = 1;
       $scope.contLimit = $scope.previewMode ? 5 : undefined;
-      $scope.descriptionLimit = 300;
+      $scope.descriptionLimit = 150;
 
       $scope.getGitReposProvider = FrmttSrvc.getGitReposProvider;
       $scope.getGitReposProviderName = FrmttSrvc.getGitReposProviderName;

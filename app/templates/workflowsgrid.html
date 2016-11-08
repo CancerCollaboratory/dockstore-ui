@@ -47,6 +47,9 @@
           <!-- need a to write a 'smart search' filter -->
           <tr ng-repeat-start="workflow in filteredWorkflows | orderBy:sortColumn:sortReverse | PreviewFilter:contLimit | PaginationFilter:getListRange()" ng-class="hasDescription(workflow.description)">
             <td>
+              <span ng-show="workflow.verified" uib-tooltip="Verified">
+                  <span class="glyphicon glyphicon-ok"></span>
+              </span>
               <a ng-href="/workflows/{{workflow.path}}">{{workflow.repository + (workflow.workflowName ? ' (' + workflow.workflowName + ')' : '')}}</a>
             </td>
             <td>
@@ -67,7 +70,7 @@
           </tr>
           <tr ng-repeat-end ng-if="workflow.description !== '' && workflow.description !== null && workflow.description !== undefined && homePage === false" class="search-description-row">
             <td class="search-description" colspan="4">
-              <span class="search-date">{{getDateModified(workflow.lastUpdated)}} </span> {{workflow.description | limitTo:descriptionLimit}}{{workflow.description.length >= descriptionLimit ? '...' : ''}}
+              <span class="search-date">{{getDateModified(workflow.lastUpdated)}} </span> <span>{{workflow.description}}</span>
             </td>
           </tr>
           <tr ng-show="previewMode && filteredWorkflows.length !== 0">
