@@ -333,9 +333,9 @@ angular.module('dockstore.ui')
       };
 
       $scope.getMailToLink = function(containerObj){
-        var subject = encodeURIComponent("Question about "+containerObj.path+" on Dockstore");
+        var subject = encodeURIComponent("Question about the tool "+containerObj.path+" on Dockstore");
         var body = encodeURIComponent("I would like to ask a question about the tool at "+window.location);
-        return "mailto:"+containerObj.email+"?subject="+subject+"&body="+body;
+        return containerObj.email+"?subject="+subject+"&body="+body;
       };
 
       $scope.checkContentValid = function(){
