@@ -45,7 +45,7 @@
           </thead>
           <tbody>
             <!-- need a to write a 'smart search' filter -->
-            <tr ng-repeat-start="container in filteredTools | orderBy:sortColumn:sortReverse | PreviewFilter:contLimit | PaginationFilter:getListRange()" ng-class="hasDescription(container.description)">
+            <tr ng-repeat="container in filteredTools | orderBy:sortColumn:sortReverse | PreviewFilter:contLimit | PaginationFilter:getListRange()" ng-class="hasDescription(container.description)">
               <td>
                 <span ng-show="container.verified" uib-tooltip="Verified">
                   <span class="glyphicon glyphicon-ok"></span>
@@ -75,11 +75,11 @@
                 <div copy-text>{{dockerPullCmd}}</div>
               </td>
             </tr>
-            <tr ng-repeat-end ng-if="container.description !== '' && container.description !== null && container.description !== undefined && homePage === false" class="search-description-row">
-              <td class="search-description" colspan="4" style="font-size:90%">
-                <span class="search-date">{{getDateModified(container.lastUpdated)}} </span> {{container.description | limitTo:descriptionLimit}}{{container.description.length >= descriptionLimit ? '...' : ''}}
-              </td>
-            </tr>
+            <!--<tr ng-repeat-end ng-if="container.description !== '' && container.description !== null && container.description !== undefined && homePage === false" class="search-description-row">-->
+              <!--<td class="search-description" colspan="4" style="font-size:90%">-->
+                <!--<span class="search-date">{{getDateModified(container.lastUpdated)}} </span> {{container.description | limitTo:descriptionLimit}}{{container.description.length >= descriptionLimit ? '...' : ''}}-->
+              <!--</td>-->
+            <!--</tr>-->
             <tr ng-show="previewMode && filteredContainers.length !== 0">
               <td colspan="4" class="browse-all">
                 <div class="button">
