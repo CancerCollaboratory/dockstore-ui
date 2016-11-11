@@ -218,7 +218,7 @@ Rather than interactively working with the image, you could also run your Docker
 
 ```
 wget ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/phase3/data/NA12878/alignment/NA12878.chrom20.ILLUMINA.bwa.CEU.low_coverage.20121211.bam
-docker run -w="/home/ubuntu" -it -v `pwd`:/home/ubuntu quay.io/collaboratory/dockstore-tool-bamstats:1.25-6_1.0 bamstats 4 NA12878.chrom20.ILLUMINA.bwa.CEU.low_coverage.20121211.bam
+docker run -w="/home/ubuntu" -it -v `pwd`:/home/ubuntu quay.io/collaboratory/dockstore-tool-bamstats:1.25-3 bamstats 4 NA12878.chrom20.ILLUMINA.bwa.CEU.low_coverage.20121211.bam
 ```
 
 In the next section, we will also demonstrate how this command-line including the input file can be parameterized and constructed via CWL.
