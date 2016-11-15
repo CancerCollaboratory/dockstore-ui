@@ -31,8 +31,9 @@ angular.module('dockstore.ui')
     'WorkflowService',
     'FormattingService',
     'NotificationService',
+    'UtilityService',
     '$location',
-    function ($scope, $q, $sce, WorkflowService, FrmttSrvc, NtfnService, $location) {
+    function ($scope, $q, $sce, WorkflowService, FrmttSrvc, NtfnService, UtilityService, $location) {
 
       $scope.labelsEditMode = false;
       $scope.descriptorEnabled = false;
@@ -271,35 +272,8 @@ angular.module('dockstore.ui')
         }
       };
 
-      $scope.getTimeAgo = function(timestamp, timeConversion) {
-        var timeDiff = (new Date()).getTime() - timestamp;
-        return Math.floor(timeDiff / timeConversion);
-      };
-
       $scope.getTimeAgoString = function(timestamp) {
-        var msToDays = 1000 * 60 * 60 * 24;
-        var msToHours = 1000 * 60 * 60;
-        var msToMins = 1000 * 60;
-
-        var timeAgo = $scope.getTimeAgo(timestamp, msToDays);
-        if (timeAgo < 1){
-          timeAgo = $scope.getTimeAgo(timestamp, msToHours);
-          if (timeAgo < 1) {
-            timeAgo = $scope.getTimeAgo(timestamp, msToMins);
-            if (timeAgo === 0) {
-              return '<1 minute ago';
-            } else {
-              return timeAgo.toString() +
-                    ((timeAgo === 1) ? ' minute ago' : ' minutes ago');
-            }
-          } else {
-            return timeAgo.toString() +
-                  ((timeAgo === 1) ? ' hour ago' : ' hours ago');
-          }
-        } else {
-          return timeAgo.toString() +
-                ((timeAgo === 1) ? ' day ago' : ' days ago');
-        }
+        return UtilityService.getTimeAgoString(timestamp);
       };
 
       $scope.getGitReposProvider = FrmttSrvc.getGitReposProvider;
