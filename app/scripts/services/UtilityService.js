@@ -109,7 +109,7 @@ angular.module('dockstore.ui')
 
       this.getMailToLink = function(entryType, entryPath, windlowLocation, email){
         var subject = encodeURIComponent("Question about the " + entryType + " " + entryPath + " on Dockstore");
-        var body = encodeURIComponent("I would like to ask a question about the tool at " + windlowLocation);
+        var body = encodeURIComponent("I would like to ask a question about the " + entryType + " at " + windlowLocation);
         return "mailto:" + email + "?subject=" + subject + "&body=" + body;
       };
   }]);
