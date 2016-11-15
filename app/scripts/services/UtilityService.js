@@ -57,4 +57,59 @@ angular.module('dockstore.ui')
                 ((timeAgo === 1) ? ' day ago' : ' days ago');
         }
       };
+
+      this.getIconClass = function(columnName, sortColumn, sortReverse) {
+        if (sortColumn === columnName) {
+          return !sortReverse ?
+            'glyphicon-sort-by-alphabet' : 'glyphicon-sort-by-alphabet-alt';
+        } else {
+          return 'glyphicon-sort';
+        }
+      };
+
+      this.changePage = function(nextPage, currPage, getFirstPage, getLastPage) {
+        if (nextPage) {
+          /* Next Page*/
+          if (currPage === getLastPage) return;
+          return currPage++;
+        } else {
+          /* Previous Page*/
+          if (currPage === getFirstPage) return;
+          return currPage--;
+        }
+      };
+
+      this.getListRange = function(numContsPage, currPage, filteredEntriesLength) {
+        return {
+          start: Math.min(numContsPage * (currPage - 1),
+                          filteredEntriesLength),
+          end: Math.min(numContsPage * currPage - 1,
+                        filteredEntriesLength)
+        };
+      };
+
+      this.getHumanReadableDescriptor = function(descriptor) {
+        switch(descriptor) {
+          case 'DOCKSTORE_CWL':
+            return 'CWL';
+          case 'DOCKSTORE_WDL' :
+            return 'WDL';
+          default :
+            return 'n/a';
+        }
+      };
+
+      this.getFirstPage = function() {
+        return 1;
+      };
+
+      this.getLastPage = function(numContsPage, filteredEntriesLength) {
+        return Math.ceil(filteredEntriesLength / numContsPage);
+      };
+
+      this.getMailToLink = function(entryType, entryPath, windlowLocation, email){
+        var subject = encodeURIComponent("Question about the " + entryType + " " + entryPath + " on Dockstore");
+        var body = encodeURIComponent("I would like to ask a question about the tool at " + windlowLocation);
+        return "mailto:" + email + "?subject=" + subject + "&body=" + body;
+      };
   }]);

@@ -171,9 +171,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.getMailToLink = function(workflowObj){
-        var subject = encodeURIComponent("Question about the workflow "+workflowObj.path+" on Dockstore");
-        var body = encodeURIComponent("I would like to ask a question about the workflow at "+window.location);
-        return "mailto:"+workflowObj.email+"?subject="+subject+"&body="+body;
+        return UtilityService.getMailToLink("workflow", workflowObj.path, window.location, workflowObj.email);
       };
 
       $scope.checkContentValid = function(){
