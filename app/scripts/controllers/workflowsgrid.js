@@ -98,4 +98,8 @@ angular.module('dockstore.ui')
         $scope.filteredWorkflows = $filter('filter')($scope.workflows, $scope.searchQueryWorkflow);
         $scope.entryCount = $scope.filteredWorkflows.length;
       });
+
+      $scope.isVerified = function(workflow) {
+        return UtilityService.isVerifiedWorkflow(workflow);
+      };
   }]);

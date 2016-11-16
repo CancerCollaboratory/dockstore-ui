@@ -107,5 +107,7 @@ angular.module('dockstore.ui')
         }
       });
 
-
+      $scope.isVerified = function(container) {
+        return UtilityService.isVerifiedTool(container);
+      };
   }]);
