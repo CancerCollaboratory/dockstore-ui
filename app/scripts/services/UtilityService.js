@@ -144,7 +144,9 @@ angular.module('dockstore.ui')
             }
           }
         }
-        return jQuery.unique(sources);
+        return sources.filter(function(elem, pos) {
+          return sources.indexOf(elem) === pos;
+        });
       };
 
       this.getVerifiedToolSources = function(container) {
@@ -156,6 +158,8 @@ angular.module('dockstore.ui')
             }
           }
         }
-        return jQuery.unique(sources);
+        return sources.filter(function(elem, pos) {
+          return sources.indexOf(elem) === pos;
+        });
       };
   }]);

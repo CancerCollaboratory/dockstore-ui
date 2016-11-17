@@ -50,12 +50,12 @@ angular.module('dockstore.ui')
       $scope.hasDescription = function(description) {
         // temporary
         return false;
-        //
-        if (description !== undefined && description !== null && description !== '' && $scope.homePage === false) {
-          return 'search-with-description';
-        } else {
-          return '';
-        }
+        // Don't delete
+//        if (description !== undefined && description !== null && description !== '' && $scope.homePage === false) {
+//          return 'search-with-description';
+//        } else {
+//          return '';
+//        }
       };
 
       $scope.getDockerPullCmd = function(path) {
