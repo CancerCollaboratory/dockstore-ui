@@ -46,7 +46,7 @@ angular.module('dockstore.ui')
       $scope.hasDescription = function(description) {
         // temporary
         return false;
-        // Don't delete
+        // Don't delete - This is used to display a description in the search, but we don't yet want it to show
 //        if (description !== undefined && description !== null && description !== '' && $scope.homePage === false) {
 //          return 'search-with-description';
 //        } else {
