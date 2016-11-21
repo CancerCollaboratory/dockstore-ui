@@ -323,7 +323,7 @@ angular.module('dockstore.ui')
           url: WebService.API_URI + '/containers/' + containerId + '/testParameterFiles',
           params: {
             tag: tagName,
-            type: descType
+            descriptorType: descType
           }
         }).then(function(response) {
           resolve(response.data);

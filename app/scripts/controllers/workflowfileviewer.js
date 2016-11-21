@@ -256,7 +256,7 @@ angular.module('dockstore.ui')
               for (var i = 0; i < testJson.length; i++) {
                 if (testJson[i].path === filePath && testJson[i].type === fileType) {
                   $scope.fileContents = testJson[i].content;
-                  break;
+                  return testJson[i].content;
                 }
               }
               return testJson;
