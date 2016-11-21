@@ -220,12 +220,12 @@ angular.module('dockstore.ui')
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
-          url: WebService.API_URI + '/workflows/' + workflowId + '/testparameter',
+          url: WebService.API_URI + '/workflows/' + workflowId + '/testParameterFiles',
           params: {
             version: versionName
           }
         }).then(function(response) {
-          resolve(response.data.content);
+          resolve(response.data);
         }, function(response) {
           reject(response);
         });

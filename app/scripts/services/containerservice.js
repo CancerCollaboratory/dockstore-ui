@@ -320,13 +320,13 @@ angular.module('dockstore.ui')
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
-          url: WebService.API_URI + '/containers/' + containerId + '/testparameter',
+          url: WebService.API_URI + '/containers/' + containerId + '/testParameterFiles',
           params: {
             tag: tagName,
             type: descType
           }
         }).then(function(response) {
-          resolve(response.data.content);
+          resolve(response.data);
         }, function(response) {
           reject(response);
         });

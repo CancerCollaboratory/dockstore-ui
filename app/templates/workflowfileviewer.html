@@ -34,16 +34,17 @@
     </select>
   </div>
 
-  <div class="ds-descriptor-selector float-left" ng-hide="isTestParameter()">
+  <div class="ds-descriptor-selector float-left">
     <strong>File</strong>:
-    <select class="ds-wide-descriptor" ng-model="selSecondaryDescriptorName">
+    <select class="ds-wide-descriptor" ng-model="selFileName">
       <option
-        ng-repeat="secondaryDescriptorPath in secondaryDescriptors"
+        ng-repeat="secondaryDescriptorPath in fileList"
         value="{{secondaryDescriptorPath}}">
         {{secondaryDescriptorPath}}
       </option>
     </select>
   </div>
+
 </div>
 </div>
 

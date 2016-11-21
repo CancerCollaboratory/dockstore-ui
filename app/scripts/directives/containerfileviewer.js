@@ -58,7 +58,7 @@ angular.module('dockstore.ui')
             scope.refreshDocument(true);
           });
         scope.$watchGroup(
-          ['selSecondaryDescriptorName'],
+          ['selFileName'],
           function() {
             scope.setType('descriptor');
             scope.refreshDocument(false);
