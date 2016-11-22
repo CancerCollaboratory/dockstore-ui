@@ -49,32 +49,6 @@
         <div class="modal-body">
           <div class="form-group form-group-sm">
             <label class="col-sm-3 control-label">
-              Version Tag:
-            </label>
-            <div class="col-sm-9">
-              <input
-                type="text"
-                class="form-control"
-                name="name"
-                ng-model="versionTagObj.name"
-                ng-maxlength="128"
-                ng-pattern="/^[a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*$/i"
-                required
-               uib-tooltip
-                title="Docker Image tag name."
-                placeholder="e.g. develop"
-                ng-disabled="!versionTagObj.create" />
-              <div
-                class="form-error-messages"
-                ng-messages="versionTagEditorForm.name.$error"
-                ng-if="versionTagEditorForm.name.$touched">
-                <div ng-messages-include="templates/validation/tags/name.html">
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="form-group form-group-sm">
-            <label class="col-sm-3 control-label">
               Git Reference:
             </label>
             <div class="col-sm-9">
@@ -86,7 +60,7 @@
                 ng-minlength="3"
                 ng-maxlength="128"
                 ng-pattern="/^[\w-]+((\/|\.)[\w-]+)*$/i"
-               uib-tooltip
+                uib-tooltip
                 title="Git branch or tag name."
                 placeholder="e.g. develop"
                 ng-disabled="!versionTagObj.create"  />
@@ -126,7 +100,7 @@
               </div>
             </div>
           </div>
-          <div class="form-group form-group-sm" ng-if="editMode || items.length > 0">
+          <div class="form-group form-group-sm">
             <label class="col-sm-3 control-label">
               Test Parameter File(s):
             </label>
@@ -143,7 +117,7 @@
                 title="Relative path to a test parameter file in the Git repository."
                 placeholder="e.g. /test.json"
                 ng-disabled="!editMode" ng-class="editMode ? 'test_parameter_input' : ''"/>
-              <button type="button" class="btn btn-danger test_parameter_remove_button" ng-hide="!editMode" ng-click="removeTestParameterFile($index)">
+              <button tooltip-append-to-body="true" uib-tooltip="Remove test parameter file" type="button" class="btn btn-danger test_parameter_remove_button" ng-hide="!editMode" ng-click="removeTestParameterFile($index)">
                 <span class="glyphicon glyphicon-minus"></span>
               </button>
               <div
@@ -156,11 +130,11 @@
             </div>
           </div>
           <div>
-            <button type="button" class="btn btn-success test_parameter_add_button" ng-click="addTestParameterFile()" ng-hide="!editMode" ng-disabled="hasBlankPath()">
+            <button tooltip-append-to-body="true" uib-tooltip="Add test parameter file" type="button" class="btn btn-success test_parameter_add_button" ng-click="addTestParameterFile()" ng-hide="!editMode" ng-disabled="hasBlankPath()">
               <span class="glyphicon glyphicon-plus"></span>
             </button>
           </div>
-          <div class="form-group form-group-sm" ng-if="editMode"  style="clear:both;">
+          <div class="form-group form-group-sm" ng-if="editMode" style="clear:both;">
             <label class="col-sm-3 control-label">
               Hidden:
             </label>

@@ -43,14 +43,27 @@ angular.module('dockstore.ui')
       $scope.wdlValuesInDatabase = [];
 
       // Retrieve test parameter paths from the database and store to items array
-      $scope.getTestParameterFiles = function() {
+      $scope.getTestParameterFiles = function(type) {
         if ($scope.tagObj !== undefined) {
-        return ContainerService.getTestJson($scope.containerId, $scope.tagObj.name, "CWL")
+        return ContainerService.getTestJson($scope.containerId, $scope.tagObj.name, type)
           .then(
             function(testJson) {
-              $scope.cwlItems = [];
-              for (var i = 0; i < testJson.length; i++) {
-                $scope.cwlItems.push(testJson[i].path);
+              if (type === 'CWL') {
+                $scope.cwlItems = [];
+                for (var i = 0; i < testJson.length; i++) {
+                  $scope.cwlItems.push(testJson[i].path);
+                }
+              if (testJson.length === 0) {
+                $scope.cwlItems.push("");
+              }
+              } else if (type === 'WDL') {
+                $scope.wdlItems = [];
+                for (var j = 0; j < testJson.length; j++) {
+                  $scope.wdlItems.push(testJson[j].path);
+                }
+              if (testJson.length === 0) {
+                $scope.wdlItems.push("");
+              }
               }
             },
             function(response) {
@@ -60,7 +73,7 @@ angular.module('dockstore.ui')
           }
       };
 
-      // Retrieve test parameter paths from the database and store to cwlValuesInDatabase array
+      // Retrieve test parameter paths from the database and store to ValuesInDatabase array
       $scope.getDbTestParameterFiles = function(type) {
         if ($scope.tagObj !== undefined) {
         return ContainerService.getTestJson($scope.containerId, $scope.tagObj.name, type)
@@ -73,8 +86,8 @@ angular.module('dockstore.ui')
                 }
               } else if (type === 'WDL') {
                 $scope.wdlValuesInDatabase = [];
-                for (var i = 0; i < testJson.length; i++) {
-                  $scope.wdlValuesInDatabase.push(testJson[i].path);
+                for (var j = 0; j < testJson.length; j++) {
+                  $scope.wdlValuesInDatabase.push(testJson[j].path);
                 }
               }
             },
@@ -121,6 +134,7 @@ angular.module('dockstore.ui')
       $scope.updateTestParameterFiles = function() {
         $scope.getDbTestParameterFiles('CWL').then(function() {
           $scope.getDbTestParameterFiles('WDL').then(function() {
+            // Remove all blanks
             while ($scope.cwlItems.indexOf("") !== -1) {
               $scope.cwlItems.splice($scope.cwlItems.indexOf(""), 1);
             }
@@ -131,10 +145,12 @@ angular.module('dockstore.ui')
             var toAddCwl = [];
             var toRemoveWdl = [];
             var toAddWdl = [];
+
             toRemoveCwl = $($scope.cwlValuesInDatabase).not($scope.cwlItems);
             toAddCwl = $scope.cwlItems;
             toRemoveWdl = $($scope.wdlValuesInDatabase).not($scope.wdlItems);
             toAddWdl = $scope.wdlItems;
+
             $scope.removeTestParameterFileToDb(toRemoveCwl.toArray(), toAddCwl, 'CWL');
             $scope.removeTestParameterFileToDb(toRemoveWdl.toArray(), toAddWdl, 'WDL');
           });
@@ -228,11 +244,8 @@ angular.module('dockstore.ui')
 
       // Initializes items with test parameter files from the version
       $scope.setItems = function() {
-        $scope.getTestParameterFiles();
-        // if items is null, add a placeholder
-        if ($scope.cwlItems.length === 0) {
-          $scope.cwlItems.push("");
-        }
+        $scope.getTestParameterFiles('CWL');
+        $scope.getTestParameterFiles('WDL');
       };
 
       // Update db with new test parameter files for the given tool and version
@@ -284,7 +297,11 @@ angular.module('dockstore.ui')
           }
       };
 
-      $scope.hasBlankPath = function() {
-        return ($scope.cwlItems.indexOf("") !== -1);
+      $scope.hasBlankPath = function(type) {
+        if (type === 'CWL') {
+          return ($scope.cwlItems.indexOf("") !== -1);
+        } else if (type === 'WDL') {
+          return ($scope.wdlItems.indexOf("") !== -1);
+        }
       };
   }]);

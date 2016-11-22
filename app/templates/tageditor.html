@@ -207,9 +207,9 @@
               </div>
             </div>
           </div>
-          <div class="form-group form-group-sm" ng-if="editMode || cwlItems.length > 0">
+          <div class="form-group form-group-sm">
             <label class="col-sm-3 control-label">
-              CWL Test Parameter Files:
+              CWL Test Parameter File(s):
             </label>
             <div class="col-sm-9 test_parameter_div" ng-repeat="item in cwlItems track by $index" ng-class="$first ? '' : 'col-sm-offset-3'">
               <input
@@ -224,7 +224,7 @@
                 title="Relative path to a CWL Test Parameter File in the Git repository."
                 placeholder="e.g. /test.cwl.json"
                 ng-disabled="!editMode" ng-class="editMode ? 'test_parameter_input' : ''"/>
-              <button type="button" class="btn btn-danger test_parameter_remove_button" ng-hide="!editMode" ng-click="removeTestParameterFile($index, 'CWL')">
+              <button tooltip-append-to-body="true" uib-tooltip="Remove CWL test parameter file" type="button" class="btn btn-danger test_parameter_remove_button" ng-hide="!editMode" ng-click="removeTestParameterFile($index, 'CWL')">
                 <span class="glyphicon glyphicon-minus"></span>
               </button>
               <div
@@ -237,13 +237,13 @@
             </div>
           </div>
           <div>
-            <button type="button" class="btn btn-success test_parameter_add_button" ng-click="addTestParameterFile('CWL')" ng-hide="!editMode" ng-disabled="hasBlankPath('CWL')">
+            <button tooltip-append-to-body="true" uib-tooltip="Add CWL test parameter file" type="button" class="btn btn-success test_parameter_add_button" ng-click="addTestParameterFile('CWL')" ng-hide="!editMode" ng-disabled="hasBlankPath('CWL')">
               <span class="glyphicon glyphicon-plus"></span>
             </button>
           </div>
-          <div class="form-group form-group-sm" ng-if="editMode || wdlItems.length > 0">
+          <div class="form-group form-group-sm" style="clear:both;">
             <label class="col-sm-3 control-label">
-              WDL Test Parameter Files:
+              WDL Test Parameter File(s):
             </label>
             <div class="col-sm-9 test_parameter_div" ng-repeat="item in wdlItems track by $index" ng-class="$first ? '' : 'col-sm-offset-3'">
               <input
@@ -255,10 +255,10 @@
                 ng-maxlength="128"
                 ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.(json|yml|yaml)$/i"
                 data-toggle="tooltip"
-                title="Relative path to a CWL Test Parameter File in the Git repository."
+                title="Relative path to a WDL Test Parameter File in the Git repository."
                 placeholder="e.g. /test.wdl.json"
                 ng-disabled="!editMode" ng-class="editMode ? 'test_parameter_input' : ''"/>
-              <button type="button" class="btn btn-danger test_parameter_remove_button" ng-hide="!editMode" ng-click="removeTestParameterFile($index, 'WDL')">
+              <button tooltip-append-to-body="true" uib-tooltip="Remove WDL test parameter file" type="button" class="btn btn-danger test_parameter_remove_button" ng-hide="!editMode" ng-click="removeTestParameterFile($index, 'WDL')">
                 <span class="glyphicon glyphicon-minus"></span>
               </button>
               <div
@@ -271,11 +271,11 @@
             </div>
           </div>
           <div>
-            <button type="button" class="btn btn-success test_parameter_add_button" ng-click="addTestParameterFile('WDL')" ng-hide="!editMode" ng-disabled="hasBlankPath('WDL')">
+            <button tooltip-append-to-body="true" uib-tooltip="Add WDL test parameter file" type="button" class="btn btn-success test_parameter_add_button" ng-click="addTestParameterFile('WDL')" ng-hide="!editMode" ng-disabled="hasBlankPath('WDL')">
               <span class="glyphicon glyphicon-plus"></span>
             </button>
           </div>
-          <div class="form-group form-group-sm" ng-if="editMode">
+          <div class="form-group form-group-sm" ng-if="editMode" style="clear:both;">
             <label class="col-sm-3 control-label">
               Hidden:
             </label>

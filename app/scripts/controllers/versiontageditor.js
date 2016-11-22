@@ -48,6 +48,9 @@ angular.module('dockstore.ui')
               for (var i = 0; i < testJson.length; i++) {
                 $scope.items.push(testJson[i].path);
               }
+              if (testJson.length === 0) {
+                $scope.items.push("");
+              }
             },
             function(response) {
               return $q.reject(response);
@@ -154,10 +157,6 @@ angular.module('dockstore.ui')
       // Initializes items with test parameter files from the version
       $scope.setItems = function() {
         $scope.getTestParameterFiles();
-        // if items is null, add a placeholder
-        if ($scope.items.length === 0) {
-          $scope.items.push("");
-        }
       };
 
       // Update db with new test parameter files for the given workflow and version
