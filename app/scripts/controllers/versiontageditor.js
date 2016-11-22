@@ -151,6 +151,7 @@ angular.module('dockstore.ui')
 
       $scope.setVersionTagEditError(null);
 
+      // Initializes items with test parameter files from the version
       $scope.setItems = function() {
         $scope.getTestParameterFiles();
         // if items is null, add a placeholder
@@ -159,6 +160,7 @@ angular.module('dockstore.ui')
         }
       };
 
+      // Update db with new test parameter files for the given workflow and version
       $scope.addTestParameterFileToDb = function(toAdd) {
         if ($scope.versionTagObj !== undefined) {
         return WorkflowService.addTestJson($scope.workflowId, $scope.versionTagObj.name, toAdd)
@@ -181,6 +183,7 @@ angular.module('dockstore.ui')
           }
       };
 
+      // Remove from db test parameter files for the given workflow and version
       $scope.removeTestParameterFileToDb = function(toRemove, toAdd) {
         if ($scope.versionTagObj !== undefined) {
         return WorkflowService.removeTestJson($scope.workflowId, $scope.versionTagObj.name, toRemove)
@@ -201,6 +204,10 @@ angular.module('dockstore.ui')
             }
           );
           }
+      };
+
+      $scope.hasBlankPath = function() {
+        return ($scope.items.indexOf("") !== -1);
       };
 
   }]);
