@@ -42,6 +42,7 @@ angular.module('dockstore.ui')
         });
         scope.$watch('toggleModal', function(newValue, oldValue) {
           if (scope.toggleModal) {
+            scope.setItems();
             $('#tagEditorModal').modal('toggle');
             scope.toggleModal = false;
           }
@@ -50,6 +51,11 @@ angular.module('dockstore.ui')
           if (newValue) {
             scope.setDockerPullCmd();
             $(element).find('[data-toggle="tooltip"]').tooltip();
+          }
+        });
+        scope.$watch('tagObj', function(newValue, oldValue) {
+          if (newValue !== undefined) {
+            scope.setItems();
           }
         });
       }
