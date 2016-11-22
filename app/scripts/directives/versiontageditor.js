@@ -42,8 +42,14 @@ angular.module('dockstore.ui')
         });
         scope.$watch('toggleModal', function(newValue, oldValue) {
           if (scope.toggleModal) {
+            scope.setItems();
             $('#versionTagEditorModal').modal('toggle');
             scope.toggleModal = false;
+          }
+        });
+        scope.$watch('versionTagObj', function(newValue, oldValue) {
+          if (newValue !== undefined) {
+            scope.setItems();
           }
         });
       }

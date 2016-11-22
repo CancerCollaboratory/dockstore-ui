@@ -128,22 +128,24 @@
           </div>
           <div class="form-group form-group-sm">
             <label class="col-sm-3 control-label">
-              Test Parameter File:
+              Test Parameter File(s):
             </label>
-            <div class="col-sm-9">
+            <div class="col-sm-9" ng-repeat="item in items" ng-class="$first ? '' : 'col-sm-offset-3'">
               <input
                 type="text"
                 class="form-control"
                 name="test_parameter_file"
-                ng-model="versionTagObj.test_parameter_file"
+                ng-model="items[$index]"
                 ng-minlength="3"
                 ng-maxlength="128"
                 ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.(json|yml|yaml)$/i"
-                required
                 data-toggle="tooltip"
                 title="Relative path to the test parameter file in the Git repository."
                 placeholder="e.g. /test.json"
-                ng-disabled="!editMode" />
+                ng-disabled="!editMode" style="width:90%; float:left;"/>
+              <button type="button" class="btn btn-default" ng-hide="!editMode" style="margin-left:2px; width:9%; float:left;" ng-click="removeTestParameterFile($index)">
+                <span class="glyphicon glyphicon-minus"></span>
+              </button>
               <div
                 class="form-error-messages"
                 ng-messages="versionTagEditorForm.test_parameter_file.$error"
@@ -153,7 +155,12 @@
               </div>
             </div>
           </div>
-          <div class="form-group form-group-sm" ng-if="editMode">
+          <div>
+            <button type="button" class="btn btn-default" ng-click="addTestParameterFile()" ng-hide="!editMode" style="float:right;">
+              <span class="glyphicon glyphicon-plus"></span>
+            </button>
+          </div>
+          <div class="form-group form-group-sm" ng-if="editMode"  style="clear:both;">
             <label class="col-sm-3 control-label">
               Hidden:
             </label>
