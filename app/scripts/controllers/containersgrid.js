@@ -50,7 +50,7 @@ angular.module('dockstore.ui')
       $scope.hasDescription = function(description) {
         // temporary
         return false;
-        // below is temporarily commented out since it is an unreachable if statement
+        // Don't delete - This is used to display a description in the search, but we don't yet want it to show
 //        if (description !== undefined && description !== null && description !== '' && $scope.homePage === false) {
 //          return 'search-with-description';
 //        } else {
@@ -107,5 +107,7 @@ angular.module('dockstore.ui')
         }
       });
 
-
+      $scope.isVerified = function(container) {
+        return UtilityService.isVerifiedTool(container);
+      };
   }]);
