@@ -42,7 +42,8 @@ module.exports = function (grunt) {
     karma : 'grunt-karma',
     coveralls: 'grunt-coveralls',
     protractor: 'grunt-protractor-runner',
-    cdnify: 'grunt-google-cdn'
+    cdnify: 'grunt-google-cdn',
+    purifycss: 'grunt-purifycss'
   });
 
   // Configurable paths for the application
@@ -359,31 +360,40 @@ module.exports = function (grunt) {
       }
     },
 
+    purifycss: {
+        options: {},
+        target: {
+          src: ['<%= yeoman.dist %>/**/*.js', '<%= yeoman.app %>/{,*/}*.html'],
+          css: ['.tmp/{,*/}*.css'],
+          dest: '.tmp/styles/purifiedmain.css'
+        },
+      },
+
     // The following *-min tasks will produce minified files in the dist folder
     // By default, your `index.html`'s <!-- Usemin block --> will take care of
     // minification. These next options are pre-configured if you do not wish
     // to use the Usemin blocks.
-    // cssmin: {
-    //   dist: {
-    //     files: {
-    //       '<%= yeoman.dist %>/styles/main.css': [
-    //         '.tmp/styles/{,*/}*.css'
-    //       ]
-    //     }
-    //   }
-    // },
-    // uglify: {
-    //   dist: {
-    //     files: {
-    //       '<%= yeoman.dist %>/scripts/scripts.js': [
-    //         '<%= yeoman.dist %>/scripts/scripts.js'
-    //       ]
-    //     }
-    //   }
-    // },
-    // concat: {
-    //   dist: {}
-    // },
+//     cssmin: {
+//       dist: {
+//         files: {
+//           '<%= yeoman.dist %>/styles/main.css': [
+//             '.tmp/styles/{,*/}*.css'
+//           ]
+//         }
+//       }
+//     },
+//     uglify: {
+//       dist: {
+//         files: {
+//           '<%= yeoman.dist %>/scripts/scripts.js': [
+//             '<%= yeoman.dist %>/scripts/scripts.js'
+//           ]
+//         }
+//       }
+//     },
+//     concat: {
+//       dist: {}
+//     },
 
     imagemin: {
       dist: {
@@ -573,6 +583,7 @@ module.exports = function (grunt) {
       'clean:server',
       'wiredep',
       'concurrent:server',
+      'purifycss',
       'autoprefixer:server',
       'connect:livereload',
       'watch'
@@ -606,6 +617,7 @@ module.exports = function (grunt) {
       'wiredep',
       'useminPrepare',
       'concurrent:dist',
+      'purifycss',
       'autoprefixer',
       'ngtemplates',
       'concat',
