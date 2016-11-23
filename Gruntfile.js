@@ -363,7 +363,7 @@ module.exports = function (grunt) {
     purifycss: {
         options: {},
         target: {
-          src: ['<%= yeoman.dist %>/{,*/}*.js', '<%= yeoman.app %>/{,*/}*.html'],
+          src: ['<%= yeoman.dist %>/**/*.js', '<%= yeoman.app %>/{,*/}*.html'],
           css: ['.tmp/{,*/}*.css'],
           dest: '.tmp/styles/purifiedmain.css'
         },
@@ -583,9 +583,9 @@ module.exports = function (grunt) {
       'clean:server',
       'wiredep',
       'concurrent:server',
+      'purifycss',
       'autoprefixer:server',
       'connect:livereload',
-      'purifycss',
       'watch'
     ]);
   });
@@ -617,6 +617,7 @@ module.exports = function (grunt) {
       'wiredep',
       'useminPrepare',
       'concurrent:dist',
+      'purifycss',
       'autoprefixer',
       'ngtemplates',
       'concat',
