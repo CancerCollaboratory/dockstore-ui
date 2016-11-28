@@ -41,7 +41,6 @@ module.exports = function (grunt) {
     insert: 'grunt-insert',
     karma : 'grunt-karma',
     coveralls: 'grunt-coveralls',
-    // protractor: 'grunt-protractor-runner',
     cdnify: 'grunt-google-cdn'
   });
 

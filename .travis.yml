@@ -6,6 +6,7 @@ node_js:
   - '4.2.1'
 addons:
   firefox: "latest"
+  postgresql: "9.4"
   apt:
     sources:
       - google-chrome
@@ -33,11 +34,13 @@ install:
 before_script:
   - grunt # this does syntax checking, unit testing, and jshint
   - grunt serve --silent & #make sure it runs the server first before testing
+  - psql -c "create user dockstore with password 'dockstore' createdb;" -U postgres
+  - psql -c "ALTER USER dockstore WITH superuser;" -U postgres
+  - psql -c 'create database webservice_test with owner = dockstore;' -U postgres
+  - psql -c 'webservice_test < db_dump.sql' -U postgres
 
 script:
   - cypress ci #test using cypress for integration testing
-  # - 'node_modules/protractor/bin/webdriver-manager update --standalone --chrome'
-  # - 'node_modules/grunt-protractor-runner/scripts/webdriver-manager-update'
 
 after_script:
 - cat ./build/coverage/**/lcov.info | ./node_modules/coveralls/bin/coveralls.js

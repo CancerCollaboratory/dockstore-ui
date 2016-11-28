@@ -14,4 +14,21 @@ describe('dockstore homepage', function() {
 	  // ignoring for now, not working in combination with API display
 		//expect(browser.getLocationAbsUrl()).toMatch("/");
 	});
+
+  describe('Browse tabs', function() {
+	  it('should have tool tab selected', function() {
+      cy
+        .get(".tool-tab-selected")
+          .should("exist")
+    });
+	  it('should not have workflow tab selected', function() {
+      cy
+        .get(".workflow-tab-not-selected")
+          .should("exist")
+    });
+  });
+
+  describe('Search box', function() {
+
+  });
 });
