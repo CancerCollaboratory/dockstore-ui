@@ -37,7 +37,7 @@ before_script:
   - psql -c "create user dockstore with password 'dockstore' createdb;" -U postgres
   - psql -c "ALTER USER dockstore WITH superuser;" -U postgres
   - psql -c 'create database webservice_test with owner = dockstore;' -U postgres
-  - psql 'webservice_test < db_dump.sql' -U postgres
+  - psql 'webservice_test' -U postgres < db_dump.sql
 
 script:
   - cypress ci #test using cypress for integration testing
