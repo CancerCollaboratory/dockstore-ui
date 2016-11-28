@@ -44,6 +44,7 @@ describe('Dockstore Workflow Details', function() {
           .next()
           .click()
     });
+
     it('Should have Descriptor files tab selected', function() {
       cy
         .get(".file-tabs")
@@ -53,6 +54,32 @@ describe('Dockstore Workflow Details', function() {
           .first()
           .should("have.class", "active")
     });
+
+    it('Should have content in file viewer', function() {
+      cy
+        .get(".hljs.yaml")
+          .children()
+          .should("exist")
+    });
+
+      describe('Change tab to Test Parameters', function() {
+          beforeEach(function() {
+            cy
+              .get(".file-tabs")
+                .children('div')
+                .first()
+                .next()
+                .children('button')
+                .click()
+          });
+
+          it('Should not have content in file viewer', function() {
+            cy
+              .get(".hljs.yaml")
+                .children()
+                .should("not.exist")
+          });
+      });
   });
 
   it('Change tab to tools', function() {
@@ -67,16 +94,29 @@ describe('Dockstore Workflow Details', function() {
         .click()
   });
 
-  it('Change tab to dag', function() {
-    cy
-      .get("#workflow_tabs>ul")
-        .children()
-        .not(".active")
-        .first()
-        .next()
-        .next()
-        .next()
-        .next()
-        .click()
+  describe('Change tab to dag', function () {
+    beforeEach(function() {
+      cy
+        .get("#workflow_tabs>ul")
+          .children()
+          .not(".active")
+          .first()
+          .next()
+          .next()
+          .next()
+          .next()
+          .click()
+    });
+
+    it('Change to fullscreen and back', function() {
+      cy
+        .get("#dag_fullscreen")
+          .click()
+          .get("#dag-col")
+            .should("have.class", "fullscreen-element")
+            .get("#dag_fullscreen")
+              .click()
+              .should("not.have.class", "fullscreen-element")
+    });
   });
 })
