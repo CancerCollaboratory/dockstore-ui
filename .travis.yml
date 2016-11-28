@@ -4,10 +4,16 @@ language: node_js
 node_js:
   - 'stable'
   - '4.2.1'
+addons:
+  firefox: "latest"
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-beta
 before_install:
   - 'npm config get registry'
   - 'npm config set registry http://registry.npmjs.org/'
-  - 'export CHROME_BIN=/usr/bin/google-chrome'
   - 'export DISPLAY=:99.0'
   - 'sh -e /etc/init.d/xvfb start'
   - 'sudo apt-get update'
@@ -15,6 +21,7 @@ before_install:
   - 'wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'
   - 'sudo dpkg -i google-chrome*.deb'
   - 'npm install -g cypress-cli' #test using cypress cli for integrationg testing
+  - 'sleep 3' # https://docs.travis-ci.com/user/gui-and-headless-browsers/#Using-xvfb-to-Run-Tests-That-Require-a-GUI
 install:
   - 'npm install --global grunt-cli bower yo generator-karma generator-angular'
   - 'npm install karma jasmine-core'
@@ -26,16 +33,17 @@ install:
 before_script:
   - grunt # this does syntax checking, unit testing, and jshint
   - grunt serve --silent & #make sure it runs the server first before testing
-  
-script: 
+
+script:
   - cypress ci #test using cypress for integration testing
   # - 'node_modules/protractor/bin/webdriver-manager update --standalone --chrome'
   # - 'node_modules/grunt-protractor-runner/scripts/webdriver-manager-update'
-  
-after_script:  
-- cat ./build/coverage/**/lcov.info | ./node_modules/coveralls/bin/coveralls.js 
+
+after_script:
+- cat ./build/coverage/**/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+
 after_success: grunt coveralls
- 
+
 notifications:
   webhooks:
     urls:

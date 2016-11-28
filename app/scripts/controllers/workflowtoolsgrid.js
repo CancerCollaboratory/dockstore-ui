@@ -1,3 +1,19 @@
+/*
+ *    Copyright 2016 OICR
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
 'use strict';
 
 /**
@@ -42,7 +58,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.getTableContent = function(workflowId, workflowVersions) {
-        //this function will call the webservice to get 
+        //this function will call the webservice to get
         //the workflow and tool/task excerpt in form of json
         //and return here as a promise
 
@@ -95,9 +111,22 @@ angular.module('dockstore.ui')
       };
 
       $scope.setDocument = function() {
+        var isVersionValid = false;
         $scope.workflowVersions = $scope.getWorkflowVersions();
-        $scope.selVersionName = $scope.successContent[0];
-
+        if ($scope.workflowObj.defaultVersion === null) {
+          $scope.selVersionName = $scope.successContent[0];
+        } else {
+          for (var counter = 0; counter < $scope.successContent.length; counter++) {
+            if ($scope.successContent[counter] === $scope.workflowObj.defaultVersion) {
+              $scope.selVersionName = $scope.successContent[counter];
+              isVersionValid = true;
+              break;
+            }
+          }
+          if (!isVersionValid) {
+             $scope.selVersionName = $scope.successContent[0];
+          }
+        }
       };
 
       $scope.refreshDocument = function() {

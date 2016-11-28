@@ -1,3 +1,19 @@
+/*
+ *    Copyright 2016 OICR
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
 'use strict';
 
 /**
@@ -27,7 +43,7 @@ angular.module('dockstore.ui')
       $scope.createWorkflow = function(workflowObj) {
         if ($scope.savingActive) return;
         $scope.savingActive = true;
-        return WorkflowService.createWorkflow($scope.workflowObj.scrProvider, workflowObj.gitUrl, workflowObj.default_workflow_path, workflowObj.workflowName, $scope.workflowObj.descriptorType)
+        return WorkflowService.createWorkflow($scope.workflowObj.scrProvider, workflowObj.gitUrl, workflowObj.default_workflow_path, workflowObj.workflowName, $scope.workflowObj.descriptorType, $scope.workflowObj.default_test_parameter_file)
           .then(
             function(workflowObj) {
               return workflowObj;
@@ -80,6 +96,7 @@ angular.module('dockstore.ui')
           organization: $scope.getWorkflowPath(workflowObj.gitPath, 'organization'),
           gitUrl: workflowObj.gitPath,
           default_workflow_path: workflowObj.default_workflow_path,
+          default_test_parameter_file: workflowObj.default_test_parameter_file,
           is_published: workflowObj.is_published,
         };
         return normWorkflowObj;

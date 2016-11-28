@@ -1,3 +1,19 @@
+/*!
+ *    Copyright 2016 OICR
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
 $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
 // bower:scss
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
@@ -299,7 +315,7 @@ img.site-icons-tab {
 }
 
 .search-home {
-  width: 430px;
+  width: 475px;
 }
 
 input[type=text]:focus, textarea:focus {
@@ -334,6 +350,11 @@ input[type=text]:focus, textarea:focus {
   padding-right: 15px;
   line-height: 2.5em;
   margin: 0;
+}
+
+.push-right {
+  position: absolute;
+  right: 20px;
 }
 
 /* BUTTONS - - - - - - - - - - - - - */
@@ -387,21 +408,9 @@ th {
   text-align: left;
 }
 
-tr:hover, tr:nth-child(odd):hover {
-  background: #e8eaef;
-}
-
 td.browse-all {
   background-color: #f4f4f4;
   text-align: center;
-}
-
-tr:nth-child(odd) {
-  background: #fafafa;
-}
-
-tr:nth-child(even) td{
-
 }
 
 .browse-all .button {
@@ -860,8 +869,148 @@ div.tabs > div:target > div, :target #info > div, #info > div {
   font-weight: bold;
 }
 
-#cy {
-  height: 300px;
-  width: 100%;
+.radio-button-reference {
+  margin-top: -1px;
+  vertical-align: middle;
 }
+
+.home-search-entry-holder {
+  width:475px;
+  overflow: hidden;
+  padding-left:10px;
+}
+
+.home-search-entry-type {
+  float:right;
+  width:130px;
+  background:#f4f4f4;
+  padding-left:15px;
+  padding-right:15px;
+  font-size: 10px;
+}
+
+.home-search-entry-name {
+  float:left;
+  width:325px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.custom-typeahead-popup {
+  padding:0px;
+  border:1px solid #ccc;
+  margin:0px;
+}
+
+.dag-button {
+  float:right;
+}
+
+.fullscreen {
+    z-index: 9998;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding:10px;
+    margin:0px;
+ }
+
+.fullscreen-element {
+  width: 100%;
+  height: 100%;
+  border:2px solid #ccc;
+  background: #FFF;
+}
+
+.mini-dag {
+  width:100%;
+  height:500px;
+}
+
+.large-dag {
+  height: 90%;
+  border:1px solid #ccc;
+}
+
+.fullscreen-dropdown {
+  padding:10px;
+}
+
+.no-display {
+  display:none;
+}
+
+#dag-popover {
+  z-index: 9999;
+  position: absolute;
+  max-width:250px;
+}
+
+#tooltiptext {
+  display:none;
+}
+
+.file-tabs {
+  padding-bottom:5px;
+}
+
+.search-description {
+  padding: 0px 35px 10px 35px;
+  line-height: 1.5;
+  font-size:90%;
+}
+
+.search-with-description td {
+  border-bottom: 0px;
+}
+
+.search-date {
+  color: #808080;
+}
+
+.code-holder {
+  position:relative;
+  overflow:visible;
+}
+
+.code-copy-button {
+  top:2px;
+  right:2px;
+  position:absolute;
+}
+
+.ellipsis-lines {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow:hidden;
+}
+
+.test_parameter_input {
+  width:90%;
+  float:left;
+}
+
+.test_parameter_remove_button {
+  margin-left:2px;
+  width:9%;
+  float:left;
+  padding: 4px 0px 4px 0px;
+}
+
+.test_parameter_add_button {
+  float:right;
+}
+
+.test_parameter_div {
+  margin-top:5px;
+  margin-bottom:5px;
+}
+
+html, body {
+  height:100%;
+}
+
 /* End Temporary Styles - Need to Refactor Later */

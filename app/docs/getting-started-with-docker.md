@@ -4,10 +4,10 @@
 
 Docker is a fantastic tool for creating light-weight containers to run your tools.  What this means is it gives you a fast VM-like environment for Linux where you can automatically install dependencies, make configurations, and setup your tool exactly the way you want, as you would on a "normal" Linux host.  You can then quickly and easily share these Docker images with the world using registries like Docker Hub and Quay.io (indexed by Dockstore).  The full details on how to make new Docker images is beyond the scope of this site here we will go through a simple representative example. The end-product is a Dockerfile for your tool, stored in a supported Git repository.  The steps, at a high level, are:
 
-0. create a new repository on GitHub or Bitbucket
+0. create a new repository on GitHub, Bitbucket, or GitLab
 0. create a `Dockerfile` in that repository that describes how to create a Docker image
 0. use the Docker tools to build and test your Docker image
-0. use the release process on GitHub or Bitbucket to make distinct release tags
+0. use the release process on GitHub, Bitbucket, or GitLab to make distinct release tags
 0. setup Quay.io (or Docker Hub) to automatically build your Docker image
 
 See the [dockstore-tool-bamstats](https://github.com/CancerCollaboratory/dockstore-tool-bamstats) repository on GitHub which we created as an example. This is linked to the quay.io repository at [dockstore-tool-bamstats](https://quay.io/repository/collaboratory/dockstore-tool-bamstats).
@@ -214,13 +214,18 @@ to see what type of reports are created by this tool. For example, here's a snip
 
 ![Sample report](docs/report.png)
 
+Rather than interactively working with the image, you could also run your Docker image from the command-line. 
+
+```
+wget ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/phase3/data/NA12878/alignment/NA12878.chrom20.ILLUMINA.bwa.CEU.low_coverage.20121211.bam
+docker run -w="/home/ubuntu" -it -v `pwd`:/home/ubuntu quay.io/collaboratory/dockstore-tool-bamstats:1.25-3 bamstats 4 NA12878.chrom20.ILLUMINA.bwa.CEU.low_coverage.20121211.bam
+```
+
+In the next section, we will also demonstrate how this command-line including the input file can be parameterized and constructed via CWL.
+
 ## You Could Stop Here!
 
-At this point you have a working Docker image.  You could use the `docker push` command to send that
-to Quay or DockerHub and share with others.  However, what you loose is a standardized way to describe
-how to run your tool.  That's what the CWL descriptor and Dockstore provide.  We think it's valuable
-and there's an increasing number of tools designed to work with CWL so there are benefits to not just stopping here.
-
+At this point you have a working Docker image.  You could use the `docker push` command to send that to Quay or DockerHub and share with others.  However, what you lose is a standardized way to describe how to run your tool.  That's what the CWL descriptor and Dockstore provide.  We think it's valuable and there's an increasing number of tools designed to work with CWL so there are benefits to not just stopping here.
 
 ## Next Steps
 

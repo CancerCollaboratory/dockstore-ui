@@ -1,48 +1,67 @@
+<!--
+  ~    Copyright 2016 OICR
+  ~
+  ~    Licensed under the Apache License, Version 2.0 (the "License");
+  ~    you may not use this file except in compliance with the License.
+  ~    You may obtain a copy of the License at
+  ~
+  ~        http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~    Unless required by applicable law or agreed to in writing, software
+  ~    distributed under the License is distributed on an "AS IS" BASIS,
+  ~    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~    See the License for the specific language governing permissions and
+  ~    limitations under the License.
+  -->
+
 <div class="row">
   <div class="col-md-12">
     <table class="table versions-grid table-bordered table-condensed table-striped">
       <thead>
         <tr>
-          <th style="width:7.5% !important">
-            Tag
+          <th uib-tooltip="Tags from Docker repository" tooltip-append-to-body="true">
+            <span>Tag</span>
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('name')"
                   ng-click="clickSortColumn('name')">
             </span>
           </th>
-          <th style="width:14.5% !important">
-            Git Reference
+          <th uib-tooltip-html="gitReferenceTooltip" tooltip-append-to-body="true">
+            <span>Git Reference</span>
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('reference')"
                   ng-click="clickSortColumn('reference')">
             </span>
           </th>
-          <th style="width:21.5% !important">
-            Tool Path
+          <th uib-tooltip="Tool paths for given version" tooltip-append-to-body="true">
+            <span>Tool Path</span>
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('name')"
                   ng-click="clickSortColumn('name')">
             </span>
           </th>
-          <th style="width:16.5% !important">
-            Date Modified
+          <th uib-tooltip="Date of last build of the Docker image" tooltip-append-to-body="true">
+            <span>Date Built</span>
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('last_modified')"
                   ng-click="clickSortColumn('last_modified')">
             </span>
           </th>
-          <th style="width:9.5% !important">
-            Valid
+          <th uib-tooltip="A version is valid if it has at least one valid descriptor file and Dockerfile" tooltip-append-to-body="true">
+            <span>Valid</span>
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('valid')"
                   ng-click="clickSortColumn('valid')">
             </span>
           </th>
-          <th>
-            Actions
+          <th uib-tooltip="A version is verified if it has been verified to work by a person/group." tooltip-append-to-body="true">
+            <span>Verified</span>
           </th>
-          <th>
-            Docker Pull
+          <th uib-tooltip="View more information about the given version" tooltip-append-to-body="true">
+            <span>Actions</span>
+          </th>
+          <th uib-tooltip="Docker pull command" tooltip-append-to-body="true">
+            <span>Docker Pull</span>
           </th>
         </tr>
       </thead>
@@ -58,8 +77,11 @@
           </td>
           <td>
             <div class="git-ref">
+              <input class="radio-button-reference" ng-if="editMode && versionTag.name !== 'latest'" type="radio" name="defaultVersion"
+                     ng-model="$parent.containerObj.defaultVersion" ng-value="versionTag.reference" ng-click="updateDefaultVersion(versionTag.reference)"
+                     uib-tooltip="Set as default branch."/>
               {{versionTag.reference ? versionTag.reference : 'n/a'}}
-            </span>
+            </div>
           </td>
           <td>
             <div style="border-bottom:1.5px solid #ddd;margin-bottom:6px;">
@@ -77,6 +99,9 @@
           </td>
           <td>
             {{versionTag.valid ? 'Yes' : 'No'}}
+          </td>
+          <td uib-tooltip="{{versionTag.verifiedSource}}" tooltip-append-to-body="true">
+            {{versionTag.verified ? 'Yes' : 'No'}}
           </td>
           <td class="tag-actions">
             <a href

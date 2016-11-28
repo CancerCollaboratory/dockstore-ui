@@ -1,3 +1,19 @@
+/*!
+ *    Copyright 2016 OICR
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
 /**
  * CSS Style Fixes - Dockstore-Bootstrap Integration
  */
@@ -47,18 +63,15 @@ table.containers-grid {
 }
 
 table.tokens-grid {
-  th:nth-child(1) {
-    width: 15%;
-  }
-  th:nth-child(2) {
-    width: 20%;
-  }
-  th:nth-child(3) {
-    width: 45%;
-  }
-  th:nth-child(4) {
-    width: 20%;
-  }
+    th:nth-child(1) {
+      width: 25%;
+    }
+    th:nth-child(2) {
+      width: 60%;
+    }
+    th:nth-child(3) {
+      width: 15%;
+    }
 }
 
 table.versions-grid {
@@ -69,19 +82,44 @@ table.versions-grid {
     width: 17.5%;
   }
   th:nth-child(3) {
-    width: 12.5%;
+    width: 17.5%;
   }
   th:nth-child(4) {
-    width: 17%;
+    width: 15%;
   }
   th:nth-child(5) {
-    width: 9%;
+    width: 10%;
   }
   th:nth-child(6) {
-    width: 8%;
+    width: 10%;
   }
   th:nth-child(7) {
-    width: 23.5%;
+    width: 17.5%;
+  }
+  div.git-ref {
+    width: 124px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  margin-bottom: 10px;
+}
+
+table.workflow-versions-grid {
+  th:nth-child(1) {
+    width: 22.5%;
+  }
+  th:nth-child(2) {
+    width: 35%;
+  }
+  th:nth-child(3) {
+    width: 22.5%;
+  }
+  th:nth-child(4) {
+    width: 10%;
+  }
+  th:nth-child(5) {
+    width: 10%;
   }
   div.git-ref {
     width: 124px;
@@ -303,6 +341,14 @@ div.container-source-repos p {
   margin: 0;
 }
 
+div.container-verified{
+  width:240px;
+}
+
+div.container-verified p {
+  margin: 0;
+}
+
 div.container-sharing {
   width: 180px;
   margin: 0 auto;
@@ -328,6 +374,12 @@ div.ds-holder {
   table-layout: fixed;
   width:100%;
   margin-bottom: 5px;
+}
+
+div.ds-holder div{
+  display: table-cell;
+  padding: 5px;
+  width:33%;
 }
 
 div.ds-descriptor-selector {
@@ -465,15 +517,12 @@ button.contact-button {
   }
   table.tokens-grid {
     th:nth-child(1) {
-      width: 20%;
-    }
-    th:nth-child(2) {
       width: 25%;
     }
-    th:nth-child(3) {
-      width: 40%;
+    th:nth-child(2) {
+      width: 60%;
     }
-    th:nth-child(4) {
+    th:nth-child(3) {
       width: 15%;
     }
   }

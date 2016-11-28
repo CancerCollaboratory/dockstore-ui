@@ -1,3 +1,19 @@
+/*
+ *    Copyright 2016 OICR
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
 'use strict';
 
 /**
@@ -16,56 +32,14 @@ angular.module('dockstore.ui')
     function ($scope, $q, WorkflowService, NtfnService) {
 
       $scope.descriptor = $scope.workflowObj.descriptorType;
-
       $scope.fileLoaded = false;
       $scope.fileContents = null;
       $scope.successContent = [];
-      $scope.fileContent = null;
+      $scope.fileTabs = ['descriptor', 'testparameter'];
 
-      $scope.getContentHTML = function() {
-        var pre = document.getElementsByTagName('pre');
-        var contentHTML = pre[0].innerHTML;
-        var firstChildNode = pre[0].firstChild;
-        var codeTag = document.getElementById('code');
-        
-        if(contentHTML !== "<code class=\"hljs\"></code>" && contentHTML !== "<code class=\"hljs yaml\"></code>"){
-          if($('#preCopy').length === 0){
-            $('pre').hide(); //hide the original code
-            //create new elements/nodes for copy of pre
-            var preCopy = document.createElement("PRE");
-            var lineNumSpan = document.createElement("SPAN");
-            var closeSpan = document.createElement("SPAN");
-
-            //set id and classes
-            preCopy.setAttribute("id","preCopy");
-            lineNumSpan.setAttribute("class","line-number");
-            closeSpan.setAttribute("class","cl");
-            
-            //append nodes to appropriate tags
-            preCopy.appendChild(lineNumSpan);
-            preCopy.appendChild(firstChildNode);
-            preCopy.appendChild(closeSpan);
-            codeTag.appendChild(preCopy);
-          }
-
-          //get line numbers node and total line numbers
-          var lineNumNode = document.getElementsByClassName('line-number');
-          var lineNumLength = $('.line-number').children().length;
-          //reset line numbers for new file by removing the nodes of line numbers
-          if(lineNumLength > 0){
-            while(lineNumNode[0].firstChild){
-              lineNumNode[0].removeChild(lineNumNode[0].firstChild);
-            }
-          }
-          //add the line numbers beside the descriptor file
-          for (var i = 1; i < $scope.totalLines; i++) {
-            var line = document.createElement("SPAN");
-            line.innerHTML = i;
-            $('.line-number').append(line);
-          }
-
-        }
-
+      $scope.setType = function(type) {
+        $scope.type = type;
+        $scope.refreshDocument(false);
       };
 
       $scope.checkDescriptor = function() {
@@ -74,7 +48,7 @@ angular.module('dockstore.ui')
           return;
         }
         $scope.successContent = [];
-        $scope.fileContent = null;
+        $scope.fileContents = null;
         var accumulator = [];
         var index = 0;
         var m = [];
@@ -90,7 +64,7 @@ angular.module('dockstore.ui')
             };
             index++;
         }
-        
+
         var checkSuccess = function(acc) {
           var makePromises = function(acc, start) {
             var vd = acc[start];
@@ -126,12 +100,32 @@ angular.module('dockstore.ui')
         var successResult = checkSuccess(accumulator);
         successResult.then(
           function(r){
-            $scope.selVersionName = $scope.successContent[0].version;
-            $scope.fileContent = $scope.successContent[0].content;
-            var result = $scope.fileContent;
+            var isVersionValid = false;
+            if ($scope.successContent.length !== 0) {
+              if ($scope.workflowObj.defaultVersion === null) {
+                $scope.selVersionName = $scope.successContent[0].version;
+                $scope.fileContents = $scope.successContent[0].content;
+              } else {
+                for (var counter = 0; counter < $scope.successContent.length; counter++) {
+                  if ($scope.successContent[counter].version === $scope.workflowObj.defaultVersion) {
+                    $scope.selVersionName = $scope.successContent[counter].version;
+                    $scope.fileContents = $scope.successContent[counter].content;
+                    isVersionValid = true;
+                    break;
+                  }
+                }
+                if (!isVersionValid) {
+                  $scope.selVersionName = $scope.successContent[0].version;
+                  $scope.fileContents = $scope.successContent[0].content;
+                }
+              }
+            }
+
+            var result = $scope.fileContents;
             m = [];
             v = false;
             count = 0;
+            if (result !== null){
 
             if($scope.descriptor === "cwl"){
               //Descriptor: CWL
@@ -172,10 +166,10 @@ angular.module('dockstore.ui')
                 v = true;
               }
             }
-            $scope.totalLines = result.split(/\n/).length;
-            $scope.getContentHTML();
+
             $scope.$emit('returnMissing',m);
             $scope.$emit('returnValid',v);
+            }
           },
           function(e){
             console.log("error get success result",e);
@@ -193,6 +187,10 @@ angular.module('dockstore.ui')
             }
           }
         }
+      };
+
+      $scope.isTestParameter = function() {
+        return $scope.type === 'testparameter';
       };
 
       $scope.getWorkflowVersions = function() {
@@ -231,27 +229,8 @@ angular.module('dockstore.ui')
           );
       };
 
-      $scope.getDescriptorFilePath = function(containerId, tagName, type) {
-        return WorkflowService.getDescriptorFilePath(containerId, tagName, type)
-          .then(
-            function(descriptorFile) {
-              $scope.secondaryDescriptors = $scope.secondaryDescriptors.concat(descriptorFile);
-              $scope.secondaryDescriptors = $scope.secondaryDescriptors.filter(
-                function(elem, index, self){
-                  return index === self.indexOf(elem);
-                });
-              return $scope.secondaryDescriptors;
-            },
-            function(response) {
-              return $q.reject(response);
-            }
-          ).finally(
-            function() { $scope.fileLoaded = true; }
-          );
-      };
-
       $scope.getSecondaryDescriptorFile = function(containerId, tagName, type, secondaryDescriptorPath) {
-        if(typeof $scope.selVersionName === 'undefined' || typeof $scope.selSecondaryDescriptorName === 'undefined'){
+        if(typeof $scope.selVersionName === 'undefined' || typeof $scope.selFileName === 'undefined'){
           return;
         }
         return WorkflowService.getSecondaryDescriptorFile(containerId, tagName, type, encodeURIComponent(secondaryDescriptorPath))
@@ -270,12 +249,35 @@ angular.module('dockstore.ui')
           );
       };
 
-      function extracted(){
+      $scope.getTestParameterFile = function(workflowId, versionName, filePath, fileType) {
+        return WorkflowService.getTestJson(workflowId, versionName)
+          .then(
+            function(testJson) {
+              for (var i = 0; i < testJson.length; i++) {
+                if (testJson[i].path === filePath && testJson[i].type === fileType) {
+                  $scope.fileContents = testJson[i].content;
+                  return testJson[i].content;
+                }
+              }
+              return testJson;
+            },
+            function(response) {
+              return $q.reject(response);
+            }
+          )
+          .finally(
+            function() {
+              $scope.fileLoaded = true;
+            }
+          );
+      };
+
+      function extracted(fileType){
         try {
           return $scope.workflowObj.workflowVersions.filter(function (a) {
             return a.name === $scope.selVersionName;
           })[0].sourceFiles.filter(function (a) {
-            return a.type === 'DOCKSTORE_' + $scope.descriptor.toUpperCase();
+            return a.type === '' + fileType;
           }).map(function (a) {
             return a.path;
           }).sort();
@@ -290,40 +292,41 @@ angular.module('dockstore.ui')
         $scope.workflowVersions = $scope.workflowObj.workflowVersions.map(function(a) {return a.name;}).sort();
         $scope.selVersionName = $scope.workflowVersions[0];
         // prepare Descriptor Imports drop-down
-        $scope.secondaryDescriptors = extracted();
-        $scope.selSecondaryDescriptorName = $scope.secondaryDescriptors[0];
+        var fileType = $scope.descriptor === 'cwl' ? 'DOCKSTORE_CWL' : 'DOCKSTORE_WDL';
+        $scope.fileList = extracted(fileType);
+        $scope.selFileName = $scope.fileList[0];
       };
 
-      $scope.refreshDocumentType = function() {
+      $scope.refreshDocument = function(versionChange) {
         $scope.fileLoaded = false;
         $scope.fileContents = null;
-        $scope.expectedFilename = 'Descriptor';
-        $scope.secondaryDescriptors = extracted();
-        $scope.selSecondaryDescriptorName = $scope.secondaryDescriptors[0];
-        var file = $scope.getSecondaryDescriptorFile($scope.workflowObj.id, $scope.selVersionName, $scope.descriptor, $scope.selSecondaryDescriptorName);
-        file.then(
-          function(s){
-            $scope.totalLines = s.split(/\n/).length;
-            $scope.getContentHTML();
-          },
-          function(e){
-            console.log("error refreshDocumentType",e);
-          });
+        var testFileType = $scope.descriptor === 'cwl' ? 'CWL_TEST_JSON' : 'WDL_TEST_JSON';
+        var fileType = $scope.descriptor === 'cwl' ? 'DOCKSTORE_CWL' : 'DOCKSTORE_WDL';
+        switch ($scope.type) {
+          case 'descriptor':
+            $scope.expectedFilename = 'Descriptor';
+            $scope.fileList = extracted(fileType);
+            if (versionChange === true) {
+                $scope.selFileName = $scope.fileList[0];
+            }
+            var descriptor = $scope.getSecondaryDescriptorFile($scope.workflowObj.id, $scope.selVersionName, $scope.descriptor, $scope.selFileName);
+              break;
+          case 'testparameter':
+            $scope.expectedFilename = 'Test Parameter File';
+            $scope.fileList = extracted(testFileType);
+            if (versionChange === true) {
+              $scope.selFileName = $scope.fileList[0];
+            }
+
+            var testparameter = $scope.getTestParameterFile($scope.workflowObj.id, $scope.selVersionName, $scope.selFileName, testFileType);
+            break;
+          default:
+            // ...
+            }
       };
 
-      $scope.refreshDocument = function() {
-        $scope.fileLoaded = false;
-        $scope.fileContents = null;
-        $scope.expectedFilename = 'Descriptor';
-        var file = $scope.getSecondaryDescriptorFile($scope.workflowObj.id, $scope.selVersionName, $scope.descriptor, $scope.selSecondaryDescriptorName);
-        file.then(
-          function(s){
-            $scope.totalLines = s.split(/\n/).length;
-            $scope.getContentHTML();
-          },
-          function(e){
-            console.log("error refreshDocument",e);
-          });
+      $scope.onSuccess = function(e) {
+        e.clearSelection();
       };
 
       $scope.setDocument();

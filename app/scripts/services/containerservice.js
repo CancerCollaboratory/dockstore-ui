@@ -1,3 +1,19 @@
+/*
+ *    Copyright 2016 OICR
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
 'use strict';
 
 /**
@@ -239,18 +255,18 @@ angular.module('dockstore.ui')
       });
     };
 
-    // this is actually a partial update, see https://github.com/ga4gh/dockstore/issues/274 
-    this.setDefaultToolPath = function(containerId,cwlPath,wdlPath,dfPath,toolname,giturl){
+    // this is actually a partial update, see https://github.com/ga4gh/dockstore/issues/274
+    this.updateToolDefaults = function(containerId,containerObj){
       return $q(function(resolve, reject) {
         $http({
           method: 'PUT',
           url: WebService.API_URI + '/containers/' + containerId,
           data: {
-            default_cwl_path: cwlPath,
-            default_wdl_path: wdlPath,
-            default_dockerfile_path: dfPath,
-            toolname: toolname,
-            gitUrl: giturl
+            default_cwl_path: containerObj.default_cwl_path,
+            default_wdl_path: containerObj.default_wdl_path,
+            default_dockerfile_path: containerObj.default_dockerfile_path,
+            toolname: containerObj.toolname,
+            gitUrl: containerObj.gitUrl
           }
         }).then(function(response) {
           resolve(response.data);
@@ -260,17 +276,17 @@ angular.module('dockstore.ui')
       });
     };
 
-    this.updateToolPathTag = function(containerId,cwlPath,wdlPath,dfPath,toolname,giturl){
+    this.updateToolPathTag = function(containerId,containerObj){
       return $q(function(resolve, reject) {
         $http({
           method: 'PUT',
           url: WebService.API_URI + '/containers/' + containerId + '/updateTagPaths',
           data: {
-            default_cwl_path: cwlPath,
-            default_wdl_path: wdlPath,
-            default_dockerfile_path: dfPath,
-            toolname: toolname,
-            gitUrl: giturl
+            default_cwl_path: containerObj.default_cwl_path,
+            default_wdl_path: containerObj.default_wdl_path,
+            default_dockerfile_path: containerObj.default_dockerfile_path,
+            toolname: containerObj.toolname,
+            gitUrl: containerObj.gitUrl
           }
         }).then(function(response) {
           resolve(response.data);
@@ -290,6 +306,59 @@ angular.module('dockstore.ui')
           }
         }).then(function(response) {
           resolve(response.data.content);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
+    this.getTestJson = function(containerId, tagName, descType) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'GET',
+          url: WebService.API_URI + '/containers/' + containerId + '/testParameterFiles',
+          params: {
+            tag: tagName,
+            descriptorType: descType
+          }
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
+    this.addTestJson = function(containerId, tagName, testParameterArray, descType) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'PUT',
+          url: WebService.API_URI + '/containers/' + containerId + '/testParameterFiles',
+          params: {
+            tagName: tagName,
+            testParameterPaths: testParameterArray,
+            descriptorType: descType
+          }
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
+    this.removeTestJson = function(containerId, tagName, testParameterArray, descType) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'DELETE',
+          url: WebService.API_URI + '/containers/' + containerId + '/testParameterFiles',
+          params: {
+            tagName: tagName,
+            testParameterPaths: testParameterArray,
+            descriptorType: descType
+          }
+        }).then(function(response) {
+          resolve(response.data);
         }, function(response) {
           reject(response);
         });
@@ -343,6 +412,21 @@ angular.module('dockstore.ui')
             });
           });
         };
+
+
+    this.updateDefaultVersion = function(containerId,toolObj){
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'PUT',
+          url: WebService.API_URI + '/containers/' + containerId,
+          data: toolObj
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
 
 
   }]);

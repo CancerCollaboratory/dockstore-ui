@@ -1,3 +1,19 @@
+/*
+ *    Copyright 2016 OICR
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
 'use strict';
 
 /**
@@ -80,6 +96,9 @@ angular.module('dockstore.ui')
           case 'GitHub':
             gitUrl = 'https://github.com/';
             break;
+          case 'GitLab':
+            gitUrl = 'https://gitlab.com/';
+            break;
           case 'Bitbucket':
             /* falls through */
           default:
@@ -124,6 +143,8 @@ angular.module('dockstore.ui')
           default_dockerfile_path: containerObj.default_dockerfile_path,
           default_cwl_path: containerObj.default_cwl_path,
           default_wdl_path: containerObj.default_wdl_path,
+          default_cwl_test_parameter_file: containerObj.default_cwl_test_parameter_file,
+          default_wdl_test_parameter_file: containerObj.default_wdl_test_parameter_file,
           is_published: containerObj.is_published,
         };
         if (normContainerObj.toolname === normContainerObj.name) {

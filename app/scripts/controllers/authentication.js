@@ -1,3 +1,19 @@
+/*
+ *    Copyright 2016 OICR
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
 'use strict';
 
 /**
@@ -51,6 +67,21 @@ angular.module('dockstore.ui')
           );
       };
 
+      $scope.registerGitlabToken = function(userId, accessToken) {
+        return TokenService.registerGitlabToken(userId, accessToken)
+          .then(
+            function(token) {
+              return token;
+            },
+            function(response) {
+              $scope.errorMsg =
+                '[HTTP ' + response.status + '] ' + response.statusText + '. ' +
+                'Error registering Gitlab token.';
+              return $q.reject(response);
+            }
+          );
+      };
+
       $scope.refreshUserContainers = function(userId) {
         return ContainerService.refreshUserContainers(userId)
           .then(
@@ -65,7 +96,7 @@ angular.module('dockstore.ui')
             }
           );
       };
-    
+
       var providerRegExp = /^\/auth\/([a-zA-Z-\.]*).*$/;
       var provider = $location.url().match(providerRegExp)[1];
 
@@ -81,6 +112,21 @@ angular.module('dockstore.ui')
           var bitbucketToken = $location.url().match(bitbucketTokenRegExp);
           if (bitbucketToken) {
             $scope.registerBitbucketToken($scope.userObj.id, bitbucketToken[1])
+              .then(
+                function() {
+                  $window.location.href = '/onboarding';
+                }
+              );
+          } else {
+            $window.location.href = '/login';
+          }
+          break;
+        case 'gitlab.com':
+          $scope.providerName = 'Gitlab';
+          var gitlabTokenRegExp = /code=([a-zA-Z0-9]*)/;
+          var gitlabToken = $location.url().match(gitlabTokenRegExp);
+          if (gitlabToken) {
+            $scope.registerGitlabToken($scope.userObj.id, gitlabToken[1])
               .then(
                 function() {
                   $window.location.href = '/onboarding';

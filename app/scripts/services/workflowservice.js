@@ -1,3 +1,19 @@
+/*
+ *    Copyright 2016 OICR
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
 'use strict';
 
 /**
@@ -81,6 +97,19 @@ angular.module('dockstore.ui')
       });
     };
 
+    this.restubWorkflow = function(workflowId) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'GET',
+          url: WebService.API_URI + '/workflows/' + workflowId + '/restub',
+         }).then(function(response) {
+          resolve(response.data);
+         }, function(response) {
+          reject(response);
+         });
+        });
+       };
+
     this.refreshUserWorkflows = function(userId) {
       return $q(function(resolve, reject) {
         $http({
@@ -130,17 +159,17 @@ angular.module('dockstore.ui')
     };
 
     // this is actually a partial update, see https://github.com/ga4gh/dockstore/issues/274
-    this.setDefaultWorkflowPath = function(workflowId, workflowpath, workflowname, descType,path, giturl) {
+    this.updateWorkflowDefaults = function(workflowId, workflowObj) {
       return $q(function(resolve, reject) {
         $http({
           method: 'PUT',
           url: WebService.API_URI + '/workflows/' + workflowId,
           data: {
-            workflow_path: workflowpath,
-            workflowName: workflowname,
-            descriptorType: descType,
-            path: path,
-            gitUrl: giturl
+            workflow_path: workflowObj.workflow_path,
+            workflowName: workflowObj.workflowName,
+            descriptorType: workflowObj.descriptorType,
+            path: workflowObj.path,
+            gitUrl: workflowObj.gitUrl
           }
         }).then(function(response) {
           resolve(response.data);
@@ -150,17 +179,17 @@ angular.module('dockstore.ui')
       });
     };
 
-    this.updateWorkflowPathVersion = function(workflowId, workflowpath, workflowname, descType,path, giturl) {
+    this.updateWorkflowPathVersion = function(workflowId, workflowObj) {
       return $q(function(resolve, reject) {
         $http({
           method: 'PUT',
           url: WebService.API_URI + '/workflows/' + workflowId +'/resetVersionPaths',
           data: {
-            workflow_path: workflowpath,
-            workflowName: workflowname,
-            descriptorType: descType,
-            path: path,
-            gitUrl: giturl
+            workflow_path: workflowObj.workflow_path,
+            workflowName: workflowObj.workflowName,
+            descriptorType: workflowObj.descriptorType,
+            path: workflowObj.path,
+            gitUrl: workflowObj.gitUrl
           }
         }).then(function(response) {
           resolve(response.data);
@@ -175,6 +204,58 @@ angular.module('dockstore.ui')
         $http({
           method: 'GET',
           url: WebService.API_URI + '/workflows/' + workflowId + '/dag/' + workflowVersionId
+        }).then(function(response) {
+          if (response !== null) {
+            resolve(response.data);
+          }
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
+    this.getTestJson = function(workflowId, versionName) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'GET',
+          url: WebService.API_URI + '/workflows/' + workflowId + '/testParameterFiles',
+          params: {
+            version: versionName
+          }
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
+    this.addTestJson = function(workflowId, versionName, testParameterArray) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'PUT',
+          url: WebService.API_URI + '/workflows/' + workflowId + '/testParameterFiles',
+          params: {
+            version: versionName,
+            testParameterPaths: testParameterArray
+          }
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
+    this.removeTestJson = function(workflowId, versionName, testParameterArray) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'DELETE',
+          url: WebService.API_URI + '/workflows/' + workflowId + '/testParameterFiles',
+          params: {
+            version: versionName,
+            testParameterPaths: testParameterArray
+          }
         }).then(function(response) {
           resolve(response.data);
         }, function(response) {
@@ -277,6 +358,20 @@ angular.module('dockstore.ui')
         $http({
           method: 'GET',
           url: WebService.API_URI + '/workflows/' + workflowId + '/tools/' + workflowVersionId
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
+    this.updateDefaultVersion = function(workflowId,workflowObj){
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'PUT',
+          url: WebService.API_URI + '/workflows/' + workflowId,
+          data: workflowObj
         }).then(function(response) {
           resolve(response.data);
         }, function(response) {

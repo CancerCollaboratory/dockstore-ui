@@ -1,3 +1,19 @@
+<!--
+  ~    Copyright 2016 OICR
+  ~
+  ~    Licensed under the Apache License, Version 2.0 (the "License");
+  ~    you may not use this file except in compliance with the License.
+  ~    You may obtain a copy of the License at
+  ~
+  ~        http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~    Unless required by applicable law or agreed to in writing, software
+  ~    distributed under the License is distributed on an "AS IS" BASIS,
+  ~    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~    See the License for the specific language governing permissions and
+  ~    limitations under the License.
+  -->
+
 <div id="container-header">
   <div class="container">
     <div class="row">
@@ -40,34 +56,35 @@
           ng-if="refreshingContainers">
         <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate">
         </span>
-        Please wait, retrieving Quay.io and/or Docker Hub containers...
+        Please wait, retrieving Quay.io and/or Docker Hub tools...
       </div>
       <div class="alert alert-info"
           role="alert"
           ng-if="nsContainers.length === 0">
         <p>
           <span class="glyphicon glyphicon-info-sign"></span>
-          There are currently no containers registered under this account, to add your first containers, do one of the following:
+          There are currently no tools registered under this account, to add your first tool, do one of the following:
         </p>
         <ul>
           <li>
-            Go to 'Accounts' and link a Quay.io account that is set up to build Docker images from GitHub or Bitbucket. Containers will be synchronized in the linking process.
+            Go to 'Accounts' and link a Quay.io account that is set up to build Docker images from GitHub, Gitlab, or Bitbucket. Tools will be synchronized in the linking process.
           </li>
           <li>
-            Press the 'Add Tool' button to manually add a Quay.io or Docker Hub container.
+            Press the 'Add Tool' button to manually add a Quay.io or Docker Hub tool.
           </li>
+          </ul>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-3 containers-rsb">
       <div class="ns-containers-accordion" ng-if="nsContainers">
-        <uib-accordion ng-repeat="nsObj in nsContainers" close-others="true">
-          <uib-accordion-group is-open="nsContainers[$index].isOpen">
+        <uib-accordion close-others="true">
+          <uib-accordion-group ng-repeat="nsObj in nsContainers" is-open="$first">
             <uib-accordion-heading>
               <div class="container-namespace-label-oflw"
                   title="{{nsObj.namespace}}"
-                  data-toggle="tooltip">
+                   uib-tooltip>
                 {{nsObj.namespace}}
               </div>
             </uib-accordion-heading>
@@ -77,7 +94,7 @@
                 ng-repeat="containerObj in nsObj.containers">
               <div class="container-name-oflw pull-left"
                   title="{{containerObj.name + (containerObj.toolname ? '/' + containerObj.toolname : '')}}"
-                  data-toggle="tooltip">
+                   uib-tooltip>
                 <a href ng-click="selectContainer(containerObj.id)">
                   {{containerObj.name + (containerObj.toolname ? '/' + containerObj.toolname : '')}}
                 </a>
@@ -86,7 +103,7 @@
                 <span class="label"
                   ng-class="containerObj.is_published ? 'label-primary' : 'label-warning'"
                   title="{{ containerObj.is_published ? 'Published' : 'Unpublished' }}"
-                  data-toggle="tooltip">
+                      uib-tooltip>
                   {{ containerObj.is_published ? 'PUB' : 'UNPUB' }}
                 </span>
               </div>

@@ -23,19 +23,9 @@ Again, we provide an example from the [dockstore-tool-bamstats](https://github.c
     id: "BAMStats"
     label: "BAMStats tool"
     cwlVersion: v1.0 
-    description: |
+    doc: |
         ![build_status](https://quay.io/repository/collaboratory/dockstore-tool-bamstats/status)
         A Docker container for the BAMStats command. See the [BAMStats](http://bamstats.sourceforge.net/) website for more information.
-        ```
-        Usage:
-        # fetch CWL
-        $> dockstore tool cwl --entry quay.io/collaboratory/dockstore-tool-bamstats:1.25-5 > Dockstore.cwl
-        # make a runtime JSON template and edit it (or use the content of sample_configs.json in this git repo)
-        $> dockstore tool convert cwl2json --cwl Dockstore.cwl > Dockstore.json
-        # run it locally with the Dockstore CLI
-        $> dockstore tool launch --entry quay.io/collaboratory/dockstore-tool-bamstats:1.25-5 \
-            --json Dockstore.json
-        ```
 
     dct:creator:
       "@id": "http://orcid.org/0000-0002-7681-6415"
@@ -82,15 +72,18 @@ Again, we provide an example from the [dockstore-tool-bamstats](https://github.c
 You can see this tool takes two inputs, a parameter to control memory usage and a BAM file (binary sequence alignment file).  It produces one output, a zip file, that contains various HTML reports that BamStats creates.
 
 There's a lot going on here.  Let's break it down.  The CWL is actually recognized and parsed by Dockstore (when we register this later). By
-default it recognizes `Dockstore.cwl` but you can customize this if you need to.  One of the most important items below is the [CWL version](http://www.commonwl.org/v1.0/CommandLineTool.html#CWLVersion), you should label your CWL with the version you are using so CWL tools that cannot run this version can error our appropriately.  
+default it recognizes `Dockstore.cwl` but you can customize this if you need to.  One of the most important items below is the [CWL version](http://www.commonwl.org/v1.0/CommandLineTool.html#CWLVersion), you should label your CWL with the version you are using so CWL tools that cannot run this version can error out appropriately. Our tools have been tested with draft-3 and v1.0 (we recommend the latter).
 
 ```
 class: CommandLineTool
 id: "BAMStats"
 label: "BAMStats tool"
 cwlVersion: v1.0
-description: "A Docker container for the BAMStats command. See the BAMStats website for more information."
+description: |
+        ![build_status](https://quay.io/repository/collaboratory/dockstore-tool-bamstats/status)
+        A Docker container for the BAMStats command. See the [BAMStats](http://bamstats.sourceforge.net/) website for more information.
 ```
+
 These items are recommended and the description is actually parsed and displayed in the Dockstore page. Here's an example:
 
 ![Entry](docs/entry.png)
@@ -105,6 +98,8 @@ dct:creator:
 ```
 
 This section includes the tool author referenced by Dockstore. It is open to your interpretation whether that is the person that registers the tool, the person who made the Docker image, or the developer of the original tool.  I'm biased towards the person that registers the tool since that is likely to be the primary contact when asking questions about how the tool was setup.
+
+You can register for an [ORCID](http://orcid.org/) (a digital identifer for researchers) or use an email address for your id.  
 
 ```
 requirements:
@@ -140,9 +135,8 @@ This may or may not be honoured by the tool calling this CWL but at least it giv
         inputBinding:
           position: 2
 
-This is one of the items from the inputs section.  Notice a few things, first, the `bam_input:` matches with `bam_input` in the sample parameterization JSON.
-Also, you can control the position of the variable, it can have a type (int or File here), and, for tools that require a prefix (`--prefix`) before a
-parameter you can use the `prefix` key:value in the inputBindings section.
+This is one of the items from the inputs section.  Notice a few things, first, the `bam_input:` matches with `bam_input` in the sample parameterization JSON (shown in the next section as `sample_configs.local.json`).
+Also, you can control the position of the variable, it can have a type (int or File here), and, for tools that require a prefix (`--prefix`) before a parameter you can use the `prefix: key` in the inputBindings section.
 
 Also, I'm using the `format` field to specify a file format via the [EDAM](http://bioportal.bioontology.org/ontologies/EDAM) ontology.
 
@@ -293,6 +287,11 @@ cwltool --non-strict --enable-net --outdir /home/ubuntu/gitroot/dockstore-tool-b
 and uses it for inputs/outputs.  It can get quite large depending on the tool/inputs/outputs being used.  Plan accordingly e.g. execute
 the dockstore CLI in a directory located on a partition with sufficient storage.
 
+## Adding a Test Parameter File
+We are able register the above input parameterization of the tool into Dockstore so that users can see and test an example with our tool. By default we look for the files `/test.cwl.json` and/or `/test.wdl.json`, depending on which descriptor language you end up using for a given Tool. 
+
+**Tip:** Make sure that any required input files are given as URLs so that a user can run the example successfully.
+
 ## Releasing on GitHub
 
 At this point we've successfully created our tool in Docker, tested it, written a CWL that describes how to run it, and tested
@@ -326,7 +325,7 @@ Log onto Quay now and setup a new repository (click the "+" icon).
 
 ![New Quay Repo](docs/quay_new_repo.png)
 
-You must match the name to what I was using previously, so in this case it's `CancerCollaboratory` / `dockstore-tool-bamstats`.  Also, Dockstore will
+You must match the name to what I was using previously, so in this case it's `CancerCollaboratory/dockstore-tool-bamstats`.  Also, Dockstore will
 only work with `Public` repositories currently.
 Notice I'm selecting "Link to a GitHub Repository Push", this is because we want Quay to automatically build our Docker image
 every time we update the repository on GitHub.  Very slick!

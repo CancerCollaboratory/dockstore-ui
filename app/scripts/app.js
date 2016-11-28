@@ -1,3 +1,19 @@
+/*
+ *    Copyright 2016 OICR
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
 'use strict';
 
 /**
@@ -21,9 +37,10 @@ angular
     'LocalStorageModule',
     'ui.bootstrap',
     'toaster',
-    'hc.marked',
     'hljs',
-    'sn.addthis'
+    'hc.marked',
+    'sn.addthis',
+    'ngclipboard'
   ])
   .config(['$authProvider', 'WebService',
     function($authProvider, WebService) {
@@ -46,6 +63,15 @@ angular
         tabReplace: '    '
       });
   }])
+  .config(['markedProvider', function (markedProvider) {
+    markedProvider.setOptions({
+      gfm: true,
+      tables: true,
+      breaks: true,
+      sanitize: true,
+      smartypants: true
+    });
+  }])
   .config(['$routeProvider', '$locationProvider',
     function ($routeProvider, $locationProvider) {
       $routeProvider
@@ -54,15 +80,17 @@ angular
           controller: 'LoginCtrl',
           controllerAs: 'Login'
         })
-        .when('/search-containers/:searchQueryContainer?', {
+        .when('/search-containers', {
           templateUrl: 'views/search.html',
           controller: 'SearchCtrl',
-          controllerAs: 'Search'
+          controllerAs: 'Search',
+          reloadOnSearch: false
         })
-        .when('/search-workflows/:searchQueryWorkflow?', {
+        .when('/search-workflows', {
           templateUrl: 'views/searchworkflow.html',
           controller: 'SearchWorkflowCtrl',
-          controllerAs: 'SearchWorkflow'
+          controllerAs: 'SearchWorkflow',
+          reloadOnSearch: false
         })
         .when('/containers/:containerPath*', {
           templateUrl: 'views/containerviewer.html',
@@ -178,19 +206,19 @@ angular
   }])
   .run(['$rootScope', '$auth', '$location', 'UserService',
     function($rootScope, $auth, $location, UserService) {
-      $rootScope.$on('auth401Refused', function(event) {
+      $rootScope.$on('auth401Refused', function() {
         UserService.logout({
           title: 'Dockstore Web Service',
           content: 'Invalid token or authorization denied, please sign in again.'
         });
       });
-      $rootScope.$watch('searchQueryContainer', function(newValue, oldValue) {
+      $rootScope.$watch('searchQueryContainer', function(newValue) {
         if (newValue) $location.path('/search-containers');
       });
-      $rootScope.$watch('searchQueryWorkflow', function(newValue, oldValue) {
+      $rootScope.$watch('searchQueryWorkflow', function(newValue) {
         if (newValue) $location.path('/search-workflows');
       });
-      $rootScope.$on('$routeChangeStart', function(event, next, current) {
+      $rootScope.$on('$routeChangeStart', function() {
         if ($location.url() === '/') return;
         var public_views = [
           '/search-containers', '/containers', '/docs', '/login', '/publish', 'maintenance', '/workflows', '/search-workflows'

@@ -1,4 +1,20 @@
 <!DOCTYPE html>
+<!--
+  ~    Copyright 2016 OICR
+  ~
+  ~    Licensed under the Apache License, Version 2.0 (the "License");
+  ~    you may not use this file except in compliance with the License.
+  ~    You may obtain a copy of the License at
+  ~
+  ~        http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~    Unless required by applicable law or agreed to in writing, software
+  ~    distributed under the License is distributed on an "AS IS" BASIS,
+  ~    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~    See the License for the specific language governing permissions and
+  ~    limitations under the License.
+  -->
+
 <html lang="en-CA">
 <head>
   <meta charset="utf-8" />
@@ -10,10 +26,14 @@
   <!-- build:css(.) styles/vendor.css -->
   <!-- bower:css -->
   <link rel="stylesheet" href="bower_components/AngularJS-Toaster/toaster.css" />
+  <link rel="stylesheet" href="bower_components/highlightjs/styles/default.css" />
   <!-- endbower -->
   <!-- endbuild -->
   <!-- build:css(.tmp) styles/main.css -->
   <link rel="stylesheet" href="styles/main.css">
+  <!-- For some reason this is not automatically added by bower -->
+  <link rel="stylesheet" href="bower_components/qtip2/jquery.qtip.css" />
+
   <!-- endbuild -->
 </head>
 <body ng-app="dockstore.ui">
@@ -51,9 +71,6 @@
     </div>
   </div>
 
-  <!-- highlight.js -->
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/styles/default.min.css">
-  <script src="scripts/libs/highlightjs/highlight.pack.js"></script>
 
   <!-- AddThis (Sharing Icons) -->
   <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-564e22ffb3fcb698&async=1"></script>
@@ -78,14 +95,21 @@
   <script src="bower_components/dagre/dist/dagre.core.js"></script>
   <script src="bower_components/dagre/dist/dagre.core.min.js"></script>
   <script src="bower_components/cytoscape-dagre/cytoscape-dagre.js"></script>
-  <script src="bower_components/angular-highlightjs/build/angular-highlightjs.js"></script>
   <script src="bower_components/marked/lib/marked.js"></script>
-  <script src="bower_components/angular-marked/angular-marked.js"></script>
+  <script src="bower_components/angular-marked/dist/angular-marked.js"></script>
   <script src="bower_components/angular-messages/angular-messages.js"></script>
   <script src="bower_components/angular-addthis/dist/angular-addthis.js"></script>
+  <script src="bower_components/ev-emitter/ev-emitter.js"></script>
+  <script src="bower_components/imagesloaded/imagesloaded.js"></script>
+  <script src="bower_components/qtip2/jquery.qtip.js"></script>
+  <script src="bower_components/qtip2/basic/jquery.qtip.js"></script>
+  <script src="bower_components/cytoscape-qtip/cytoscape-qtip.js"></script>
+  <script src="bower_components/highlightjs/highlight.pack.js"></script>
+  <script src="bower_components/angular-highlightjs/build/angular-highlightjs.js"></script>
+  <script src="bower_components/clipboard/dist/clipboard.js"></script>
+  <script src="bower_components/ngclipboard/dist/ngclipboard.js"></script>
   <!-- endbower -->
   <!-- endbuild -->
-
   <!-- Satellizer - Modified for Dockstore -->
   <script src="scripts/libs/satellizer/satellizer-ds.js"></script>
 
@@ -145,14 +169,17 @@
   <script src="scripts/directives/registerworkflow.js"></script>
   <script src="scripts/directives/containerfileviewer.js"></script>
   <script src="scripts/directives/workflowfileviewer.js"></script>
+  <script src="scripts/directives/fileviewer.js"></script>
   <script src="scripts/controllers/containerfileviewer.js"></script>
   <script src="scripts/controllers/workflowfileviewer.js"></script>
+  <script src="scripts/controllers/fileviewer.js"></script>
   <script src="scripts/controllers/maintenance.js"></script>
   <script src="scripts/directives/tageditor.js"></script>
   <script src="scripts/directives/versiontageditor.js"></script>
   <script src="scripts/controllers/tageditor.js"></script>
   <script src="scripts/controllers/versiontageditor.js"></script>
   <script src="scripts/services/formatting.js"></script>
+  <script src="scripts/services/UtilityService.js"></script>
   <script src="scripts/filters/hiddentagsfilter.js"></script>
   <!--<script src="http://cytoscape.github.io/cytoscape.js/api/cytoscape.js-latest/cytoscape.min.js"></script>-->
   <!--<script src="https://cdn.rawgit.com/cpettitt/dagre/v0.7.4/dist/dagre.min.js"></script>-->

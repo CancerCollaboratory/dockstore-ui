@@ -1,3 +1,19 @@
+/*
+ *    Copyright 2016 OICR
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
 'use strict';
 
 /**
@@ -11,11 +27,11 @@ angular.module('dockstore.ui')
   .controller('ContainerDetailsCtrl', [
     '$scope',
     '$q',
+    '$sce',
     'ContainerService',
     'FormattingService',
-    'NotificationService',
-    function ($scope, $q, ContainerService, FrmttSrvc, NtfnService) {
-
+    'UtilityService',
+    function ($scope, $q, $sce, ContainerService, FrmttSrvc, UtilityService) {
       $scope.labelsEditMode = false;
       $scope.dockerfileEnabled = false;
       $scope.descriptorEnabled = false;
@@ -26,12 +42,17 @@ angular.module('dockstore.ui')
       $scope.showEditCWL = true;
       $scope.showEditWDL = true;
       $scope.showEditDockerfile = true;
+      $scope.showEditCWLTestParameterPath = true;
+      $scope.showEditWDLTestParameterPath = true;
       $scope.launchWith = null;
+      $scope.launchWithCWLTool = null;
       $scope.desc = 'cwl';
       $scope.toolTag = '';
       $scope.toolTagName = '';
       $scope.validTags = [];
       $scope.descAvailable = [];
+      $scope.buildTooltip = $sce.trustAsHtml('<strong>Fully-Automated</strong>: All versions are automated builds<br><strong>Partially-Automated</strong>: At least one version is an automated build<br><strong>Manual</strong>: No versions are automated builds<br><strong>Unknown</strong>: Build information not known');
+
       //There are 5 tabs, and only 1 can be active
       // so there are 4 other tabs that are not active
       var notActiveTabs = 4;
@@ -45,29 +66,49 @@ angular.module('dockstore.ui')
         $scope.$broadcast('checkDescPageType');
       };
 
-      $scope.dockerfileTab = function() {
-        $scope.$broadcast('dockerfileTab');
-      };
-
       $scope.refreshTagLaunchWith = function() {
         //get the tool tags that are valid
+        if ($scope.containerObj === null){
+          return;
+        }
         $scope.validTags = [];
         for(var i=0;i<$scope.containerObj.tags.length;i++){
           if($scope.isTagValid($scope.containerObj.tags[i])){
             $scope.validTags.push($scope.containerObj.tags[i]);
           }
         }
+        var isVersionValid = false;
+        var firstTag;
         if($scope.validTags.length !==0){
-          $scope.toolTag = $scope.validTags[0].id;
-          $scope.toolTagName = $scope.validTags[0].name;
+          if ($scope.containerObj.defaultVersion === null) {
+            $scope.toolTag = $scope.validTags[0].id;
+            $scope.toolTagName = $scope.validTags[0].name;
+            firstTag = 0;
+          } else {
+            for (i = 0; i < $scope.validTags.length; i++) {
+              if ($scope.validTags[i].name === $scope.containerObj.defaultVersion) {
+                 $scope.toolTag = $scope.validTags[i].id;
+                 $scope.toolTagName = $scope.validTags[i].name;
+                 firstTag = i;
+                 isVersionValid = true;
+                break;
+              }
+            }
+            if (!isVersionValid) {
+              $scope.toolTag = $scope.validTags[0].id;
+              $scope.toolTagName = $scope.validTags[0].name;
+              firstTag = 0;
+            }
+          }
         }
+        $scope.refreshDescLaunchWith(firstTag);
       };
 
-      $scope.refreshDescLaunchWith = function() {
+      $scope.refreshDescLaunchWith = function(tagIndex) {
         //get the descriptor type that is available for tool version
         $scope.descAvailable = [];
-        for(var j=0;j<$scope.validTags[0].sourceFiles.length;j++){
-          var fileType = $scope.validTags[0].sourceFiles[j].type;
+        for(var j=0;j<$scope.validTags[tagIndex].sourceFiles.length;j++){
+          var fileType = $scope.validTags[tagIndex].sourceFiles[j].type;
           if($scope.descAvailable.indexOf(fileType)){
             if(fileType === 'DOCKSTORE_CWL' && $scope.descAvailable.indexOf('cwl') === -1){
               $scope.descAvailable.push('cwl');
@@ -77,7 +118,7 @@ angular.module('dockstore.ui')
           }
         }
         if($scope.descAvailable.length !==0){
-          $scope.desc = $scope.descAvailable[0];
+          $scope.desc = $scope.descAvailable[tagIndex];
         }
       };
 
@@ -100,20 +141,15 @@ angular.module('dockstore.ui')
       };
 
       $scope.showLaunchWith = function() {
-        if($scope.containerObj.tags.length === 0 || 
+        if($scope.containerObj === undefined ||  $scope.containerObj === null || $scope.containerObj.tags.length === 0 ||
           $scope.validTags.length === 0){
           //no tags available in the container, do not show launchWith
           //return false immediately to get out of this method
-          return false; 
+          return false;
         }
 
         // assign default values
-        var tool_path = $scope.containerObj.path;
-        var toJson = 'cwl2json';
-
-        if($scope.desc === 'wdl'){
-          toJson = 'wdl2json';
-        }
+        var tool_path = $scope.containerObj === null ? "" : $scope.containerObj.path;
 
         //get the tag name from tag id
         for(var i=0;i<$scope.validTags.length;i++){
@@ -124,48 +160,61 @@ angular.module('dockstore.ui')
         }
 
         //get rid of blank option in tag dropdown if exists
-        if(document.getElementById('tagVersion')[0].value === '?' || 
-          document.getElementById('tagVersion')[0].value === ''){
+        if(document.getElementById('tagVersion')[0] !== undefined &&
+          (document.getElementById('tagVersion')[0].value === '?' ||
+          document.getElementById('tagVersion')[0].value === '')){
           $scope.refreshTagLaunchWith();
           var firstElement = $scope.toolTagName;
           var validTagsNameArray =[];
           for(var j=0;j<$scope.validTags.length;j++){
             validTagsNameArray.push($scope.validTags[j].name);
           }
-
-          $("#tagVersion option").filter(function(){
+          var tagVersion = $("#tagVersion");
+          tagVersion.find("option").filter(function(){
             return $(this).text() === firstElement;
           }).attr('selected',true);
-          $("#tagVersion option").filter(function(){
+          tagVersion.find("option").filter(function(){
             return window.jQuery.inArray($(this).text(),validTagsNameArray) === -1;
           }).remove();
         }
 
         //get rid of blank option in descriptor dropdown if exists
-        if(document.getElementById('descType')[0].value === '?' || 
-          document.getElementById('descType')[0].value === ''){
+        if(document.getElementById('descType')[0] !== undefined &&
+          (document.getElementById('descType')[0].value === '?' ||
+          document.getElementById('descType')[0].value === '')){
           var firstElementDesc = $scope.descAvailable[0];
           var descriptorAvailable = $scope.descAvailable;
-
-          $("#descType option").filter(function(){
+          var descType = $("#descType");
+          descType.find("option").filter(function(){
             return $(this).text() === firstElementDesc;
           }).attr('selected',true);
-          $("#descType option").filter(function(){
+          descType.find("option").filter(function(){
             return window.jQuery.inArray($(this).text(),descriptorAvailable) === -1;
           }).remove();
         }
 
-        $scope.launchWith = 
-          "dockstore tool " + $scope.desc + " --entry " + tool_path + ":" + $scope.toolTagName +" > Dockstore." + $scope.desc +
-          "\ndockstore tool convert " + toJson + " --" + $scope.desc + " Dockstore." + $scope.desc + " > Dockstore.json" +
+        $scope.launchWith =
+          "# make a runtime JSON template and fill in desired inputs, outputs, and other parameters" +
+          "\ndockstore tool convert entry2json --entry " + tool_path + ":" + $scope.toolTagName +" > Dockstore.json" +
           "\nvim Dockstore.json"+
+          "\n# run it locally with the Dockstore CLI" +
           "\ndockstore tool launch --entry " + tool_path + ":" + $scope.toolTagName + " --json Dockstore.json";
+
+        if ($scope.desc !== 'cwl') {
+          $scope.launchWith += " --descriptor " + $scope.desc;
+        }
+
+        var escapedPath = encodeURIComponent(tool_path);
+        var escapedVersion = encodeURIComponent($scope.toolTagName);
+
+        $scope.launchWithCWLTool = "# alternatively, cwltool can run a tool directly when all inputs and outputs are available on the local filesystem" +
+          "\ncwltool --non-strict https://www.dockstore.org:8443/api/ga4gh/v1/tools/" + escapedPath + "/versions/" + escapedVersion + "/plain-CWL/descriptor Dockstore.json";
 
         return $scope.validContent; //only show LaunchWith when content is valid
       };
 
       $scope.tagLaunchWith = function(tag) {
-        //method is called when specific tag is selected 
+        //method is called when specific tag is selected
         //to change the LaunchWith commands
         $scope.toolTag = tag;
         for(var i=0;i<$scope.containerObj.tags.length;i++){
@@ -178,18 +227,14 @@ angular.module('dockstore.ui')
       };
 
       $scope.descLaunchWith = function(descriptor) {
-        //method is called when descriptor is selected 
+        //method is called when descriptor is selected
         //to change the LaunchWith commands
         $scope.desc = descriptor;
         $scope.showLaunchWith();
       };
 
       $scope.isTagValid = function(element) {
-        if(element.valid){
-          return true;
-        }else{
-          return false;
-        }
+        return !!element.valid;
       };
 
       $scope.loadContainerDetails = function(containerPath) {
@@ -231,7 +276,7 @@ angular.module('dockstore.ui')
               );
               return $q.reject(response);
             }
-          ).finally(function(response) {
+          ).finally(function() {
             $scope.containerEditData.isPublished = $scope.containerObj.is_published;
           });
       };
@@ -240,7 +285,7 @@ angular.module('dockstore.ui')
         $scope.setContainerDetailsError(null);
         return ContainerService.deleteContainer(containerId)
           .then(
-            function(response) {
+            function() {
               $scope.$emit('deregisterContainer', containerId);
               return containerId;
             },
@@ -282,9 +327,13 @@ angular.module('dockstore.ui')
               );
               return $q.reject(response);
             }
-          ).finally(function(response) {
+          ).finally(function() {
             $scope.refreshingContainer = false;
           });
+      };
+
+      $scope.getMailToLink = function(containerObj){
+        return UtilityService.getMailToLink("tool", containerObj.path, window.location, containerObj.email);
       };
 
       $scope.checkContentValid = function(){
@@ -331,69 +380,6 @@ angular.module('dockstore.ui')
 
           return false;
         }
-      };
-
-      $scope.updateToolTagPaths = function(containerId, cwlpath, wdlpath, dfpath) {
-        var toolname = $scope.containerToolname;
-        var giturl = $scope.containerObj.gitUrl;
-
-        return ContainerService.updateToolPathTag(containerId, cwlpath, wdlpath, dfpath,toolname, giturl)
-          .then(
-            function(containerObj){
-              if($scope.containerObj.default_cwl_path !== containerObj.default_cwl_path){
-                $scope.containerObj.default_cwl_path = containerObj.default_cwl_path;
-              } else if($scope.containerObj.default_wdl_path !== containerObj.default_wdl_path){
-                $scope.containerObj.default_wdl_path = containerObj.default_wdl_path;
-              } else if($scope.containerObj.default_dockerfile_path !== containerObj.default_dockerfile_path){
-                $scope.containerObj.default_dockerfile_path = containerObj.default_dockerfile_path;
-              }
-              $scope.updateContainerObj();
-              return containerObj;
-            },
-            function(response) {
-              $scope.setContainerDetailsError(
-                'The webservice encountered an error trying to modify default path ' +
-                'for this container, please ensure that the path is valid, ' +
-                'properly-formatted and does not contain prohibited ' +
-                'characters of words.',
-                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
-                response.data
-              );
-              return $q.reject(response);
-            }
-          );
-      };
-
-      $scope.setDefaultToolPath = function(containerId, cwlpath, wdlpath, dfpath){
-        var toolname = $scope.containerToolname;
-        var giturl = $scope.containerObj.gitUrl;
-
-        return ContainerService.setDefaultToolPath(containerId, cwlpath, wdlpath, dfpath,toolname, giturl)
-          .then(
-            function(containerObj){
-
-              if($scope.containerObj.default_cwl_path !== containerObj.default_cwl_path){
-                $scope.containerObj.default_cwl_path = containerObj.default_cwl_path;
-              } else if($scope.containerObj.default_wdl_path !== containerObj.default_wdl_path){
-                $scope.containerObj.default_wdl_path = containerObj.default_wdl_path;
-              } else if($scope.containerObj.default_dockerfile_path !== containerObj.default_dockerfile_path){
-                $scope.containerObj.default_dockerfile_path = containerObj.default_dockerfile_path;
-              }
-              $scope.updateContainerObj();
-              return containerObj;
-            },
-            function(response) {
-              $scope.setContainerDetailsError(
-                'The webservice encountered an error trying to modify default path ' +
-                'for this container, please ensure that the path is valid, ' +
-                'properly-formatted and does not contain prohibited ' +
-                'characters of words.',
-                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
-                response.data
-              );
-              return $q.reject(response);
-            }
-          );
       };
 
       /* Editing entire containers is not possible yet... */
@@ -460,18 +446,8 @@ angular.module('dockstore.ui')
         }
       };
 
-      $scope.getDaysAgo = function(timestamp) {
-        var timeDiff = (new Date()).getTime() - timestamp;
-        return Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-      };
-
-      $scope.getDaysAgoString = function(timestamp) {
-        var daysAgo = $scope.getDaysAgo(timestamp);
-        if(daysAgo < 0){
-          daysAgo = 0;
-        }
-        return daysAgo.toString() +
-                ((daysAgo === 1) ? ' day ago' : ' days ago');
+      $scope.getTimeAgoString = function(timestamp) {
+        return UtilityService.getTimeAgoString(timestamp);
       };
 
       $scope.getGitReposProvider = FrmttSrvc.getGitReposProvider;
@@ -516,12 +492,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.checkOverflow = function() {
-
-        if ($('#label-values')[0].scrollHeight > $('#label-holder').height()) {
-           return true;
-        } else {
-          return false;
-        }
+        return $('#label-values')[0].scrollHeight > $('#label-holder').height();
       };
 
       $scope.moveToStart = function(element) {
@@ -547,32 +518,97 @@ angular.module('dockstore.ui')
         var wdlpath = $scope.containerObj.default_wdl_path;
         var dfpath = $scope.containerObj.default_dockerfile_path;
 
-
         if(type === 'cwl' && cwlpath === ''){
           if(wdlpath === ''){
-            cwlpath = '/Dockstore.cwl';
+            $scope.containerObj.default_cwl_path = '/Dockstore.cwl';
           }
         } else if(type === 'wdl' && wdlpath === ''){
           if(cwlpath === ''){
-            wdlpath = '/Dockstore.wdl';
+            $scope.containerObj.default_wdl_path = '/Dockstore.wdl';
           }
         } else if(type === 'dockerfile' && dfpath === ''){
-            dfpath = '/Dockerfile';
+            $scope.containerObj.default_dockerfile_path = '/Dockerfile';
         }
 
         if($scope.containerObj.default_cwl_path !== 'undefined' || $scope.containerObj.default_wdl_path !== 'undefined' ||
             $scope.containerObj.default_dockerfile_path !== 'undefined'){
-          $scope.setDefaultToolPath($scope.containerObj.id,
-            cwlpath, wdlpath, dfpath)
-          .then(function(containerObj) {
-            $scope.updateToolTagPaths($scope.containerObj.id, cwlpath, wdlpath, dfpath)
-              .then(function(containerObj){
+          $scope.updateToolAndTags();
+        }
+      };
+
+      $scope.submitTestParameterFileEdits = function(){
+        if(($scope.containerObj.default_cwl_test_parameter_file !== 'undefined') || ($scope.containerObj.default_wdl_test_parameter_file !== 'undefined')) {
+          $scope.updateToolAndTags();
+        }
+      };
+
+      $scope.updateToolAndTags = function() {
+        $scope.updateToolDefaultPaths($scope.containerObj.id)
+          .then(function() {
+            $scope.updateToolTagPaths($scope.containerObj.id)
+              .then(function(){
                 $scope.labelsEditMode = false;
                 $scope.refreshContainer($scope.containerObj.id,0);
               });
           });
-        }
+      };
 
+      $scope.updateToolDefaultPaths = function(containerId){
+        return ContainerService.updateToolDefaults(containerId, $scope.containerObj)
+          .then(
+            function(containerObj){
+              $scope.updateToolInfoWithDatabaseInfo(containerObj);
+              $scope.updateContainerObj();
+              return containerObj;
+            },
+            function(response) {
+              $scope.setContainerDetailsError(
+                'The webservice encountered an error trying to modify default path ' +
+                'for this container, please ensure that the path is valid, ' +
+                'properly-formatted and does not contain prohibited ' +
+                'characters of words.',
+                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                response.data
+              );
+              return $q.reject(response);
+            }
+          );
+      };
+
+      $scope.updateToolTagPaths = function(containerId) {
+        return ContainerService.updateToolPathTag(containerId, $scope.containerObj)
+          .then(
+            function(containerObj){
+              $scope.updateToolInfoWithDatabaseInfo(containerObj);
+              $scope.updateContainerObj();
+              return containerObj;
+            },
+            function(response) {
+              $scope.setContainerDetailsError(
+                'The webservice encountered an error trying to modify default path ' +
+                'for this container, please ensure that the path is valid, ' +
+                'properly-formatted and does not contain prohibited ' +
+                'characters of words.',
+                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                response.data
+              );
+              return $q.reject(response);
+            }
+          );
+      };
+
+      $scope.updateToolInfoWithDatabaseInfo = function(containerObj) {
+        if($scope.containerObj.default_cwl_path !== containerObj.default_cwl_path){
+          $scope.containerObj.default_cwl_path = containerObj.default_cwl_path;
+        } else if($scope.containerObj.default_wdl_path !== containerObj.default_wdl_path){
+          $scope.containerObj.default_wdl_path = containerObj.default_wdl_path;
+        } else if($scope.containerObj.default_dockerfile_path !== containerObj.default_dockerfile_path){
+          $scope.containerObj.default_dockerfile_path = containerObj.default_dockerfile_path;
+        } else if($scope.containerObj.default_cwl_test_parameter_file !== containerObj.default_cwl_test_parameter_file){
+          $scope.containerObj.default_cwl_test_parameter_file = containerObj.default_cwl_test_parameter_file;
+        } else if($scope.containerObj.default_wdl_test_parameter_file !== containerObj.default_wdl_test_parameter_file){
+          $scope.containerObj.default_wdl_test_parameter_file = containerObj.default_wdl_test_parameter_file;
+        }
       };
 
       $scope.submitContainerEdits = function() {
@@ -584,7 +620,7 @@ angular.module('dockstore.ui')
         if ($scope.containerEditData.labels !== 'undefined') {
           $scope.setContainerLabels($scope.containerObj.id,
               $scope.containerEditData.labels)
-            .then(function(containerObj) {
+            .then(function() {
               $scope.labelsEditMode = false;
             });
         }
@@ -609,7 +645,7 @@ angular.module('dockstore.ui')
         return false;
       };
 
-      $scope.$watch('containerPath', function(newValue, oldValue) {
+      $scope.$watch('containerPath', function(newValue) {
         if (newValue) {
           $scope.setContainerDetailsError(null);
           $scope.missingContent = [];
@@ -617,25 +653,34 @@ angular.module('dockstore.ui')
 
           if (!$scope.editMode) {
             $scope.loadContainerDetails($scope.containerPath)
-              .then(function(containerObj) {
+              .then(function() {
                 $scope.updateInfoURLs();
                 $scope.refreshTagLaunchWith();
-                $scope.refreshDescLaunchWith();
               });
           } else {
             $scope.labelsEditMode = false;
             $scope.resetContainerEditData($scope.containerObj);
             $scope.updateInfoURLs();
             $scope.refreshTagLaunchWith();
-            $scope.refreshDescLaunchWith();
           }
         }
       });
 
-      $scope.$watch('containerToolname', function(newValue, oldValue) {
+      $scope.$watch('containerToolname', function(newValue) {
         if (newValue) {
           $scope.updateInfoURLs();
         }
       });
 
+      $scope.onSuccess = function(e) {
+        e.clearSelection();
+      };
+
+      $scope.isVerified = function() {
+        return UtilityService.isVerifiedTool($scope.containerObj);
+      };
+
+      $scope.getVerifiedSources = function() {
+        return UtilityService.getVerifiedToolSources($scope.containerObj);
+      };
   }]);

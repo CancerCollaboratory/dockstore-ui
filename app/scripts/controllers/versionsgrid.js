@@ -1,3 +1,19 @@
+/*
+ *    Copyright 2016 OICR
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
 'use strict';
 
 /**
@@ -11,10 +27,12 @@ angular.module('dockstore.ui')
   .controller('VersionsGridCtrl', [
     '$scope',
     '$q',
+    '$sce',
     'ContainerService',
     'FormattingService',
     'NotificationService',
-    function ($scope, $q, ContainerService, FrmttSrvc, NtfnService) {
+    'UtilityService',
+    function ($scope, $q, $sce, ContainerService, FrmttSrvc, NtfnService, UtilityService) {
 
       $scope.containers = [];
       $scope.sortColumn = 'name';
@@ -22,6 +40,7 @@ angular.module('dockstore.ui')
 
       $scope.getHRSize = FrmttSrvc.getHRSize;
       $scope.getDateModified = FrmttSrvc.getDateModified;
+      $scope.gitReferenceTooltip = $sce.trustAsHtml('Git branches/tags<br/> The selected reference and tag will be used to populate <br/>the info tab including "launch with"');
 
       $scope.clickSortColumn = function(columnName) {
         if ($scope.sortColumn === columnName) {
@@ -33,12 +52,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.getIconClass = function(columnName) {
-        if ($scope.sortColumn === columnName) {
-          return !$scope.sortReverse ?
-            'glyphicon-sort-by-alphabet' : 'glyphicon-sort-by-alphabet-alt';
-        } else {
-          return 'glyphicon-sort';
-        }
+        return UtilityService.getIconClass(columnName, $scope.sortColumn, $scope.sortReverse);
       };
 
       $scope.deleteTag = function(tagId) {
@@ -92,4 +106,11 @@ angular.module('dockstore.ui')
         };
       };
 
+      $scope.updateDefaultVersion = function(referenceName) {
+      $scope.containerObj.defaultValue = referenceName;
+        ContainerService.updateDefaultVersion($scope.containerObj.id,$scope.containerObj)
+        .then(function(){
+          $scope.$parent.refreshContainer($scope.containerObj.id,0);
+         });
+      };
   }]);

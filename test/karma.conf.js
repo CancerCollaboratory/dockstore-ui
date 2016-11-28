@@ -1,3 +1,19 @@
+/*
+ *    Copyright 2016 OICR
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
 // Karma configuration
 // http://karma-runner.github.io/0.12/config/configuration-file.html
 // Generated on 2015-10-19 using
@@ -42,10 +58,11 @@ module.exports = function(config) {
       'bower_components/cytoscape-dagre/cytoscape-dagre.js',
       'bower_components/angular-highlightjs/build/angular-highlightjs.js',
       'bower_components/marked/lib/marked.js',
-      'bower_components/angular-marked/angular-marked.js',
+      'bower_components/angular-marked/dist/angular-marked.js',
       'bower_components/angular-messages/angular-messages.js',
       'bower_components/angular-addthis/dist/angular-addthis.js',
       'bower_components/angular-mocks/angular-mocks.js',
+      'bower_components/ngclipboard/dist/ngclipboard.js',
       // endbower
       "app/scripts/**/*.js",
       // "test/mock/**/*.js",
@@ -56,7 +73,7 @@ module.exports = function(config) {
     exclude: [
     ],
 
-    customLaunchers: {  
+    customLaunchers: {
       Chrome_travis_ci: {
          base: 'Chrome',
 	 flags: ['--no-sandbox']
@@ -102,19 +119,19 @@ module.exports = function(config) {
     // URL root prevent conflicts with the site root
     // urlRoot: '_karma_'
 
-    preprocessors: {  
+    preprocessors: {
       'app/scripts/**/*.js': ['coverage']
     },
 
     reporters: ['dots', 'coverage'],
 
-    coverageReporter: {  
+    coverageReporter: {
       type: 'lcov',
       dir: 'build/coverage/'
     }
   });
 
-  if(process.env.TRAVIS) {  
+  if(process.env.TRAVIS) {
     config.browsers = ['Chrome_travis_ci'];
   }
 };

@@ -1,3 +1,19 @@
+/*
+ *    Copyright 2016 OICR
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
 'use strict';
 
 /**
@@ -251,16 +267,19 @@ angular.module('dockstore.ui')
           if ($scope.workflows[i].id === workflowObj.id) break;
         }
         $scope.workflows[i] = workflowObj;
-        $scope.orgWorkflows = $scope.sortORGWorkflows(
-          $scope.workflows,
-          $scope.userObj.username
-        );
-        $scope.updateWorkflowTooltips();
-        $scope.selectWorkflow(workflowObj.id);
-        $scope.activeTabs[activeTabIndex ? activeTabIndex : 0] = true;
+
+        $scope.listUserWorkflows($scope.userObj.id).then(
+        function(workflows) {
+          $scope.orgWorkflows = $scope.sortORGWorkflows(workflows, $scope.userObj.username);
+          $scope.updateWorkflowTooltips();
+          $scope.selectWorkflow(workflowObj.id);
+          $scope.activeTabs[activeTabIndex ? activeTabIndex : 0] = true;
+        });
+
       };
 
-      $scope.listUserWorkflows($scope.userObj.id).then(
+      $scope.reloadOrgList = function () {
+        $scope.listUserWorkflows($scope.userObj.id).then(
         function(workflows) {
           $scope.orgWorkflows = $scope.sortORGWorkflows(workflows, $scope.userObj.username);
           if ($scope.orgWorkflows.length > 0) {
@@ -269,5 +288,8 @@ angular.module('dockstore.ui')
 
           $scope.updateWorkflowTooltips();
         });
+      };
+
+      $scope.reloadOrgList();
 
   }]);
