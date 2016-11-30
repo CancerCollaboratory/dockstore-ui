@@ -1,9 +1,12 @@
-sudo: true
+sudo: required
 dist: trusty
 language: node_js
 node_js:
   - 'stable'
   - '4.2.1'
+services:
+  - docker
+  - postgresql
 addons:
   firefox: "latest"
   postgresql: "9.4"
@@ -34,19 +37,25 @@ install:
 before_script:
   - grunt # this does syntax checking, unit testing, and jshint
   - grunt serve --silent & #make sure it runs the server first before testing
-  - psql -c "create user dockstore with password 'dockstore' createdb;" -U postgres
-  - psql -c "ALTER USER dockstore WITH superuser;" -U postgres
-  - psql -c 'create database postgres with owner = dockstore;' -U postgres
+  - 'sleep 10'
   - psql 'postgres' -U postgres < db_dump.sql
-  - docker run -d -p 127.0.0.1:8080:8080 quay.io/ga4gh/dockstore-webservice
+  - docker pull quay.io/ga4gh/dockstore-webservice
+  - nc -z localhost 5432
+  - echo $?
+  - netstat -plunt | grep postgres
+  - docker run -p 8080:8080 quay.io/ga4gh/dockstore-webservice
+  - docker ps -a
+  - 'sleep 10'
+  - nc -z localhost 8080
+  - echo $?
 
 script:
-  - cypress ci #test using cypress for integration testing
+  - /home/travis/.cypress/Cypress/Cypress ci #test using cypress for integration testing
 
-after_script:
-- cat ./build/coverage/**/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+#after_script:
+#  - ./node_modules/.bin/mocha -R mocha-lcov-reporter | ./node_modules/coveralls/bin/coveralls.js
 
-after_success: grunt coveralls
+#after_success: grunt coveralls
 
 notifications:
   webhooks:

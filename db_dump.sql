@@ -37,7 +37,7 @@ CREATE SEQUENCE container_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.container_id_seq OWNER TO dockstore;
+ALTER TABLE public.container_id_seq OWNER TO postgres;
 
 SET default_tablespace = '';
 
@@ -54,7 +54,7 @@ CREATE TABLE enduser (
 );
 
 
-ALTER TABLE public.enduser OWNER TO dockstore;
+ALTER TABLE public.enduser OWNER TO postgres;
 
 --
 -- Name: enduser_id_seq; Type: SEQUENCE; Schema: public; Owner: dockstore
@@ -68,7 +68,7 @@ CREATE SEQUENCE enduser_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.enduser_id_seq OWNER TO dockstore;
+ALTER TABLE public.enduser_id_seq OWNER TO postgres;
 
 --
 -- Name: enduser_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dockstore
@@ -87,7 +87,7 @@ CREATE TABLE endusergroup (
 );
 
 
-ALTER TABLE public.endusergroup OWNER TO dockstore;
+ALTER TABLE public.endusergroup OWNER TO postgres;
 
 --
 -- Name: entry_label; Type: TABLE; Schema: public; Owner: dockstore; Tablespace:
@@ -99,7 +99,7 @@ CREATE TABLE entry_label (
 );
 
 
-ALTER TABLE public.entry_label OWNER TO dockstore;
+ALTER TABLE public.entry_label OWNER TO postgres;
 
 --
 -- Name: label; Type: TABLE; Schema: public; Owner: dockstore; Tablespace:
@@ -111,7 +111,7 @@ CREATE TABLE label (
 );
 
 
-ALTER TABLE public.label OWNER TO dockstore;
+ALTER TABLE public.label OWNER TO postgres;
 
 --
 -- Name: label_id_seq; Type: SEQUENCE; Schema: public; Owner: dockstore
@@ -125,7 +125,7 @@ CREATE SEQUENCE label_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.label_id_seq OWNER TO dockstore;
+ALTER TABLE public.label_id_seq OWNER TO postgres;
 
 --
 -- Name: label_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dockstore
@@ -146,7 +146,7 @@ CREATE TABLE sourcefile (
 );
 
 
-ALTER TABLE public.sourcefile OWNER TO dockstore;
+ALTER TABLE public.sourcefile OWNER TO postgres;
 
 --
 -- Name: sourcefile_id_seq; Type: SEQUENCE; Schema: public; Owner: dockstore
@@ -160,7 +160,7 @@ CREATE SEQUENCE sourcefile_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.sourcefile_id_seq OWNER TO dockstore;
+ALTER TABLE public.sourcefile_id_seq OWNER TO postgres;
 
 --
 -- Name: sourcefile_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dockstore
@@ -192,7 +192,7 @@ CREATE TABLE tag (
 );
 
 
-ALTER TABLE public.tag OWNER TO dockstore;
+ALTER TABLE public.tag OWNER TO postgres;
 
 --
 -- Name: tag_id_seq; Type: SEQUENCE; Schema: public; Owner: dockstore
@@ -206,7 +206,7 @@ CREATE SEQUENCE tag_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.tag_id_seq OWNER TO dockstore;
+ALTER TABLE public.tag_id_seq OWNER TO postgres;
 
 --
 -- Name: token; Type: TABLE; Schema: public; Owner: dockstore; Tablespace:
@@ -222,7 +222,7 @@ CREATE TABLE token (
 );
 
 
-ALTER TABLE public.token OWNER TO dockstore;
+ALTER TABLE public.token OWNER TO postgres;
 
 --
 -- Name: token_id_seq; Type: SEQUENCE; Schema: public; Owner: dockstore
@@ -236,7 +236,7 @@ CREATE SEQUENCE token_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.token_id_seq OWNER TO dockstore;
+ALTER TABLE public.token_id_seq OWNER TO postgres;
 
 --
 -- Name: token_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dockstore
@@ -272,7 +272,7 @@ CREATE TABLE tool (
 );
 
 
-ALTER TABLE public.tool OWNER TO dockstore;
+ALTER TABLE public.tool OWNER TO postgres;
 
 --
 -- Name: tool_tag; Type: TABLE; Schema: public; Owner: dockstore; Tablespace:
@@ -284,7 +284,7 @@ CREATE TABLE tool_tag (
 );
 
 
-ALTER TABLE public.tool_tag OWNER TO dockstore;
+ALTER TABLE public.tool_tag OWNER TO postgres;
 
 --
 -- Name: user_entry; Type: TABLE; Schema: public; Owner: dockstore; Tablespace:
@@ -296,7 +296,7 @@ CREATE TABLE user_entry (
 );
 
 
-ALTER TABLE public.user_entry OWNER TO dockstore;
+ALTER TABLE public.user_entry OWNER TO postgres;
 
 --
 -- Name: usergroup; Type: TABLE; Schema: public; Owner: dockstore; Tablespace:
@@ -308,7 +308,7 @@ CREATE TABLE usergroup (
 );
 
 
-ALTER TABLE public.usergroup OWNER TO dockstore;
+ALTER TABLE public.usergroup OWNER TO postgres;
 
 --
 -- Name: usergroup_id_seq; Type: SEQUENCE; Schema: public; Owner: dockstore
@@ -322,7 +322,7 @@ CREATE SEQUENCE usergroup_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.usergroup_id_seq OWNER TO dockstore;
+ALTER TABLE public.usergroup_id_seq OWNER TO postgres;
 
 --
 -- Name: usergroup_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dockstore
@@ -341,7 +341,7 @@ CREATE TABLE version_sourcefile (
 );
 
 
-ALTER TABLE public.version_sourcefile OWNER TO dockstore;
+ALTER TABLE public.version_sourcefile OWNER TO postgres;
 
 --
 -- Name: workflow; Type: TABLE; Schema: public; Owner: dockstore; Tablespace:
@@ -367,7 +367,7 @@ CREATE TABLE workflow (
 );
 
 
-ALTER TABLE public.workflow OWNER TO dockstore;
+ALTER TABLE public.workflow OWNER TO postgres;
 
 --
 -- Name: workflow_workflowversion; Type: TABLE; Schema: public; Owner: dockstore; Tablespace:
@@ -379,7 +379,7 @@ CREATE TABLE workflow_workflowversion (
 );
 
 
-ALTER TABLE public.workflow_workflowversion OWNER TO dockstore;
+ALTER TABLE public.workflow_workflowversion OWNER TO postgres;
 
 --
 -- Name: workflowversion; Type: TABLE; Schema: public; Owner: dockstore; Tablespace:
@@ -399,7 +399,7 @@ CREATE TABLE workflowversion (
 );
 
 
-ALTER TABLE public.workflowversion OWNER TO dockstore;
+ALTER TABLE public.workflowversion OWNER TO postgres;
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: dockstore
