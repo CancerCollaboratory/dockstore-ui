@@ -555,6 +555,7 @@ module.exports = function (grunt) {
       'wiredep',
       'concurrent:server',
       'autoprefixer:server',
+      'copy:styles',
       'connect:livereload',
       'watch'
     ]);
@@ -571,7 +572,7 @@ module.exports = function (grunt) {
     'concurrent:test',
     'autoprefixer',
     'connect:test',
-    'karma'
+    'karma' // broke on 2016-11-29
   ]);
 
   grunt.registerTask('build', function(target){
@@ -591,6 +592,7 @@ module.exports = function (grunt) {
       'concat',
       'ngAnnotate',
       'copy:dist',
+      'copy:styles',
       'insert',
       'cdnify',
       'cssmin',

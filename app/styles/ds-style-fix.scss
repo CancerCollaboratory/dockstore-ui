@@ -18,10 +18,10 @@
  * CSS Style Fixes - Dockstore-Bootstrap Integration
  */
 
+
 .nav > li > a {
-  position: initial;
-  display: initial;
-  padding: initial;
+  display: block;
+  padding:10px 0;
 }
 
 span.nav-menu-usericon { display: none; }
@@ -76,13 +76,13 @@ table.tokens-grid {
 
 table.versions-grid {
   th:nth-child(1) {
-    width: 12.5%;
+    width: 17.5%;
   }
   th:nth-child(2) {
     width: 17.5%;
   }
   th:nth-child(3) {
-    width: 17.5%;
+    width: 20%;
   }
   th:nth-child(4) {
     width: 15%;
@@ -94,7 +94,7 @@ table.versions-grid {
     width: 10%;
   }
   th:nth-child(7) {
-    width: 17.5%;
+    width: 10%;
   }
   div.git-ref {
     width: 124px;
@@ -186,8 +186,7 @@ ul.nav-tabs {
   background-color: #ffffff;
   li {
     border-right: solid 1px #cfd1d7;
-    min-width: 150px;
-    padding: 12px 0;
+    padding: 0 0;
     text-align: center;
     line-height: 1;
     a {

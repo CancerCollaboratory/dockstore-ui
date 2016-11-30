@@ -19,6 +19,7 @@
     <div class="row">
       <div class="col-md-12">
         <h3 class="available-containers">
+          <span class="glyphicon glyphicon-tasks"></span>
           Onboarding Wizard
         </h3>
       </div>
@@ -39,60 +40,7 @@
           Please wait, retrieving Quay.io tools...
         </div>
 
-        <h4>GitHub Account</h4>
-        <div ng-show="tokenStatusSet.github">
-          <span class="label label-success">
-            <span class="glyphicon glyphicon-link"></span> Linked
-          </span>
-        </div>
-        <div ng-show="!tokenStatusSet.github">
-          <button class="btn btn-primary btn-xs" ng-click="linkGitHubAccount()">
-            <span class="glyphicon glyphicon-link"></span> Link Account
-          </button>
-        </div>
-
-        <h4>Bitbucket Account</h4>
-        <div ng-show="tokenStatusSet.bitbucket">
-          <span class="label label-success">
-            <span class="glyphicon glyphicon-link"></span> Linked
-          </span>
-        </div>
-        <div ng-show="!tokenStatusSet.bitbucket">
-          <button class="btn btn-primary btn-xs"
-              ng-click="linkBitbucketAccount()"
-              ng-disabled="registeringToken">
-            <span class="glyphicon glyphicon-link"></span> Link Account
-          </button>
-        </div>
-
-        <h4>Gitlab Account</h4>
-        <div ng-show="tokenStatusSet.gitlab">
-          <span class="label label-success">
-            <span class="glyphicon glyphicon-link"></span> Linked
-          </span>
-        </div>
-        <div ng-show="!tokenStatusSet.gitlab">
-          <button class="btn btn-primary btn-xs"
-                  ng-click="linkGitlabAccount()"
-                  ng-disabled="registeringToken">
-            <span class="glyphicon glyphicon-link"></span> Link Account
-          </button>
-        </div>
-
-        <h4>Quay.io Account</h4>
-        <div ng-show="tokenStatusSet.quayio">
-          <span class="label label-success">
-            <span class="glyphicon glyphicon-link"></span> Linked
-          </span>
-        </div>
-        <div ng-show="!tokenStatusSet.quayio">
-          <button
-              class="btn btn-primary btn-xs"
-              ng-click="linkQuayIOAccount()"
-              ng-disabled="refreshingContainers">
-            <span class="glyphicon glyphicon-link"></span> Link Account
-          </button>
-        </div>
+        <div accounts></div>
 
       </div>
 
@@ -114,7 +62,7 @@
           </li>
         </ol>
         <a
-            class="btn btn-default hori-offset-12"
+            class="btn btn-primary hori-offset-12"
             ng-href="https://github.com/ga4gh/dockstore/releases/download/{{ apiVersion }}/dockstore">
           <span class="glyphicon glyphicon-download"></span>
           Download CLI
@@ -137,7 +85,7 @@ server-url: {{dsServerURI}}</div>
             <code>pip --version</code>
           </li>
           <li>
-            Run these commands to install cwltool <code>pip install setuptools==24.0.3</code><br><code>pip install cwl-runner cwltool==1.0.20160712154127 schema-salad==1.14.20160708181155 avro==1.8.1</code>
+            Run these commands to install cwltool <code>pip install setuptools==28.8.0</code><br><code>pip install cwl-runner cwltool==1.0.20161114152756 schema-salad==1.0.20161114152756 avro==1.8.1</code>
           </li>
           <li>
             Run this to verify that cwltool has been installed properly

@@ -47,7 +47,7 @@
                   ng-click="clickSortColumn('valid')">
             </span>
         </th>
-        <th uib-tooltip="A version is verified if it has been verified to work by a person/group." tooltip-append-to-body="true">
+        <th uib-tooltip="A version is verified if it has been verified to work by a person/group" tooltip-append-to-body="true">
           <span>Verified</span>
         </th>
         <th uib-tooltip="View more information about the given Git reference" tooltip-append-to-body="true">
@@ -78,10 +78,12 @@
           {{getDateModified(versionTag.last_modified)}}
         </td>
         <td>
-          {{versionTag.valid ? 'Yes' : 'No'}}
+          <span class="glyphicon glyphicon-ok" ng-if="versionTag.valid"></span>
+          <span class="glyphicon glyphicon-remove" ng-if="!versionTag.valid"></span>
         </td>
         <td uib-tooltip="{{versionTag.verifiedSource}}" tooltip-append-to-body="true">
-          {{versionTag.verified ? 'Yes' : 'No'}}
+          <span class="glyphicon glyphicon-ok" ng-if="versionTag.verified"></span>
+          <span class="glyphicon glyphicon-remove" ng-if="!versionTag.verified"></span>
         </td>
         <td class="tag-actions">
           <a href

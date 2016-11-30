@@ -18,38 +18,20 @@
 
 /**
  * @ngdoc directive
- * @name dockstore.ui.directive:workflowDagView
+ * @name dockstore.ui.directive:accounts
  * @description
- * # workflowDagView
+ * # accounts
  */
 angular.module('dockstore.ui')
-  .directive('workflowDagView', function () {
+  .directive('accounts', function () {
     return {
       restrict: 'AE',
-      controller: 'WorkflowDagViewCtrl',
+      controller: 'AccountsCtrl',
       scope: {
-      	workflowObj: '=',
+
       },
-      templateUrl: 'templates/workflowdagview.html',
+      templateUrl: 'templates/accountlinks.html',
       link: function postLink(scope, element, attrs) {
-        scope.$watch('workflowObj', function(newValue, oldValue) {
-          if (newValue) {
-            scope.checkVersion();
-            scope.setDocument();
-          }
-        });
-        scope.$watchGroup(
-          ['selVersionName', 'workflowObj.id'],
-          function(newValues, oldValues) {
-              scope.refreshDocument();
-        });
-        scope.$on('refreshFiles', function(event) {
-          scope.setDocument();
-          scope.refreshDocument();
-        });
-        scope.$on('checkVersion', function(event){
-          scope.checkVersion();
-        });
 
       }
     };

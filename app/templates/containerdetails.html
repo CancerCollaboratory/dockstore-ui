@@ -61,14 +61,22 @@
 </div>
 <div class="row" ng-show="containerObj">
   <div ng-class="editMode ? 'col-md-7' : 'col-md-8'">
-    <h3 id="tool-path"><span ng-show="isVerified()" uib-tooltip="Verified"><span class="glyphicon glyphicon-ok"></span></span>{{(containerObj.tool_path)}} <button class="btn" ngclipboard data-clipboard-target="#tool-path" ngclipboard-success="onSuccess(e);"><span class="glyphicon glyphicon-copy"></span></button></h3>
+    <h3 id="tool-path">
+      <!--<span class="glyphicon glyphicon-lock" ng-if="!containerObj.is_public"></span>-->
+      <span ng-show="isVerified()" uib-tooltip="Verified">
+        <span class="glyphicon glyphicon-ok"></span>
+      </span>
+      {{
+        (containerObj.tool_path)
+      }} <button class="btn btn-default" ngclipboard data-clipboard-target="#tool-path" ngclipboard-success="onSuccess(e);" ngclipboard-error="onError(e);"><span class="glyphicon glyphicon-copy"></span></button>
+    </h3>
     <div ng-if="containerObj" id="label-holder">
       <div id="label-values">
         <span ng-show="checkOverflow()" class="label label-default container-label" id="label-button" ng-click="selectLabelTab()">View All</span>
 
       <span class="label label-default container-label"
             ng-repeat="label in getContainerLabelStrings(containerObj.labels)" id="{{label}}">
-        <a ng-href="/search-containers/{{label}}">
+        <a ng-href="/search-containers?query={{label}}">
           {{label}}
         </a>
         <span ng-if="$first">
@@ -80,7 +88,7 @@
         </div>
     </div>
 
-    <p class="update" title="{{ containerObj.lastUpdated ? getDateTimeString(containerObj.lastUpdated) : 'n/a' }}" uib-tooltip>
+    <p class="update" title="{{ containerObj.lastUpdated ? getDateTimeString(containerObj.lastUpdated) : 'n/a' }}" uib-tooltip tooltip-append-to-body="true">
       Last build:
       {{ containerObj.lastBuild ? getTimeAgoString(containerObj.lastBuild) : 'n/a' }}
     </p>
@@ -92,11 +100,10 @@
         <div class="btn-group" role="group">
           <button uib-btn-checkbox
               type="button"
-              class="btn btn-primary"
+              class="btn btn-warning"
               ng-class="!refreshingContainer && isContainerValid()? '' : 'disabled'"
               ng-click="setContainerRegistration(containerObj.id, containerObj.is_published); checkContentValid()"
               ng-model="containerObj.is_published"
-              ng-class="containerObj.is_published ? 'btn-primary' : 'btn-warning'"
               ng-disabled="refreshingContainer || !isContainerValid() || !validContent"
               id="publishButton">
             {{ containerObj.is_published ? 'Unpublish' : 'Publish' }}
@@ -157,7 +164,7 @@
 </div>
 <div class="row" ng-show="containerObj">
   <div class="ds-tabs" ng-class="editMode ? 'col-md-12' : 'col-md-9'">
-    <uib-tabset id="tool_tabs">
+    <uib-tabset id="tool_tabs" justified="true">
       <uib-tab active="activeTabs[0]">
         <uib-tab-heading>Info</uib-tab-heading>
         <ul class="list-unstyled container-info">
@@ -397,6 +404,12 @@
               </div>
             </div>
           </li>
+          <li ng-if="validTags.length > 0">
+            <strong uib-tooltip="Pull the Docker image directly">Docker Pull:</strong>
+              <div ng-repeat="tag in validTags">
+                <div copy-text ng-show="tag.name === toolTagName">{{dockerPullTag}}:{{tag.name}}</div>
+              </div>
+          </li>
         </ul>
         <div ng-if="!editMode">
           <hr />
@@ -417,7 +430,7 @@
             <span ng-show="containerObj.labels.length === 0">n/a</span>
             <span class="label label-default container-label"
                   ng-repeat="label in getContainerLabelStrings(containerObj.labels)">
-              <a ng-href="/search-containers/{{label}}">
+              <a ng-href="/search-containers?query={{label}}">
                 {{label}}
               </a>
             </span>
@@ -468,7 +481,6 @@
         <div container-file-viewer
             type="dockerfile"
             container-obj="containerObj"
-             tabindex="activeTabs[4]"
             ng-if="containerObj">
         </div>
       </uib-tab>
