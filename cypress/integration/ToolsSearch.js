@@ -1,6 +1,6 @@
 
 describe('Dockstore tool search page', function() {
-
+  require('./helper.js')
 	beforeEach(function () {
      cy.visit("http://localhost:9000/search-containers")
   });

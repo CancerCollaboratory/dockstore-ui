@@ -1,13 +1,8 @@
 
-'use strict'
-
 /* https://github.com/angular/protractor/blob/master/docs/getting-started.md */
 describe('dockstore homepage', function() {
-
+  require('./helper.js')
 	beforeEach(function () {
-	  // Login by adding user obj and token to local storage
-	  localStorage.setItem('dockstore.ui.userObj', '{\"id\": 1, \"username\": \"DockstoreTestUser2\", \"isAdmin\": \"false\", \"name\": \"DockstoreTestUser2\"}')
-    localStorage.setItem('satellizer_token', 'fasfsefse')
 		cy.visit("http://localhost:9000")
 	})
 
@@ -30,10 +25,6 @@ describe('dockstore homepage', function() {
     });
   });
 
-//  describe('Search box', function() {
-//
-//  });
-
   describe('Navigation', function() {
     it ('My Tools visible', function() {
       cy
@@ -46,8 +37,4 @@ describe('dockstore homepage', function() {
           .should("visible")
     });
   });
-
-  describe('Login', function() {
-
-  })
 })

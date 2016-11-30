@@ -1,6 +1,6 @@
 
 describe('Dockstore Workflow Details', function() {
-
+  require('./helper.js')
 	beforeEach(function () {
      cy.visit("http://localhost:9000/workflows/DockstoreTestUser2/test_workflow_cwl")
   });
@@ -16,33 +16,26 @@ describe('Dockstore Workflow Details', function() {
 
   it('Change tab to labels', function() {
     cy
-      .get("#workflow_tabs>ul")
-        .children(":nth-child(2)")
+      .get("#labelsTab")
         .click()
   });
 
   it('Change tab to versions', function() {
     cy
-      .get("#workflow_tabs>ul")
-        .children(":nth-child(3)")
+      .get("#versionsTab")
         .click()
   });
 
   describe('Change tab to files', function() {
     beforeEach(function() {
       cy
-        .get("#workflow_tabs>ul")
-          .children(":nth-child(4)")
+        .get("#filesTab")
           .click()
     });
 
     it('Should have Descriptor files tab selected', function() {
       cy
-        .get(".file-tabs")
-          .children('div')
-          .first()
-          .children('button')
-          .first()
+        .get("#descriptorTab")
           .should("have.class", "active")
     });
 
@@ -56,11 +49,7 @@ describe('Dockstore Workflow Details', function() {
       describe('Change tab to Test Parameters', function() {
           beforeEach(function() {
             cy
-              .get(".file-tabs")
-                .children('div')
-                .first()
-                .next()
-                .children('button')
+              .get("#testParameterTab")
                 .click()
           });
 
@@ -75,16 +64,14 @@ describe('Dockstore Workflow Details', function() {
 
   it('Change tab to tools', function() {
     cy
-      .get("#workflow_tabs>ul")
-          .children(":nth-child(5)")
+      .get("#toolsTab")
           .click()
   });
 
   describe('Change tab to dag', function () {
     beforeEach(function() {
       cy
-        .get("#workflow_tabs>ul")
-          .children(":nth-child(6)")
+        .get("#dagTab")
           .click()
     });
 

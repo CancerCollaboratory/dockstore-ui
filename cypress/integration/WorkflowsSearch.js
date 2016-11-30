@@ -1,6 +1,5 @@
-
 describe('Dockstore workflow search page', function() {
-
+  require('./helper.js')
 	beforeEach(function () {
      cy.visit("http://localhost:9000/search-workflows")
   });
@@ -14,7 +13,7 @@ describe('Dockstore workflow search page', function() {
      });
 
      it('Select test_workflow_cwl', function() {
-       var toolpath = cy
+       cy
          .get('tbody')
          .children('tr')
          .first()
@@ -22,7 +21,7 @@ describe('Dockstore workflow search page', function() {
          .first()
          .click()
          .get('#workflow-path')
-         .should('contain.text', 'DockstoreTestUser2/test_workflow_cwl ')
+         .should('contain', 'DockstoreTestUser2/test_workflow_cwl')
      });
    });
 })

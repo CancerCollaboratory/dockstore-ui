@@ -1,39 +1,31 @@
-
 describe('Dockstore Tool Details', function() {
-
+  require('./helper.js')
 	beforeEach(function () {
      cy.visit("http://localhost:9000/containers/quay.io/dockstoretestuser2/dockstore-tool-imports")
   });
 
   it('Change tab to labels', function() {
     cy
-      .get("#tool_tabs>ul")
-          .children(":nth-child(2)")
+      .get("#labelsTab")
           .click()
   });
 
   it('Change tab to versions', function() {
     cy
-      .get("#tool_tabs>ul")
-          .children(":nth-child(3)")
+      .get("#versionsTab")
           .click()
   });
 
   describe('Change tab to files', function() {
     beforeEach(function() {
       cy
-        .get("#tool_tabs>ul")
-          .children(":nth-child(4)")
+        .get("#filesTab")
           .click()
     });
 
     it('Should have Dockerfile tab selected', function() {
       cy
-        .get(".file-tabs")
-          .children('div')
-          .first()
-          .children('button')
-          .first()
+        .get("#dockerfileTab")
           .should("have.class", "active")
     });
 
@@ -47,11 +39,7 @@ describe('Dockstore Tool Details', function() {
       describe('Change tab to Descriptor files', function() {
           beforeEach(function() {
             cy
-              .get(".file-tabs")
-                .children('div')
-                .first()
-                .next()
-                .children('button')
+              .get("#descriptorTab")
                 .click()
           });
 
@@ -66,12 +54,7 @@ describe('Dockstore Tool Details', function() {
       describe('Change tab to Test Parameters', function() {
           beforeEach(function() {
             cy
-              .get(".file-tabs")
-                .children('div')
-                .first()
-                .next()
-                .next()
-                .children('button')
+              .get("#testParameterTab")
                 .click()
           });
 

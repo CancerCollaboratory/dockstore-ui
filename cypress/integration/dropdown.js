@@ -1,10 +1,7 @@
-
 describe('Dropdown test', function() {
+  require('./helper.js')
 
 	beforeEach(function () {
-	  // Login by adding user obj and token to local storage
-	  localStorage.setItem('dockstore.ui.userObj', '{\"id\": 1, \"username\": \"DockstoreTestUser2\", \"isAdmin\": \"false\", \"name\": \"DockstoreTestUser2\"}')
-    localStorage.setItem('satellizer_token', 'fasfsefse')
     cy.visit("http://localhost:9000")
 
      // Select dropdown
@@ -15,14 +12,141 @@ describe('Dropdown test', function() {
 
     describe('Go to accounts page', function() {
       beforeEach(function() {
-        // Select dropdown
+        // Select dropdown accounts
         cy
           .get('#dropdown-accounts')
           .click()
       });
 
-      it('Should show all accounts as linked', function(){
+      it('Should show all accounts as linked (except GitLab)', function(){
+        cy
+          .get('#github-linked')
+          .should('be.visible')
+        cy
+          .get('#github-not-linked')
+          .should('not.be.visible')
+        cy
+          .get('#bitbucket-linked')
+          .should('be.visible')
+        cy
+          .get('#bitbucket-not-linked')
+          .should('not.be.visible')
+        cy
+          .get('#gitlab-linked')
+          .should('not.be.visible')
+        cy
+          .get('#gitlab-not-linked')
+          .should('be.visible')
+        cy
+          .get('#quay-linked')
+          .should('be.visible')
+        cy
+          .get('#quay-not-linked')
+          .should('not.be.visible')
+      });
 
+      it('Should have proper account information', function(){
+        cy
+          .get('#account-username')
+          .should('contain', 'DockstoreTestUser2')
+      });
+    });
+
+    describe('Go to tokens page', function() {
+      beforeEach(function() {
+        // Select dropdown tokens
+        cy
+          .get('#dropdown-tokens')
+          .click()
+      });
+
+      it('Should have four tokens', function(){
+        expect(('#dockstore_token')).to.exist;
+        expect(('#github.com_token')).to.exist;
+//        expect(('#gitlab.com_token')).not.to.exist;
+        expect(('#quay.io_token')).to.exist;
+        expect(('#bitbucket.org_token')).to.exist;
+
+      });
+    });
+
+    describe('Go to setup page', function() {
+      beforeEach(function() {
+        // Select dropdown setup
+        cy
+          .get('#dropdown-onboarding')
+          .click()
+      });
+
+      it('Should show all accounts as linked (except GitLab)', function(){
+        cy
+          .get('#github-linked')
+          .should('be.visible')
+        cy
+          .get('#github-not-linked')
+          .should('not.be.visible')
+        cy
+          .get('#bitbucket-linked')
+          .should('be.visible')
+        cy
+          .get('#bitbucket-not-linked')
+          .should('not.be.visible')
+        cy
+          .get('#gitlab-linked')
+          .should('not.be.visible')
+        cy
+          .get('#gitlab-not-linked')
+          .should('be.visible')
+        cy
+          .get('#quay-linked')
+          .should('be.visible')
+        cy
+          .get('#quay-not-linked')
+          .should('not.be.visible')
+      });
+
+      it('Go through steps', function(){
+        // Should start on step 1
+        cy
+          .get('#step_one')
+          .should('be.visible')
+        cy
+          .get('#step_two')
+          .should('not.be.visible')
+        cy
+          .get('#step_three')
+          .should('not.be.visible')
+        cy
+          .get('#next_step')
+          .click()
+
+        // Should now be on step 2
+        cy
+          .get('#step_one')
+          .should('not.be.visible')
+        cy
+          .get('#step_two')
+          .should('be.visible')
+        cy
+          .get('#step_three')
+          .should('not.be.visible')
+        cy
+          .get('#next_step')
+          .click()
+
+        // Should now be on step 3
+        cy
+          .get('#step_one')
+          .should('not.be.visible')
+        cy
+          .get('#step_two')
+          .should('not.be.visible')
+        cy
+          .get('#step_three')
+          .should('be.visible')
+        cy
+          .get('#finish_step')
+          .click()
       });
     });
 });

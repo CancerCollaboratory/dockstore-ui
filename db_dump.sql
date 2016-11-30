@@ -1331,10 +1331,10 @@ SELECT pg_catalog.setval('tag_id_seq', 51, true);
 -- Data for Name: token; Type: TABLE DATA; Schema: public; Owner: dockstore
 --
 
-INSERT INTO token VALUES (1, 'fasfsefse', NULL, 'dockstore', 1, 'user_A');
-INSERT INTO token VALUES (2, 'fesfsefesf', NULL, 'github.com', 1, 'user_B');
-INSERT INTO token VALUES (4, 'fsefsafsa', NULL, 'quay.io', 1, 'user_C');
-INSERT INTO token VALUES (3, 'gfraergrggagerager', 'gregaegergagragag', 'bitbucket.org', 1, 'user_D');
+INSERT INTO token VALUES (1, 'imamafakedockstoretoken', NULL, 'dockstore', 1, 'user_A');
+INSERT INTO token VALUES (2, 'imamafakegithubtoken', NULL, 'github.com', 1, 'user_A');
+INSERT INTO token VALUES (4, 'imamafakequaytoken', NULL, 'quay.io', 1, 'user_A');
+INSERT INTO token VALUES (3, 'imamafakebitbuckettoken', 'imamafakebitbuckettokenhelper', 'bitbucket.org', 1, 'user_A');
 
 
 --
