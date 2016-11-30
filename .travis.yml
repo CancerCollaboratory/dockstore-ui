@@ -36,8 +36,9 @@ before_script:
   - grunt serve --silent & #make sure it runs the server first before testing
   - psql -c "create user dockstore with password 'dockstore' createdb;" -U postgres
   - psql -c "ALTER USER dockstore WITH superuser;" -U postgres
-  - psql -c 'create database webservice_test with owner = dockstore;' -U postgres
-  - psql 'webservice_test' -U postgres < db_dump.sql
+  - psql -c 'create database postgres with owner = dockstore;' -U postgres
+  - psql 'postgres' -U postgres < db_dump.sql
+  - docker run -d -p 127.0.0.1:8080:8080 quay.io/ga4gh/dockstore-webservice
 
 script:
   - cypress ci #test using cypress for integration testing
