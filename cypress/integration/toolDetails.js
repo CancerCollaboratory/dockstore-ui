@@ -8,31 +8,22 @@ describe('Dockstore Tool Details', function() {
   it('Change tab to labels', function() {
     cy
       .get("#tool_tabs>ul")
-        .children()
-        .not(".active")
-        .first()
-        .click()
+          .children(":nth-child(2)")
+          .click()
   });
 
   it('Change tab to versions', function() {
     cy
       .get("#tool_tabs>ul")
-        .children()
-        .not(".active")
-        .first()
-        .next()
-        .click()
+          .children(":nth-child(3)")
+          .click()
   });
 
   describe('Change tab to files', function() {
     beforeEach(function() {
       cy
         .get("#tool_tabs>ul")
-          .children()
-          .not(".active")
-          .first()
-          .next()
-          .next()
+          .children(":nth-child(4)")
           .click()
     });
 

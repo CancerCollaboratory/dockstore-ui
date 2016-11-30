@@ -60,14 +60,7 @@
 </div>
 <div class="row" ng-show="workflowObj">
   <div ng-class="editMode ? 'col-md-7' : 'col-md-8'">
-    <h3 id="workflow-path">
-      <span ng-show="isVerified()" uib-tooltip="Verified">
-        <span class="glyphicon glyphicon-ok"></span>
-      </span>
-      {{
-      workflowObj.path
-      }} <button class="btn" ngclipboard data-clipboard-target="#workflow-path" ngclipboard-success="onSuccess(e);"><span class="glyphicon glyphicon-copy"></span></button>
-    </h3>
+    <h3 id="workflow-path"><span ng-show="isVerified()" uib-tooltip="Verified"><span class="glyphicon glyphicon-ok"></span></span>{{workflowObj.path}} <button class="btn" ngclipboard data-clipboard-target="#workflow-path" ngclipboard-success="onSuccess(e);"><span class="glyphicon glyphicon-copy"></span></button></h3>
     <div ng-if="workflowObj" id="label-holder">
       <div id="label-values">
         <span ng-show="checkOverflow()" class="label label-default container-label" id="label-button" ng-click="selectLabelTab()">View All</span>

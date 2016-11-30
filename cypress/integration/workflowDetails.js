@@ -17,19 +17,14 @@ describe('Dockstore Workflow Details', function() {
   it('Change tab to labels', function() {
     cy
       .get("#workflow_tabs>ul")
-        .children()
-        .not(".active")
-        .first()
+        .children(":nth-child(2)")
         .click()
   });
 
   it('Change tab to versions', function() {
     cy
       .get("#workflow_tabs>ul")
-        .children()
-        .not(".active")
-        .first()
-        .next()
+        .children(":nth-child(3)")
         .click()
   });
 
@@ -37,11 +32,7 @@ describe('Dockstore Workflow Details', function() {
     beforeEach(function() {
       cy
         .get("#workflow_tabs>ul")
-          .children()
-          .not(".active")
-          .first()
-          .next()
-          .next()
+          .children(":nth-child(4)")
           .click()
     });
 
@@ -85,26 +76,15 @@ describe('Dockstore Workflow Details', function() {
   it('Change tab to tools', function() {
     cy
       .get("#workflow_tabs>ul")
-        .children()
-        .not(".active")
-        .first()
-        .next()
-        .next()
-        .next()
-        .click()
+          .children(":nth-child(5)")
+          .click()
   });
 
   describe('Change tab to dag', function () {
     beforeEach(function() {
       cy
         .get("#workflow_tabs>ul")
-          .children()
-          .not(".active")
-          .first()
-          .next()
-          .next()
-          .next()
-          .next()
+          .children(":nth-child(6)")
           .click()
     });
 

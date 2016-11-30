@@ -1,13 +1,15 @@
 
-'use strict';
+'use strict'
 
 /* https://github.com/angular/protractor/blob/master/docs/getting-started.md */
-
 describe('dockstore homepage', function() {
 
 	beforeEach(function () {
-		cy.visit("http://localhost:9000");
-	});
+	  // Login by adding user obj and token to local storage
+	  localStorage.setItem('dockstore.ui.userObj', '{\"id\": 1, \"username\": \"DockstoreTestUser2\", \"isAdmin\": \"false\", \"name\": \"DockstoreTestUser2\"}')
+    localStorage.setItem('satellizer_token', 'fasfsefse')
+		cy.visit("http://localhost:9000")
+	})
 
 	it('cy.should - assert that <title> is correct', function() {
 		cy.title().should('include', 'Dockstore');
@@ -28,7 +30,24 @@ describe('dockstore homepage', function() {
     });
   });
 
-  describe('Search box', function() {
+//  describe('Search box', function() {
+//
+//  });
 
+  describe('Navigation', function() {
+    it ('My Tools visible', function() {
+      cy
+        .get('#myToolsNav')
+          .should("visible")
+    });
+    it ('My Workflows visible', function() {
+      cy
+        .get('#myWorkflowsNav')
+          .should("visible")
+    });
   });
-});
+
+  describe('Login', function() {
+
+  })
+})
