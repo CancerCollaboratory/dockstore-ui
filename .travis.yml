@@ -6,8 +6,8 @@ node_js:
   - '4.2.1'
 services:
   - postgresql
-jdk:
-- oraclejdk8
+env:
+  - WEBSERVICE_VERSION="1.1"
 addons:
   firefox: "latest"
   postgresql: "9.4"
@@ -29,8 +29,8 @@ before_install:
   - 'wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'
   - 'sudo dpkg -i google-chrome*.deb'
   - 'npm install -g cypress-cli' #test using cypress cli for integrationg testing
-  - 'wget https://seqwaremaven.oicr.on.ca/artifactory/collab-release/io/dockstore/dockstore-webservice/1.1-rc.2/dockstore-webservice-1.1-rc.2.jar'
-  - 'chmod u+x dockstore-webservice-1.1-rc.2.jar'
+  - 'wget https://seqwaremaven.oicr.on.ca/artifactory/collab-release/io/dockstore/dockstore-webservice/$WEBSERVICE_VERSION/dockstore-webservice-${WEBSERVICE_VERSION}.jar'
+  - 'chmod u+x dockstore-webservice-${WEBSERVICE_VERSION}.jar'
   - 'sleep 3' # https://docs.travis-ci.com/user/gui-and-headless-browsers/#Using-xvfb-to-Run-Tests-That-Require-a-GUI
 install:
   - 'npm install --global grunt-cli bower yo generator-karma generator-angular'
@@ -44,7 +44,7 @@ before_script:
   - grunt serve --silent & #make sure it runs the server first before testing
   - 'sleep 10'
   - psql 'postgres' -U postgres < travisci/db_dump.sql
-  - java -jar dockstore-webservice-*.jar server travisci/web.yml 1>/dev/null &
+  - java -jar dockstore-webservice-${WEBSERVICE_VERSION}.jar server travisci/web.yml 1>/dev/null &
   - 'sleep 20'
 
 script:

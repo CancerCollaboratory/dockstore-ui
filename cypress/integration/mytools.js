@@ -2,7 +2,7 @@ describe('Dockstore my tools', function() {
   require('./helper.js')
 
 	beforeEach(function () {
-     cy.visit("http://localhost:9000/my-containers")
+     cy.visit(String(global.baseUrl) + "/my-containers")
   });
 
   describe('publish a tool', function() {

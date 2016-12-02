@@ -2,7 +2,7 @@
 describe('Dockstore Workflow Details', function() {
   require('./helper.js')
 	beforeEach(function () {
-     cy.visit("http://localhost:9000/workflows/DockstoreTestUser2/test_workflow_cwl")
+     cy.visit(String(global.baseUrl) + "/workflows/DockstoreTestUser2/test_workflow_cwl")
   });
 
 	it('should not show Edit Button', function() {

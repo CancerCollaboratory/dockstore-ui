@@ -2,7 +2,7 @@ describe('Dropdown test', function() {
   require('./helper.js')
 
 	beforeEach(function () {
-    cy.visit("http://localhost:9000")
+    cy.visit(String(global.baseUrl))
 
      // Select dropdown
      cy

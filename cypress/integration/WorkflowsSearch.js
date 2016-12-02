@@ -1,7 +1,7 @@
 describe('Dockstore workflow search page', function() {
   require('./helper.js')
 	beforeEach(function () {
-     cy.visit("http://localhost:9000/search-workflows")
+     cy.visit(String(global.baseUrl) + "/search-workflows")
   });
 
    describe('Select a workflow', function() {

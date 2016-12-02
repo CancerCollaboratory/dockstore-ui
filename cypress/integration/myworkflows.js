@@ -3,7 +3,7 @@ describe('Dockstore my workflows', function() {
   require('./helper.js')
 
 	beforeEach(function () {
-     cy.visit("http://localhost:9000/my-workflows")
+     cy.visit(String(global.baseUrl) + "/my-workflows")
   });
 
  describe('Look at an invalid workflow', function() {
