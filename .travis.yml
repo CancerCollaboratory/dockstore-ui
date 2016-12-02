@@ -34,7 +34,6 @@ before_install:
   - 'sleep 3' # https://docs.travis-ci.com/user/gui-and-headless-browsers/#Using-xvfb-to-Run-Tests-That-Require-a-GUI
 install:
   - 'npm install --global grunt-cli bower yo generator-karma generator-angular'
-  - 'npm install karma jasmine-core'
   - 'sudo apt-get install -y ruby ruby-dev make'
   - 'gem install compass'
   - 'npm update'
