@@ -447,7 +447,7 @@ SELECT pg_catalog.setval('container_id_seq', 51, true);
 -- Data for Name: enduser; Type: TABLE DATA; Schema: public; Owner: dockstore
 --
 
-INSERT INTO enduser VALUES (1, false, 'DockstoreTestUser2');
+INSERT INTO enduser VALUES (1, false, 'user_A');
 
 
 --

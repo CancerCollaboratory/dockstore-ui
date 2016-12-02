@@ -44,12 +44,6 @@ describe('Dropdown test', function() {
           .get('#quay-not-linked')
           .should('not.be.visible')
       });
-
-      it('Should have proper account information', function(){
-        cy
-          .get('#account-username')
-          .should('contain', 'DockstoreTestUser2')
-      });
     });
 
     describe('Go to tokens page', function() {
