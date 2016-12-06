@@ -120,24 +120,15 @@
        ng-if="workflowObj.email">
     <h3 class="pull-right">
       <div class="btn-group" role="group">
-        <!-- non-functional
-        <button type="button"
-                class="btn btn-primary contact-button"
-                ng-if="!editMode && !workflowObj.is_published">
-          <a href="mailto:{{workflowObj.email}}?subject=Dockstore Request for Access to {{workflowObj.path}}&body=I would like to request access to your Docker image {{workflowObj.path}} housed on {{gitReposProviderName}}.  My username on {{gitReposProviderName}} is <username>.">
-            Request Access
-          </a>
-        </button>
-        -->
-        <!-- non-functional
-        <button type="button"
-                class="btn btn-info contact-button"
-                ng-if="!editMode">
-          <a href="mailto:{{workflowObj.email}}?subject=Dockstore Contact Request About: {{workflowObj.path}}">
-            Contact Author
-          </a>
-        </button>
-        -->
+        <div
+          class="button contact-button"
+          ng-if="!editMode && workflowObj.email !== null">
+          <p>
+            <a href="mailto:{{workflowObj.email}}?subject=Dockstore%20{{workflowObj.path}}%20inquiry">
+              Contact Author
+            </a>
+          </p>
+        </div>
       </div>
     </h3>
   </div>

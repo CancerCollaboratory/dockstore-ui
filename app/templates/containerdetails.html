@@ -66,8 +66,8 @@
       <span ng-show="isVerified()" uib-tooltip="Verified">
         <span class="glyphicon glyphicon-ok"></span>
       </span>
-      <span ng-show="containerObj.private" uib-tooltip="Private">
-        <span class="glyphicon glyphicon-lock"></span>
+      <span ng-show="containerObj.private_access" uib-tooltip="Private">
+        <span class="glyphicon glyphicon-eye-close"></span>
       </span>
       {{
         (containerObj.tool_path)
@@ -131,22 +131,22 @@
     <h3 class="pull-right">
         <div
             class="button contact-button"
-            ng-if="!editMode && containerObj.private">
+            ng-if="!editMode && containerObj.private_access">
           <p>
-            <a href="mailto:{{containerObj.tool_maintainer_email}}?subject=Dockstore%20Request%20for%20Access%20to%20{{containerObj.path}}&body=I%20would%20like%20to%20request%20access%20to%20your%20Docker%20image%20{{containerObj.path}}%20housed%20on%20{{gitReposProviderName}}. %20My%20username%20on%20{{gitReposProviderName}}%20is%20<username>.">
-              Request Access
+            <a href="mailto:{{getRequestAccessEmail()}}?subject=Dockstore%20Request%20for%20Access%20to%20{{containerObj.path}}&body=I%20would%20like%20to%20request%20access%20to%20your%20Docker%20image%20{{containerObj.path}}%20housed%20on%20{{gitReposProviderName}}. %20My%20username%20on%20{{gitReposProviderName}}%20is%20<username>.">
+              Request Access on {{getDockerRegistryName()}}
             </a>
           </p>
         </div>
-        <!-- non-functional
-        <button type="button"
-            class="btn btn-info contact-button"
-            ng-if="!editMode">
-          <a href="mailto:{{containerObj.email}}?subject=Dockstore Contact Request About: {{containerObj.path}}">
-            Contact Author
-          </a>
-        </button>
-        -->
+        <div
+            class="button contact-button"
+            ng-if="!editMode && containerObj.email !== null && !containerObj.private_access">
+          <p>
+            <a href="mailto:{{containerObj.email}}?subject=Dockstore%20{{containerObj.path}}%20inquiry">
+              Contact Author
+            </a>
+          </p>
+        </div>
     </h3>
   </div>
   <!--div class="col-md-2">
@@ -165,6 +165,8 @@
   </div-->
 </div>
 <div class="row" ng-show="containerObj">
+  <!--<div uib-alert ng-show="!editMode && containerObj.private_access">This is a private tool, meaning that permission is required on {{getDockerRegistryName()}} to be able to launch the tool. You must request access from the tool maintainer if you wish to use this tool.</div>-->
+
   <div class="ds-tabs" ng-class="editMode ? 'col-md-12' : 'col-md-9'">
     <uib-tabset justified="true">
       <uib-tab active="activeTabs[0]">
@@ -175,9 +177,12 @@
             {{ containerObj.author ? containerObj.author : 'n/a' }}
           </li>
           <li>
-            <strong uib-tooltip="E-mail of corresponding author for workflow">E-mail</strong>:
-            <span ng-if="!containerObj.email">n/a</span>
-            <a href={{getMailToLink(containerObj)}} ng-if="containerObj.email">{{containerObj.email}}</a>
+            <strong uib-tooltip="E-mail of corresponding author for tool">E-mail</strong>:
+            {{ containerObj.email ? containerObj.email : 'n/a' }}
+          </li>
+          <li ng-if="containerObj.tool_maintainer_email && containerObj.private_access">
+            <strong uib-tooltip-html="toolMaintainerTooltip">Tool Maintainer E-mail</strong>:
+            <span>{{containerObj.tool_maintainer_email}}</span>
           </li>
           <li ng-if="gitReposProvider">
             <strong uib-tooltip="Git repository for the associated tool descriptors and Dockerfile">{{gitReposProviderName}}</strong>:
