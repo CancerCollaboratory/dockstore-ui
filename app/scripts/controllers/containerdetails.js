@@ -720,9 +720,13 @@ angular.module('dockstore.ui')
 
       $scope.getRequestAccessEmail = function() {
         if(!$scope.isToolMaintainerEmailNullOrEmpty()) {
-          return $scope.containerObj.tool_maintainer_email;
+          return $scope.stripMailTo($scope.containerObj.tool_maintainer_email);
         } else {
-          return $scope.containerObj.email;
+          return $scope.stripMailTo($scope.containerObj.email);
         }
       };
+
+      $scope.stripMailTo = function(email) {
+        return email.replace(/^mailto:/, '');
+      }
   }]);

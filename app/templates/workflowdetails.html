@@ -124,7 +124,7 @@
           class="button contact-button"
           ng-if="!editMode && workflowObj.email !== null">
           <p>
-            <a href="mailto:{{workflowObj.email}}?subject=Dockstore%20{{workflowObj.path}}%20inquiry">
+            <a href="mailto:{{stripMailTo(workflowObj.email)}}?subject=Dockstore%20{{workflowObj.path}}%20inquiry">
               Contact Author
             </a>
           </p>
@@ -156,7 +156,7 @@
           <li>
             <strong uib-tooltip="E-mail of corresponding author for workflow">E-mail</strong>:
             <span ng-if="!workflowObj.email">n/a</span>
-            <a href={{getMailToLink(workflowObj)}} ng-if="workflowObj.email">{{workflowObj.email}}</a>
+            <a href={{getMailToLink(workflowObj)}} ng-if="workflowObj.email">{{stripMailTo(workflowObj.email)}}</a>
           </li>
           <li>
           <!-- for when it's not edit mode-->

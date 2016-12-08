@@ -62,12 +62,11 @@
 <div class="row" ng-show="containerObj">
   <div ng-class="editMode ? 'col-md-7' : 'col-md-8'">
     <h3 id="tool-path">
-      <!--<span class="glyphicon glyphicon-lock" ng-if="!containerObj.is_public"></span>-->
       <span ng-show="isVerified()" uib-tooltip="Verified">
         <span class="glyphicon glyphicon-ok"></span>
       </span>
       <span ng-show="containerObj.private_access" uib-tooltip="Private">
-        <span class="glyphicon glyphicon-eye-close"></span>
+        <span class="glyphicon glyphicon-lock"></span>
       </span>
       {{
         (containerObj.tool_path)
@@ -142,31 +141,16 @@
             class="button contact-button"
             ng-if="!editMode && containerObj.email !== null && !containerObj.private_access">
           <p>
-            <a href="mailto:{{containerObj.email}}?subject=Dockstore%20{{containerObj.path}}%20inquiry">
+            <a href="mailto:{{stripMailTo(containerObj.email)}}?subject=Dockstore%20{{containerObj.path}}%20inquiry">
               Contact Author
             </a>
           </p>
         </div>
     </h3>
   </div>
-  <!--div class="col-md-2">
-    <span class="starRating">
-      <input id="rating5" type="radio" name="rating" value="5">
-      <label for="rating5">5</label>
-      <input id="rating4" type="radio" name="rating" value="4">
-      <label for="rating4">4</label>
-      <input id="rating3" type="radio" name="rating" value="3" checked>
-      <label for="rating3">3</label>
-      <input id="rating2" type="radio" name="rating" value="2">
-      <label for="rating2">2</label>
-      <input id="rating1" type="radio" name="rating" value="1">
-      <label for="rating1">1</label>
-    </span>
-  </div-->
+
 </div>
 <div class="row" ng-show="containerObj">
-  <!--<div uib-alert ng-show="!editMode && containerObj.private_access">This is a private tool, meaning that permission is required on {{getDockerRegistryName()}} to be able to launch the tool. You must request access from the tool maintainer if you wish to use this tool.</div>-->
-
   <div class="ds-tabs" ng-class="editMode ? 'col-md-12' : 'col-md-9'">
     <uib-tabset justified="true">
       <uib-tab active="activeTabs[0]">
@@ -178,11 +162,11 @@
           </li>
           <li>
             <strong uib-tooltip="E-mail of corresponding author for tool">E-mail</strong>:
-            {{ containerObj.email ? containerObj.email : 'n/a' }}
+            {{ containerObj.email ? stripMailTo(containerObj.email) : 'n/a' }}
           </li>
           <li ng-if="containerObj.tool_maintainer_email && containerObj.private_access">
             <strong uib-tooltip-html="toolMaintainerTooltip">Tool Maintainer E-mail</strong>:
-            <span>{{containerObj.tool_maintainer_email}}</span>
+            <span>{{stripMailTo(containerObj.tool_maintainer_email)}}</span>
           </li>
           <li ng-if="gitReposProvider">
             <strong uib-tooltip="Git repository for the associated tool descriptors and Dockerfile">{{gitReposProviderName}}</strong>:
