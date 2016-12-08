@@ -705,5 +705,5 @@ angular.module('dockstore.ui')
 
       $scope.stripMailTo = function(email) {
         return email.replace(/^mailto:/, '');
-      }
+      };
   }]);
