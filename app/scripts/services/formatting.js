@@ -162,9 +162,11 @@ angular.module('dockstore.ui')
         for (var i = 0; i < dockerRegistryMap.length; i++) {
           if (imageReposProvider === dockerRegistryMap[i].enum) {
             imageReposWebUrl = dockerRegistryMap[i].url;
-            // Special case for dockerhub
+            // Special cases for docker registry URLs
             if (imageReposProvider === 'DOCKER_HUB') {
               imageReposWebUrl += ((matchRes[2] !== '_') ? 'r/' : '');
+            } else if (imageReposProvider === 'GITLAB') {
+              suffix = '/container_registry';
             }
           }
         }
@@ -174,7 +176,7 @@ angular.module('dockstore.ui')
           return null;
         }
 
-        imageReposWebUrl += matchRes[2] + '/' + matchRes[3];
+        imageReposWebUrl += matchRes[2] + '/' + matchRes[3] + suffix;
         return imageReposWebUrl;
       };
 

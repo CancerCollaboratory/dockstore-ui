@@ -497,7 +497,7 @@
         <tr>
           <td>
             <div class="container-source-repos">
-              <p>
+              <p>Git Repository:
                 <span ng-if="gitReposProvider">
                   <a ng-href="{{gitReposWebUrl}}" target="_blank">
                     {{gitReposProviderName}}
@@ -505,7 +505,7 @@
                   </a>
                 </span>
               </p>
-              <p>
+              <p>Docker Registry:
                 <span ng-if="imageReposProvider">
                   <a ng-if="imageReposWebUrl !== null" ng-href="{{imageReposWebUrl}}" target="_blank">
                     {{imageReposProviderName}}
