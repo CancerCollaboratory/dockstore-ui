@@ -507,10 +507,11 @@
               </p>
               <p>
                 <span ng-if="imageReposProvider">
-                  <a ng-href="{{imageReposWebUrl}}" target="_blank">
+                  <a ng-if="imageReposWebUrl !== null" ng-href="{{imageReposWebUrl}}" target="_blank">
                     {{imageReposProviderName}}
                     <span class="glyphicon glyphicon-new-window"></span>
                   </a>
+                  <span ng-if="imageReposWebUrl === null">{{imageReposProviderName}}</span>
                 </span>
                 <span ng-if="imageReposWebUrl && imageReposWebUrl.startsWith('https://quay.io')"
                       class="pull-right">

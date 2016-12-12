@@ -28,7 +28,9 @@ angular.module('dockstore.ui')
     '$scope',
     '$q',
     'ContainerService',
-    function ($scope, $q, ContainerService) {
+    'FormattingService',
+    function ($scope, $q, ContainerService, FrmttSrvc) {
+    $scope.dockerRegistryMap = {};
 
       $scope.registerContainer = function() {
         $scope.setContainerEditError(null);
@@ -109,7 +111,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.getImagePath = function(imagePath, part) {
-        var imagePathRegexp = /^(([a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*)|_)\/([a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*)$/i;
+        var imagePathRegexp = /^(([a-zA-Z0-9]+([-_.][a-zA-Z0-9]+)*)|_)\/([a-zA-Z0-9]+([-_.][a-zA-Z0-9]+)*)$/i;
         var matchObj = imagePath.match(imagePathRegexp);
         var imageName = '';
         if (matchObj && matchObj.length > 2) {
@@ -119,17 +121,13 @@ angular.module('dockstore.ui')
       };
 
       $scope.getContainerRegistry = function(irProvider) {
-        var registry = '';
-        switch (irProvider) {
-          case 'Quay.io':
-            registry = 'QUAY_IO';
-            break;
-          case 'Docker Hub':
-            /* falls through */
-          default:
-            registry = 'DOCKER_HUB';
+        for (var i = 0; i < $scope.dockerRegistryMap.length; i++) {
+          if (irProvider === $scope.dockerRegistryMap[i].friendlyName) {
+            return $scope.dockerRegistryMap[i].enum;
+          }
         }
-        return registry;
+        // Fallback on dockerhub
+        return 'DOCKER_HUB';
       };
 
       $scope.getNormalizedContainerObj = function(containerObj) {
@@ -173,5 +171,8 @@ angular.module('dockstore.ui')
       };
 
       $scope.setContainerEditError(null);
+
+      $scope.dockerRegistryMap = FrmttSrvc.returnDockerRegistryList();
+
 
   }]);
