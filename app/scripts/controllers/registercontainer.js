@@ -110,8 +110,15 @@ angular.module('dockstore.ui')
         return gitUrl;
       };
 
+      /**
+       * Given an image path and a part, returns the part of the path
+       * @param {string} image path, excluding registry (ex. namespace/name)
+       * @param {string} part of image (ex. name, namespace)
+       * @returns Specified section of the image path
+       */
       $scope.getImagePath = function(imagePath, part) {
-        /** Defines the regex that an image path must match */
+        /** Defines the regex that an image path (namespace/name) must match.
+         Group 1 = namespace, Group 2 = name*/
         var imagePathRegexp = /^(([a-zA-Z0-9]+([-_.][a-zA-Z0-9]+)*)|_)\/([a-zA-Z0-9]+([-_.][a-zA-Z0-9]+)*)$/i;
         var matchObj = imagePath.match(imagePathRegexp);
         var imageName = '';
