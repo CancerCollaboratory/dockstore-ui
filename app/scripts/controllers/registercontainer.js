@@ -111,6 +111,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.getImagePath = function(imagePath, part) {
+        /** Defines the regex that an image path must match */
         var imagePathRegexp = /^(([a-zA-Z0-9]+([-_.][a-zA-Z0-9]+)*)|_)\/([a-zA-Z0-9]+([-_.][a-zA-Z0-9]+)*)$/i;
         var matchObj = imagePath.match(imagePathRegexp);
         var imageName = '';

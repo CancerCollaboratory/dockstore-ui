@@ -149,6 +149,8 @@ angular.module('dockstore.ui')
             return dockerRegistryMap[i].friendlyName;
           }
         }
+
+        /** Return unknown if we can't find a matching Registry Type */
         return 'Unknown';
       };
 
