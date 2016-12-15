@@ -40,7 +40,7 @@
           ng-if="refreshingContainer">
         <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate">
         </span>
-        Please wait, retrieving Quay.io or Docker Hub tool...
+        Please wait, retrieving tool...
       </div>
       <form name="registerContainerForm"
           class="form-horizontal"
@@ -220,6 +220,21 @@
               </div>
             </div>
           </div>
+          <div class="form-group form-group-sm" ng-show="showCustomDockerRegistryPath">
+            <label class="col-sm-3 control-label">
+              Custom Docker Registry Path:
+            </label>
+            <div class="col-sm-9">
+              <input
+                class="form-control"
+                name="customDockerRegistryPath"
+                ng-model="customDockerRegistryPath"
+                ng-maxlength="256"
+                uib-tooltip
+                title="Custom Docker registry path"
+                placeholder="e.g. registry.hub.docker.com" />
+            </div>
+          </div>
           <div class="form-group form-group-sm">
             <label class="col-sm-3 control-label">
               Private Image:
@@ -230,7 +245,8 @@
                   <input type="checkbox"
                          ng-model="containerObj.private_access"
                          uib-tooltip
-                         title="Image registry entry is private." />
+                         title="Image registry entry is private."
+                          id="privateTool"/>
                 </label>
               </div>
             </div>
@@ -289,7 +305,7 @@
           </button>
           <button type="submit"
               class="btn btn-primary"
-              ng-disabled="registerContainerForm.$invalid || savingActive || refreshingContainer">
+              ng-disabled="registerContainerForm.$invalid || savingActive || refreshingContainer || isInvalidPrivateRegistry() || isInvalidPrivateTool()">
             Add Tool
           </button>
         </div>

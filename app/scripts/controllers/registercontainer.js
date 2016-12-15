@@ -31,6 +31,8 @@ angular.module('dockstore.ui')
     'FormattingService',
     function ($scope, $q, ContainerService, FrmttSrvc) {
     $scope.dockerRegistryMap = {};
+    $scope.customDockerRegistryPath = null;
+    $scope.showCustomDockerRegistryPath = false;
 
       $scope.registerContainer = function() {
         $scope.setContainerEditError(null);
@@ -134,8 +136,14 @@ angular.module('dockstore.ui')
             return $scope.dockerRegistryMap[i].enum;
           }
         }
-        // Fallback on dockerhub
-        return 'DOCKER_HUB';
+      };
+
+      $scope.getImageRegistryPath = function(irProvider) {
+        for (var i = 0; i < $scope.dockerRegistryMap.length; i++) {
+          if (irProvider === $scope.dockerRegistryMap[i].friendlyName) {
+            return $scope.dockerRegistryMap[i].dockerCommand;
+          }
+        }
       };
 
       $scope.getNormalizedContainerObj = function(containerObj) {
@@ -154,6 +162,7 @@ angular.module('dockstore.ui')
           is_published: containerObj.is_published,
           private_access: containerObj.private_access,
           tool_maintainer_email: containerObj.tool_maintainer_email,
+          path: $scope.createPath()
         };
         if (normContainerObj.toolname === normContainerObj.name) {
           delete normContainerObj.toolname;
@@ -182,5 +191,51 @@ angular.module('dockstore.ui')
 
       $scope.dockerRegistryMap = FrmttSrvc.returnDockerRegistryList();
 
+      $scope.createPath = function() {
+        var path = "";
+        if ($scope.customDockerRegistryPath !== null) {
+          path += $scope.customDockerRegistryPath;
+        } else {
+          path += $scope.getImageRegistryPath($scope.containerObj.irProvider);
+        }
+        path += "/" + $scope.getImagePath($scope.containerObj.imagePath, 'namespace') + "/" + $scope.getImagePath($scope.containerObj.imagePath, 'name');
+        return path;
 
+      };
+
+      $scope.checkIfPrivateOnlyRegistry = function() {
+        for (var i = 0; i < $scope.dockerRegistryMap.length; i++) {
+          if ($scope.containerObj.irProvider === $scope.dockerRegistryMap[i].friendlyName) {
+            if ($scope.dockerRegistryMap[i].privateOnly === "true") {
+              $scope.containerObj.private_access = true;
+              $("#privateTool").attr('disabled','disabled');
+              $scope.showCustomDockerRegistryPath = true;
+            } else {
+              $("#privateTool").removeAttr('disabled');
+              $scope.showCustomDockerRegistryPath = false;
+              $scope.customDockerRegistryPath = null;
+            }
+          }
+        }
+      };
+
+      $scope.isInvalidPrivateTool = function() {
+        return $scope.containerObj.private_access === true && ($scope.containerObj.tool_maintainer_email === null || $scope.containerObj.tool_maintainer_email === '');
+      };
+
+      $scope.isInvalidPrivateRegistry = function() {
+        for (var i = 0; i < $scope.dockerRegistryMap.length; i++) {
+          if ($scope.containerObj.irProvider === $scope.dockerRegistryMap[i].friendlyName) {
+            if ($scope.dockerRegistryMap[i].privateOnly === "true") {
+              if ($scope.customDockerRegistryPath === null || $scope.customDockerRegistryPath === '') {
+                return true;
+              } else {
+                return false;
+              }
+            } else {
+              return false;
+            }
+          }
+        }
+      };
   }]);
