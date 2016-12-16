@@ -13,6 +13,8 @@ We currently support the following public registries:
 
 A `private registry` is a Docker registry where access to Docker images are restricted to authenticated users. These registries do not have public websites to view the Docker images. Amazon ECR is a good example of a private registry. These registries are useful when you want to restrict access of a tool to authorized users only.
 
+The Docker registry path (ex. registry.hub.docker.com) for private registries **must** be provided by the user on registration. This is best explained through example. Amazon ECR has users create their own registries, it is not one big registry itself. Your registry path will not be the same as another user's registry path, even though you both use Amazon ECR, though it will follow a particular formula.
+
 We currently support the following private registries:
 * Amazon ECR
 
@@ -28,8 +30,12 @@ This is because private Docker registry images require authorization to access, 
 
 Amazon ECR images have an associated file containing the `Repository Policies`. When a tool user requests access to an Amazon ECR image, the tool maintainer should add them to the list of users with pull access.
 
-More information can be found on the [Amazon ECR](http://docs.aws.amazon.com/AmazonECR/latest/userguide/RepositoryPolicyExamples.html#IAM_allow_other_accounts) page.
+More information can be found on this [Amazon ECR](http://docs.aws.amazon.com/AmazonECR/latest/userguide/RepositoryPolicyExamples.html#IAM_allow_other_accounts) page.
 
 ## Docker Registry Request
 
 If you would like to request support for a registry that is not currently supported, then please create an issue on our [Github](https://github.com/ga4gh/dockstore/issues) page.
+
+## Next Steps
+
+Read up on the differences between public and private tools on Dockstore at the [Public and Private Tools](/docs/public_private_tools) page or see our [full list of documentation](/docs).
