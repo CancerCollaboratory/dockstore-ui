@@ -141,7 +141,7 @@ angular.module('dockstore.ui')
       $scope.getImageRegistryPath = function(irProvider) {
         for (var i = 0; i < $scope.dockerRegistryMap.length; i++) {
           if (irProvider === $scope.dockerRegistryMap[i].friendlyName) {
-            return $scope.dockerRegistryMap[i].dockerCommand;
+            return $scope.dockerRegistryMap[i].dockerPath;
           }
         }
       };
@@ -203,17 +203,22 @@ angular.module('dockstore.ui')
 
       };
 
-      $scope.checkIfPrivateOnlyRegistry = function() {
+      $scope.checkForSpecialDockerRegistry = function() {
         for (var i = 0; i < $scope.dockerRegistryMap.length; i++) {
           if ($scope.containerObj.irProvider === $scope.dockerRegistryMap[i].friendlyName) {
             if ($scope.dockerRegistryMap[i].privateOnly === "true") {
               $scope.containerObj.private_access = true;
               $("#privateTool").attr('disabled','disabled');
-              $scope.showCustomDockerRegistryPath = true;
             } else {
               $("#privateTool").removeAttr('disabled');
+            }
+
+            if ($scope.dockerRegistryMap[i].customDockerPath === "true") {
+              $scope.showCustomDockerRegistryPath = true;
+              $scope.customDockerRegistryPath =  null;
+            } else {
               $scope.showCustomDockerRegistryPath = false;
-              $scope.customDockerRegistryPath = null;
+              $scope.customDockerRegistryPath = $scope.getImageRegistryPath($scope.containerObj.irProvider);
             }
           }
         }

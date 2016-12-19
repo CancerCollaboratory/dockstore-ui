@@ -65,7 +65,7 @@ angular.module('dockstore.ui')
         });
         scope.$watch('containerObj.irProvider', function(newValue, oldValue) {
           if (newValue !== oldValue) {
-            scope.checkIfPrivateOnlyRegistry();
+            scope.checkForSpecialDockerRegistry();
             scope.containerObj.path = scope.createPath();
           }
         });
