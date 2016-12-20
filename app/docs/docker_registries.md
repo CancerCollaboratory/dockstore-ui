@@ -1,6 +1,6 @@
 # Docker Registries
 
-There are a lot of Docker Registries now besides Docker Hub and Quay.io. These registries are a combination of public registries and private registries.
+There are a number of alternative Docker Registries aside from Docker Hub and Quay.io. These registries are a combination of public registries and private registries.
 
 ## Public vs Private Docker Registries
 
@@ -17,7 +17,7 @@ We currently support the following private registries:
 * Amazon ECR
 
 ## Registries with Custom Docker Paths
-Many Docker registries that you may be familiar with use standard paths. For example, Docker Hub uses `registry.hub.docker.com`. These are used to uniquely identify a registry. While standard paths may be a thing for major public registries, there are some registries which require a custom Docker registry path.
+Many Docker registries that you may be familiar with use standard paths. For example, Docker Hub uses `registry.hub.docker.com`. These are used to uniquely identify a registry. While standard paths are common for major public registries, there are some registries which require a custom Docker registry path.
 
 This is common for services like Amazon ECR which allow users to create their own registries, instead of just using one big registry. Having your own registry makes it easy to restrict access to your Docker images.
 
