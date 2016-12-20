@@ -21,7 +21,7 @@ describe('Dockstore workflow search page', function() {
          .first()
          .click()
          .get('#workflow-path')
-         .should('contain', 'FakeNamespace1/FakeName19')
+         .should('contain', 'A/l')
      });
    });
 })

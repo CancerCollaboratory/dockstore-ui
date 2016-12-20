@@ -1350,11 +1350,11 @@ SELECT pg_catalog.setval('token_id_seq', 4, true);
 -- Data for Name: tool; Type: TABLE DATA; Schema: public; Owner: dockstore
 --
 
-INSERT INTO tool VALUES (1, 'Dockstore Test User', NULL, 'Whalesay deep quotes', NULL, 'git@github.com:FakeNamespace2/FakeName5.git', false, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-02-16 17:04:59', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'FakeName5', 'FakeNamespace2', 'quay.io/FakeNamespace2/FakeName5', 'QUAY_IO', '', '', false);
-INSERT INTO tool VALUES (2, 'Dockstore Test User2', NULL, 'Whalesay deep quotes', NULL, 'git@github.com:FakeNamespace1/FakeName4.git', false, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-03-15 15:35:29', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'FakeName4', 'FakeNamespace1', 'quay.io/FakeNamespace1/FakeName4', 'QUAY_IO', '', '', false);
-INSERT INTO tool VALUES (5, NULL, NULL, '', NULL, 'git@github.com:FakeNamespace1/FakeName1.git', true, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-06-08 14:06:36', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'FakeName1', 'FakeNamespace1', 'quay.io/FakeNamespace1/FakeName1', 'QUAY_IO', '', '', false);
-INSERT INTO tool VALUES (4, NULL, NULL, NULL, NULL, 'git@github.com:FakeNamespace1/FakeName2.git', true, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-03-15 15:36:22', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'FakeName2', 'FakeNamespace1', 'quay.io/FakeNamespace1/FakeName2', 'QUAY_IO', '', '', false);
-INSERT INTO tool VALUES (3, NULL, NULL, NULL, NULL, 'git@github.com:FakeNamespace1/FakeName3.git', false, NULL, '2016-11-28 15:02:48.557', '/Dockstore.cwl', '/testDir/Dockerfile', '/Dockstore.wdl', '2016-03-15 15:35:57', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'FakeName3', 'FakeNamespace1', 'quay.io/FakeNamespace1/FakeName3', 'QUAY_IO', '', '', false);
+INSERT INTO tool VALUES (1, 'Dockstore Test User', NULL, 'Whalesay deep quotes', NULL, 'git@github.com:A/a.git', false, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-02-16 17:04:59', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'a', 'A', 'quay.io/A/a', 'QUAY_IO', '', '', false);
+INSERT INTO tool VALUES (2, 'Dockstore Test User2', NULL, 'Whalesay deep quotes', NULL, 'git@github.com:A2/b1.git', false, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-03-15 15:35:29', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'b1', 'A2', 'quay.io/A2/b1', 'QUAY_IO', '', '', false);
+INSERT INTO tool VALUES (5, NULL, NULL, '', NULL, 'git@github.com:A2/a.git', true, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-06-08 14:06:36', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'a', 'A2', 'quay.io/A2/a', 'QUAY_IO', '', '', false);
+INSERT INTO tool VALUES (4, NULL, NULL, NULL, NULL, 'git@github.com:A2/b3.git', true, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-03-15 15:36:22', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'b3', 'A2', 'quay.io/A2/b3', 'QUAY_IO', '', '', false);
+INSERT INTO tool VALUES (3, NULL, NULL, NULL, NULL, 'git@github.com:A2/b2.git', false, NULL, '2016-11-28 15:02:48.557', '/Dockstore.cwl', '/testDir/Dockerfile', '/Dockstore.wdl', '2016-03-15 15:35:57', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'b2', 'A2', 'quay.io/A2/b2', 'QUAY_IO', '', '', false);
 
 
 --
@@ -1456,20 +1456,20 @@ INSERT INTO version_sourcefile VALUES (7, 36);
 -- Data for Name: workflow; Type: TABLE DATA; Schema: public; Owner: dockstore
 --
 
-INSERT INTO workflow VALUES (6, NULL, NULL, NULL, NULL, 'git@bitbucket.org:FakeNamespace3/FakeName6.git', false, NULL, '2016-11-28 15:00:57.148', '/Dockstore.cwl', 'cwl', 'STUB', 'FakeNamespace3', 'FakeNamespace3/FakeName6', 'FakeName6', NULL);
-INSERT INTO workflow VALUES (7, NULL, NULL, NULL, NULL, 'git@github.com:FakeNamespace1/FakeName7.git', false, NULL, '2016-11-28 15:00:57.315', '/Dockstore.cwl', 'cwl', 'STUB', 'FakeNamespace1', 'FakeNamespace1/FakeName7', 'FakeName7', NULL);
-INSERT INTO workflow VALUES (8, NULL, NULL, NULL, NULL, 'git@github.com:FakeNamespace1/FakeName8.git', false, NULL, '2016-11-28 15:00:57.419', '/Dockstore.cwl', 'cwl', 'STUB', 'FakeNamespace1', 'FakeNamespace1/FakeName8', 'FakeName8', NULL);
-INSERT INTO workflow VALUES (9, NULL, NULL, NULL, NULL, 'git@github.com:FakeNamespace1/FakeName9.git', false, NULL, '2016-11-28 15:00:57.482', '/Dockstore.cwl', 'cwl', 'STUB', 'FakeNamespace1', 'FakeNamespace1/FakeName9', 'FakeName9', NULL);
-INSERT INTO workflow VALUES (10, NULL, NULL, NULL, NULL, 'git@github.com:FakeNamespace1/FakeName10.git', false, NULL, '2016-11-28 15:00:57.593', '/Dockstore.cwl', 'cwl', 'STUB', 'FakeNamespace1', 'FakeNamespace1/FakeName10', 'FakeName10', NULL);
-INSERT INTO workflow VALUES (12, NULL, NULL, NULL, NULL, 'git@github.com:FakeNamespace1/FakeName11.git', false, NULL, '2016-11-28 15:00:57.788', '/Dockstore.cwl', 'cwl', 'STUB', 'FakeNamespace1', 'FakeNamespace1/FakeName11', 'FakeName11', NULL);
-INSERT INTO workflow VALUES (13, NULL, NULL, NULL, NULL, 'git@github.com:FakeNamespace1/FakeName12.git', false, NULL, '2016-11-28 15:00:57.792', '/Dockstore.cwl', 'cwl', 'STUB', 'FakeNamespace1', 'FakeNamespace1/FakeName12', 'FakeName12', NULL);
-INSERT INTO workflow VALUES (14, NULL, NULL, NULL, NULL, 'git@github.com:FakeNamespace1/FakeName13.git', false, NULL, '2016-11-28 15:00:57.859', '/Dockstore.cwl', 'cwl', 'STUB', 'FakeNamespace1', 'FakeNamespace1/FakeName13', 'FakeName13', NULL);
-INSERT INTO workflow VALUES (16, NULL, NULL, NULL, NULL, 'git@github.com:FakeNamespace1/FakeName14.git', false, NULL, '2016-11-28 15:00:58.068', '/Dockstore.cwl', 'cwl', 'STUB', 'FakeNamespace1', 'FakeNamespace1/FakeName14', 'FakeName14', NULL);
-INSERT INTO workflow VALUES (17, NULL, NULL, NULL, NULL, 'git@github.com:FakeNamespace1/FakeName15.git', false, NULL, '2016-11-28 15:00:58.073', '/Dockstore.cwl', 'cwl', 'STUB', 'FakeNamespace1', 'FakeNamespace1/FakeName15', 'FakeName15', NULL);
-INSERT INTO workflow VALUES (18, NULL, NULL, NULL, NULL, 'git@github.com:FakeNamespace1/FakeName16.git', false, NULL, '2016-11-28 15:00:58.153', '/Dockstore.cwl', 'cwl', 'STUB', 'FakeNamespace1', 'FakeNamespace1/FakeName16', 'FakeName16', NULL);
-INSERT INTO workflow VALUES (19, NULL, NULL, NULL, NULL, 'git@github.com:FakeNamespace1/FakeName17.git', false, NULL, '2016-11-28 15:00:58.157', '/Dockstore.cwl', 'cwl', 'STUB', 'FakeNamespace1', 'FakeNamespace1/FakeName17', 'FakeName17', NULL);
-INSERT INTO workflow VALUES (20, NULL, NULL, NULL, NULL, 'git@github.com:FakeNamespace1/FakeName18.git', false, NULL, '2016-11-28 15:00:57.948', '/Dockstore.cwl', 'cwl', 'STUB', 'FakeNamespace1', 'FakeNamespace1/FakeName18', 'FakeName18', NULL);
-INSERT INTO workflow VALUES (11, NULL, NULL, NULL, NULL, 'git@github.com:FakeNamespace1/FakeName19.git', true, NULL, '2016-11-28 15:00:57.688', '/1st-workflow.cwl', 'cwl', 'FULL', 'FakeNamespace1', 'FakeNamespace1/FakeName19', 'FakeName19', NULL);
+INSERT INTO workflow VALUES (6, NULL, NULL, NULL, NULL, 'git@bitbucket.org:a/a.git', false, NULL, '2016-11-28 15:00:57.148', '/Dockstore.cwl', 'cwl', 'STUB', 'a', 'a/a', 'a', NULL);
+INSERT INTO workflow VALUES (7, NULL, NULL, NULL, NULL, 'git@github.com:A/c.git', false, NULL, '2016-11-28 15:00:57.315', '/Dockstore.cwl', 'cwl', 'STUB', 'A', 'A/c', 'c', NULL);
+INSERT INTO workflow VALUES (8, NULL, NULL, NULL, NULL, 'git@github.com:A/f.git', false, NULL, '2016-11-28 15:00:57.419', '/Dockstore.cwl', 'cwl', 'STUB', 'A', 'A/f', 'f', NULL);
+INSERT INTO workflow VALUES (9, NULL, NULL, NULL, NULL, 'git@github.com:A/k.git', false, NULL, '2016-11-28 15:00:57.482', '/Dockstore.cwl', 'cwl', 'STUB', 'A', 'A/k', 'k', NULL);
+INSERT INTO workflow VALUES (10, NULL, NULL, NULL, NULL, 'git@github.com:A/e.git', false, NULL, '2016-11-28 15:00:57.593', '/Dockstore.cwl', 'cwl', 'STUB', 'A', 'A/e', 'e', NULL);
+INSERT INTO workflow VALUES (12, NULL, NULL, NULL, NULL, 'git@github.com:A/g.git', false, NULL, '2016-11-28 15:00:57.788', '/Dockstore.cwl', 'cwl', 'STUB', 'A', 'A/g', 'g', NULL);
+INSERT INTO workflow VALUES (13, NULL, NULL, NULL, NULL, 'git@github.com:A/j.git', false, NULL, '2016-11-28 15:00:57.792', '/Dockstore.cwl', 'cwl', 'STUB', 'A', 'A/j', 'j', NULL);
+INSERT INTO workflow VALUES (14, NULL, NULL, NULL, NULL, 'git@github.com:A/m.git', false, NULL, '2016-11-28 15:00:57.859', '/Dockstore.cwl', 'cwl', 'STUB', 'A', 'A/m', 'm', NULL);
+INSERT INTO workflow VALUES (16, NULL, NULL, NULL, NULL, 'git@github.com:A/d.git', false, NULL, '2016-11-28 15:00:58.068', '/Dockstore.cwl', 'cwl', 'STUB', 'A', 'A/d', 'd', NULL);
+INSERT INTO workflow VALUES (17, NULL, NULL, NULL, NULL, 'git@github.com:A/i.git', false, NULL, '2016-11-28 15:00:58.073', '/Dockstore.cwl', 'cwl', 'STUB', 'A', 'A/i', 'i', NULL);
+INSERT INTO workflow VALUES (18, NULL, NULL, NULL, NULL, 'git@github.com:A/b.git', false, NULL, '2016-11-28 15:00:58.153', '/Dockstore.cwl', 'cwl', 'STUB', 'A', 'A/b', 'b', NULL);
+INSERT INTO workflow VALUES (19, NULL, NULL, NULL, NULL, 'git@github.com:A/h.git', false, NULL, '2016-11-28 15:00:58.157', '/Dockstore.cwl', 'cwl', 'STUB', 'A', 'A/h', 'h', NULL);
+INSERT INTO workflow VALUES (20, NULL, NULL, NULL, NULL, 'git@github.com:A/a.git', false, NULL, '2016-11-28 15:00:57.948', '/Dockstore.cwl', 'cwl', 'STUB', 'A', 'A/a', 'a', NULL);
+INSERT INTO workflow VALUES (11, NULL, NULL, NULL, NULL, 'git@github.com:A/l.git', true, NULL, '2016-11-28 15:00:57.688', '/1st-workflow.cwl', 'cwl', 'FULL', 'A', 'A/l', 'l', NULL);
 
 
 --

@@ -729,6 +729,10 @@ angular.module('dockstore.ui')
         return email.replace(/^mailto:/, '');
       };
 
+      /**
+      * Given a registry enum, determines if it is a private only registry
+      * @returns True if private only registry, False otherwise
+      */
       $scope.checkPrivateOnlyRegistry = function() {
         for (var i = 0; i < $scope.dockerRegistryMap.length; i++) {
           if ($scope.containerObj.registry === $scope.dockerRegistryMap[i].enum) {

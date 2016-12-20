@@ -2,7 +2,7 @@
 describe('Dockstore Workflow Details', function() {
   require('./helper.js')
 	beforeEach(function () {
-     cy.visit(String(global.baseUrl) + "/workflows/FakeNamespace1/FakeName19")
+     cy.visit(String(global.baseUrl) + "/workflows/A/l")
   });
 
 	it('should not show Edit Button', function() {

@@ -22,7 +22,7 @@ describe('Dockstore tool search page', function() {
         .first()
         .click()
         .get('#tool-path')
-        .should('contain', 'quay.io/FakeNamespace1/FakeName1 ')
+        .should('contain', 'quay.io/A2/a ')
     });
   });
 })

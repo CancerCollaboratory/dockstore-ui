@@ -130,6 +130,11 @@ angular.module('dockstore.ui')
         return imageName;
       };
 
+      /**
+      * Given a friendly name of a registry, determine the enum
+      * @param {string} friendly name of docker registry
+      * @returns the docker path of a registry
+      */
       $scope.getContainerRegistry = function(irProvider) {
         for (var i = 0; i < $scope.dockerRegistryMap.length; i++) {
           if (irProvider === $scope.dockerRegistryMap[i].friendlyName) {
@@ -138,6 +143,11 @@ angular.module('dockstore.ui')
         }
       };
 
+      /**
+      * Given a friendly name of a registry, determine the docker path
+      * @param {string} friendly name of docker registry
+      * @returns the docker path of a registry
+      */
       $scope.getImageRegistryPath = function(irProvider) {
         for (var i = 0; i < $scope.dockerRegistryMap.length; i++) {
           if (irProvider === $scope.dockerRegistryMap[i].friendlyName) {
@@ -191,6 +201,10 @@ angular.module('dockstore.ui')
 
       $scope.dockerRegistryMap = FrmttSrvc.returnDockerRegistryList();
 
+      /**
+      * Will create a path for the given tool, properly setting the docker registry path
+      * @returns path on the tool
+      */
       $scope.createPath = function() {
         var path = "";
         if ($scope.customDockerRegistryPath !== null) {
@@ -200,9 +214,12 @@ angular.module('dockstore.ui')
         }
         path += "/" + $scope.getImagePath($scope.containerObj.imagePath, 'namespace') + "/" + $scope.getImagePath($scope.containerObj.imagePath, 'name');
         return path;
-
       };
 
+      /**
+      * Will customize the form for registering a tool based on the Docker registry chosen
+      * @returns nothing
+      */
       $scope.checkForSpecialDockerRegistry = function() {
         for (var i = 0; i < $scope.dockerRegistryMap.length; i++) {
           if ($scope.containerObj.irProvider === $scope.dockerRegistryMap[i].friendlyName) {
@@ -224,11 +241,19 @@ angular.module('dockstore.ui')
         }
       };
 
+      /**
+      * Basic private tool specific checks
+      * @returns True if invalid private tool, False if valid
+      */
       $scope.isInvalidPrivateTool = function() {
         return $scope.containerObj.private_access === true && ($scope.containerObj.tool_maintainer_email === null || $scope.containerObj.tool_maintainer_email === '');
       };
 
-      $scope.isInvalidPrivateRegistry = function() {
+      /**
+      * Basic custom docker registry path checks
+      * @returns True if invalid custom docker registry, False if valid
+      */
+      $scope.isInvalidCustomRegistry = function() {
         for (var i = 0; i < $scope.dockerRegistryMap.length; i++) {
           if ($scope.containerObj.irProvider === $scope.dockerRegistryMap[i].friendlyName) {
             if ($scope.dockerRegistryMap[i].privateOnly === "true") {

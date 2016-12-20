@@ -1,7 +1,7 @@
 describe('Dockstore Tool Details', function() {
   require('./helper.js')
 	beforeEach(function () {
-     cy.visit(String(global.baseUrl) + "/containers/quay.io/FakeNamespace1/FakeName1")
+     cy.visit(String(global.baseUrl) + "/containers/quay.io/A2/a")
   });
 
   it('Change tab to labels', function() {
