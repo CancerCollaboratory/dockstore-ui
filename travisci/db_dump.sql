@@ -1456,7 +1456,7 @@ INSERT INTO version_sourcefile VALUES (7, 36);
 -- Data for Name: workflow; Type: TABLE DATA; Schema: public; Owner: dockstore
 --
 
-INSERT INTO workflow VALUES (6, NULL, NULL, NULL, NULL, 'git@bitbucket.org:FakeNamespace3/FakeName6.git', false, NULL, '2016-11-28 15:00:57.148', '/Dockstore.cwl', 'cwl', 'STUB', 'FakeNamespace3', 'FakeNamespace3/FakeName6', 'FakeName6'', NULL);
+INSERT INTO workflow VALUES (6, NULL, NULL, NULL, NULL, 'git@bitbucket.org:FakeNamespace3/FakeName6.git', false, NULL, '2016-11-28 15:00:57.148', '/Dockstore.cwl', 'cwl', 'STUB', 'FakeNamespace3', 'FakeNamespace3/FakeName6', 'FakeName6', NULL);
 INSERT INTO workflow VALUES (7, NULL, NULL, NULL, NULL, 'git@github.com:FakeNamespace1/FakeName7.git', false, NULL, '2016-11-28 15:00:57.315', '/Dockstore.cwl', 'cwl', 'STUB', 'FakeNamespace1', 'FakeNamespace1/FakeName7', 'FakeName7', NULL);
 INSERT INTO workflow VALUES (8, NULL, NULL, NULL, NULL, 'git@github.com:FakeNamespace1/FakeName8.git', false, NULL, '2016-11-28 15:00:57.419', '/Dockstore.cwl', 'cwl', 'STUB', 'FakeNamespace1', 'FakeNamespace1/FakeName8', 'FakeName8', NULL);
 INSERT INTO workflow VALUES (9, NULL, NULL, NULL, NULL, 'git@github.com:FakeNamespace1/FakeName9.git', false, NULL, '2016-11-28 15:00:57.482', '/Dockstore.cwl', 'cwl', 'STUB', 'FakeNamespace1', 'FakeNamespace1/FakeName9', 'FakeName9', NULL);
