@@ -493,7 +493,7 @@ id: "dockstore-whalesay"
 label: "dockstore whalesay"
 
 dct:creator:
-  foaf:name: "Dockstore Test User"
+  foaf:name: "testuser"
 ', '/Dockstore.cwl', 'DOCKSTORE_CWL');
 INSERT INTO sourcefile VALUES (2, 'FROM docker/whalesay:latest
 
@@ -506,7 +506,7 @@ id: "dockstore-whalesay"
 label: "dockstore whalesay"
 
 dct:creator:
-  foaf:name: "Dockstore Test User"
+  foaf:name: "testuser"
 ', '/Dockstore.cwl', 'DOCKSTORE_CWL');
 INSERT INTO sourcefile VALUES (4, 'task hello {
   String name
@@ -534,7 +534,7 @@ id: "dockstore-whalesay"
 label: "dockstore whalesay"
 
 dct:creator:
-  foaf:name: "Dockstore Test User"
+  foaf:name: "testuser"
 ', '/Dockstore.cwl', 'DOCKSTORE_CWL');
 INSERT INTO sourcefile VALUES (7, 'task hello {
   String name
@@ -562,7 +562,7 @@ id: "dockstore-whalesay"
 label: "dockstore whalesay"
 
 dct:creator:
-  foaf:name: "Dockstore Test User2"
+  foaf:name: "testuser2"
 ', '/Dockstore.cwl', 'DOCKSTORE_CWL');
 INSERT INTO sourcefile VALUES (10, 'FROM docker/whalesay:latest
 
@@ -575,7 +575,7 @@ id: "dockstore-whalesay"
 label: "dockstore whalesay"
 
 dct:creator:
-  foaf:name: "Dockstore Test User2"
+  foaf:name: "testuser2"
 ', '/Dockstore.cwl', 'DOCKSTORE_CWL');
 INSERT INTO sourcefile VALUES (12, 'FROM docker/whalesay:latest
 
@@ -1350,8 +1350,8 @@ SELECT pg_catalog.setval('token_id_seq', 4, true);
 -- Data for Name: tool; Type: TABLE DATA; Schema: public; Owner: dockstore
 --
 
-INSERT INTO tool VALUES (1, 'Dockstore Test User', NULL, 'Whalesay deep quotes', NULL, 'git@github.com:A/a.git', false, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-02-16 17:04:59', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'a', 'A', 'quay.io/A/a', 'QUAY_IO', '', '', false);
-INSERT INTO tool VALUES (2, 'Dockstore Test User2', NULL, 'Whalesay deep quotes', NULL, 'git@github.com:A2/b1.git', false, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-03-15 15:35:29', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'b1', 'A2', 'quay.io/A2/b1', 'QUAY_IO', '', '', false);
+INSERT INTO tool VALUES (1, 'testuser', NULL, 'Whalesay deep quotes', NULL, 'git@github.com:A/a.git', false, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-02-16 17:04:59', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'a', 'A', 'quay.io/A/a', 'QUAY_IO', '', '', false);
+INSERT INTO tool VALUES (2, 'testuser2', NULL, 'Whalesay deep quotes', NULL, 'git@github.com:A2/b1.git', false, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-03-15 15:35:29', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'b1', 'A2', 'quay.io/A2/b1', 'QUAY_IO', '', '', false);
 INSERT INTO tool VALUES (5, NULL, NULL, '', NULL, 'git@github.com:A2/a.git', true, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-06-08 14:06:36', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'a', 'A2', 'quay.io/A2/a', 'QUAY_IO', '', '', false);
 INSERT INTO tool VALUES (4, NULL, NULL, NULL, NULL, 'git@github.com:A2/b3.git', true, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-03-15 15:36:22', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'b3', 'A2', 'quay.io/A2/b3', 'QUAY_IO', '', '', false);
 INSERT INTO tool VALUES (3, NULL, NULL, NULL, NULL, 'git@github.com:A2/b2.git', false, NULL, '2016-11-28 15:02:48.557', '/Dockstore.cwl', '/testDir/Dockerfile', '/Dockstore.wdl', '2016-03-15 15:35:57', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'b2', 'A2', 'quay.io/A2/b2', 'QUAY_IO', '', '', false);
