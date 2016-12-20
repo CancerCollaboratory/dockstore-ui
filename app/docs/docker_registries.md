@@ -43,6 +43,12 @@ In this case, `<registry-id>` is the number prefix for the docker registry path,
 
 Now if the user runs the Docker login command returned by the get-login call, they should now be able to pull the Docker image.
 
+## Private Docker Registry Common Errors
+
+### CWLTool can't find a Docker image
+If you are trying to launch a private docker tool and are getting errors like `image not found` or `CalledProcessError: Command '['docker', 'pull', 'registrypath/namespace/name']' returned non-zero exit status 1`, then you likely do not have access to the Docker image. You'll have to request access to the Docker image by clicking the `Request Access` button on the tool's Dockstore page. If you have already done so then you may need to contact the tool maintainer again to confirm that you have been authorized to pull the image.
+
+
 ## Docker Registry Request
 
 If you would like to request support for a registry that is not currently supported, then please create an issue on our [Github](https://github.com/ga4gh/dockstore/issues) page.
