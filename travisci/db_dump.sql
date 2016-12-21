@@ -488,26 +488,14 @@ SELECT pg_catalog.setval('label_id_seq', 1, false);
 -- Data for Name: sourcefile; Type: TABLE DATA; Schema: public; Owner: dockstore
 --
 
-INSERT INTO sourcefile VALUES (1, 'description: "Whalesay deep quotes"
-id: "dockstore-whalesay"
-label: "dockstore whalesay"
-
-dct:creator:
-  foaf:name: "testuser"
-', '/Dockstore.cwl', 'DOCKSTORE_CWL');
+INSERT INTO sourcefile VALUES (1, 'cwlVersion: v1.0 class: CommandLineTool baseCommand: echo inputs: message: type: string inputBinding: position: 1 outputs: []', '/Dockstore.cwl', 'DOCKSTORE_CWL');
 INSERT INTO sourcefile VALUES (2, 'FROM docker/whalesay:latest
 
 RUN apt-get -y update && apt-get install -y fortunes
 
 CMD /usr/games/fortune -a | cowsay
 ', '/Dockerfile', 'DOCKERFILE');
-INSERT INTO sourcefile VALUES (3, 'description: "Whalesay deep quotes"
-id: "dockstore-whalesay"
-label: "dockstore whalesay"
-
-dct:creator:
-  foaf:name: "testuser"
-', '/Dockstore.cwl', 'DOCKSTORE_CWL');
+INSERT INTO sourcefile VALUES (3, 'cwlVersion: v1.0 class: CommandLineTool baseCommand: echo inputs: message: type: string inputBinding: position: 1 outputs: []', '/Dockstore.cwl', 'DOCKSTORE_CWL');
 INSERT INTO sourcefile VALUES (4, 'task hello {
   String name
 
@@ -529,13 +517,7 @@ RUN apt-get -y update && apt-get install -y fortunes
 
 CMD /usr/games/fortune -a | cowsay
 ', '/Dockerfile', 'DOCKERFILE');
-INSERT INTO sourcefile VALUES (6, 'description: "Whalesay deep quotes"
-id: "dockstore-whalesay"
-label: "dockstore whalesay"
-
-dct:creator:
-  foaf:name: "testuser"
-', '/Dockstore.cwl', 'DOCKSTORE_CWL');
+INSERT INTO sourcefile VALUES (6, 'cwlVersion: v1.0 class: CommandLineTool baseCommand: echo inputs: message: type: string inputBinding: position: 1 outputs: []', '/Dockstore.cwl', 'DOCKSTORE_CWL');
 INSERT INTO sourcefile VALUES (7, 'task hello {
   String name
 
@@ -557,26 +539,14 @@ RUN apt-get -y update && apt-get install -y fortunes
 
 CMD /usr/games/fortune -a | cowsay
 ', '/Dockerfile', 'DOCKERFILE');
-INSERT INTO sourcefile VALUES (9, 'description: "Whalesay deep quotes"
-id: "dockstore-whalesay"
-label: "dockstore whalesay"
-
-dct:creator:
-  foaf:name: "testuser2"
-', '/Dockstore.cwl', 'DOCKSTORE_CWL');
+INSERT INTO sourcefile VALUES (9, 'cwlVersion: v1.0 class: CommandLineTool baseCommand: echo inputs: message: type: string inputBinding: position: 1 outputs: []', '/Dockstore.cwl', 'DOCKSTORE_CWL');
 INSERT INTO sourcefile VALUES (10, 'FROM docker/whalesay:latest
 
 RUN apt-get -y update && apt-get install -y fortunes
 
 CMD /usr/games/fortune -a | cowsay
 ', '/Dockerfile', 'DOCKERFILE');
-INSERT INTO sourcefile VALUES (11, 'description: "Whalesay deep quotes"
-id: "dockstore-whalesay"
-label: "dockstore whalesay"
-
-dct:creator:
-  foaf:name: "testuser2"
-', '/Dockstore.cwl', 'DOCKSTORE_CWL');
+INSERT INTO sourcefile VALUES (11, 'cwlVersion: v1.0 class: CommandLineTool baseCommand: echo inputs: message: type: string inputBinding: position: 1 outputs: []', '/Dockstore.cwl', 'DOCKSTORE_CWL');
 INSERT INTO sourcefile VALUES (12, 'FROM docker/whalesay:latest
 
 RUN apt-get -y update && apt-get install -y fortunes
@@ -1350,7 +1320,7 @@ SELECT pg_catalog.setval('token_id_seq', 4, true);
 -- Data for Name: tool; Type: TABLE DATA; Schema: public; Owner: dockstore
 --
 
-INSERT INTO tool VALUES (1, 'testuser', NULL, 'Whalesay deep quotes', NULL, 'git@github.com:A/a.git', false, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-02-16 17:04:59', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'a', 'A', 'quay.io/A/a', 'QUAY_IO', '', '', false);
+INSERT INTO tool VALUES (1, 'testuser', NULL, 'Whalesay deep quotes', NULL, 'git@github.com:A/a.git', false, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-02-16 17:04:59', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'a', 'A', 'quay.io/A/a', 'AMAZON_ECR', '', 'test@email.com', true);
 INSERT INTO tool VALUES (2, 'testuser2', NULL, 'Whalesay deep quotes', NULL, 'git@github.com:A2/b1.git', false, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-03-15 15:35:29', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'b1', 'A2', 'quay.io/A2/b1', 'QUAY_IO', '', '', false);
 INSERT INTO tool VALUES (5, NULL, NULL, '', NULL, 'git@github.com:A2/a.git', true, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-06-08 14:06:36', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'a', 'A2', 'quay.io/A2/a', 'QUAY_IO', '', '', false);
 INSERT INTO tool VALUES (4, NULL, NULL, NULL, NULL, 'git@github.com:A2/b3.git', true, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-03-15 15:36:22', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'b3', 'A2', 'quay.io/A2/b3', 'QUAY_IO', '', '', false);
