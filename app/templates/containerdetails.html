@@ -62,10 +62,10 @@
 <div class="row" ng-show="containerObj">
   <div ng-class="editMode ? 'col-md-7' : 'col-md-8'">
     <h3 id="tool-path">
-      <span ng-show="isVerified()" uib-tooltip="Verified">
+      <span id="verifiedIcon" ng-show="isVerified()" uib-tooltip="Verified">
         <span class="glyphicon glyphicon-ok"></span>
       </span>
-      <span ng-show="containerObj.private_access" uib-tooltip="Private">
+      <span id="lockIcon" ng-show="containerObj.private_access" uib-tooltip="Private">
         <span class="glyphicon glyphicon-lock"></span>
       </span>
       {{
@@ -101,6 +101,7 @@
       <div class="pull-right">
         <div class="btn-group" role="group">
           <button uib-btn-checkbox
+                  id="publishToolButton"
               type="button"
               class="btn btn-warning"
               ng-class="!refreshingContainer && isContainerValid()? '' : 'disabled'"

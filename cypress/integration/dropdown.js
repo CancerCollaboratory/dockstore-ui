@@ -27,10 +27,10 @@ describe('Dropdown test', function() {
           .should('not.be.visible')
         cy
           .get('#bitbucket-linked')
-          .should('be.visible')
+          .should('not.be.visible')
         cy
           .get('#bitbucket-not-linked')
-          .should('not.be.visible')
+          .should('be.visible')
         cy
           .get('#gitlab-linked')
           .should('not.be.visible')
@@ -54,12 +54,12 @@ describe('Dropdown test', function() {
           .click()
       });
 
-      it('Should have four tokens', function(){
+      it('Should have three tokens', function(){
         expect(('#dockstore_token')).to.exist;
         expect(('#github.com_token')).to.exist;
 //        expect(('#gitlab.com_token')).not.to.exist;
         expect(('#quay.io_token')).to.exist;
-        expect(('#bitbucket.org_token')).to.exist;
+//        expect(('#bitbucket.org_token')).to.exist;
 
       });
     });
@@ -81,10 +81,10 @@ describe('Dropdown test', function() {
           .should('not.be.visible')
         cy
           .get('#bitbucket-linked')
-          .should('be.visible')
+          .should('not.be.visible')
         cy
           .get('#bitbucket-not-linked')
-          .should('not.be.visible')
+          .should('be.visible')
         cy
           .get('#gitlab-linked')
           .should('not.be.visible')

@@ -1336,7 +1336,7 @@ SELECT pg_catalog.setval('tag_id_seq', 51, true);
 INSERT INTO token VALUES (1, 'imamafakedockstoretoken', NULL, 'dockstore', 1, 'user_A');
 INSERT INTO token VALUES (2, 'imamafakegithubtoken', NULL, 'github.com', 1, 'user_A');
 INSERT INTO token VALUES (4, 'imamafakequaytoken', NULL, 'quay.io', 1, 'user_A');
-INSERT INTO token VALUES (3, 'imamafakebitbuckettoken', 'imamafakebitbuckettokenhelper', 'bitbucket.org', 1, 'user_A');
+--INSERT INTO token VALUES (3, 'imamafakebitbuckettoken', 'imamafakebitbuckettokenhelper', 'bitbucket.org', 1, 'user_A');
 
 
 --

@@ -78,6 +78,7 @@
                   </ul>
                 </div>
                 <input
+                    id="sourceCodeRepositoryInput"
                     type="text"
                     class="form-control"
                     name="gitPath"
@@ -184,14 +185,14 @@
             <div class="col-sm-9">
               <div class="input-group">
                 <div class="input-group-btn">
-                  <button type="button"
+                  <button id='imageRegistrySpinner' type="button"
                       class="btn btn-default btn-sm dropdown-toggle"
                       data-toggle="dropdown">
                     {{containerObj.irProvider}} <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu">
                     <li ng-repeat="registry in dockerRegistryMap">
-                      <a href ng-click="containerObj.irProvider = registry.friendlyName">
+                      <a href ng-click="containerObj.irProvider = registry.friendlyName" id="imageRegistrySpinner_{{registry.enum}}">
                         {{registry.friendlyName}}
                       </a>
                     </li>
@@ -199,6 +200,7 @@
                   </ul>
                 </div>
                 <input
+                    id="imageRegistryInput"
                     type="text"
                     class="form-control"
                     name="imagePath"
@@ -226,6 +228,7 @@
             </label>
             <div class="col-sm-9">
               <input
+                id="dockerRegistryPathInput"
                 class="form-control"
                 name="customDockerRegistryPath"
                 ng-model="customDockerRegistryPath"
@@ -258,6 +261,7 @@
             </label>
             <div class="col-sm-9">
               <input
+                id="toolMaintainerEmailInput"
                 type="email"
                 class="form-control"
                 name="toolmaintaineremail"
@@ -304,7 +308,7 @@
               ng-click="closeRegisterContainerModal(true)">
             Close
           </button>
-          <button type="submit"
+          <button id="submitButton" type="submit"
               class="btn btn-primary"
               ng-disabled="registerContainerForm.$invalid || savingActive || refreshingContainer || isInvalidCustomRegistry() || isInvalidPrivateTool()">
             Add Tool
