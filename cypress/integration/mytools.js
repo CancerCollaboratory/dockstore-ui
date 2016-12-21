@@ -6,12 +6,6 @@ describe('Dockstore my tools', function() {
   });
 
   describe('publish a tool', function() {
-    it('Invalid tool should not be publishable', function() {
-      cy
-        .get('#publishButton')
-        .should('be.disabled')
-    });
-
     it("publish and unpublish", function() {
       cy
         .get('.panel-group')
@@ -21,13 +15,21 @@ describe('Dockstore my tools', function() {
           .find('a')
           .first()
           .click()
-          .get('#publishButton')
+          .get('#publishToolButton')
           .should('contain', 'Unpublish')
           .click()
           .should('contain', 'Publish')
           .click()
           .should('contain', 'Unpublish')
 
+    });
+  });
+
+  describe('Publish an existing Amazon ECR tool', function() {
+    it('publish', function() {
+      cy
+        .get('#publishToolButton')
+        .click()
     });
   });
 
@@ -40,6 +42,7 @@ describe('Dockstore my tools', function() {
       cy
         .get('#sourceCodeRepositoryInput')
         .type("testnamespace/testname")
+        .wait(1000)
 
       cy
         .get('#imageRegistrySpinner')
@@ -97,13 +100,8 @@ describe('Dockstore my tools', function() {
         .get('#addVersionTagButton')
         .click()
 
-    });
-  });
-
-  describe('Publish an existing Amazon ECR tool', function() {
-    it('publish', function() {
       cy
-        .get('#publishToolButton')
+        .get('#deregisterButton')
         .click()
     });
   });

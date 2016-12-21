@@ -111,7 +111,7 @@
               id="publishButton">
             {{ containerObj.is_published ? 'Unpublish' : 'Publish' }}
           </button>
-          <button type="button"
+          <button id="deregisterButton" type="button"
               class="btn btn-danger"
               ng-click="deregisterContainer(containerObj.id)"
               ng-if="containerObj.mode === 'MANUAL_IMAGE_PATH'">
