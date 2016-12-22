@@ -21,7 +21,6 @@ describe('Dockstore my tools', function() {
           .should('contain', 'Publish')
           .click()
           .should('contain', 'Unpublish')
-
     });
   });
 

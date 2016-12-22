@@ -57,10 +57,7 @@ describe('Dropdown test', function() {
       it('Should have three tokens', function(){
         expect(('#dockstore_token')).to.exist;
         expect(('#github.com_token')).to.exist;
-//        expect(('#gitlab.com_token')).not.to.exist;
         expect(('#quay.io_token')).to.exist;
-//        expect(('#bitbucket.org_token')).to.exist;
-
       });
     });
 
@@ -72,7 +69,7 @@ describe('Dropdown test', function() {
           .click()
       });
 
-      it('Should show all accounts as linked (except GitLab)', function(){
+      it('Should show GitHub and Quay.io linked', function(){
         cy
           .get('#github-linked')
           .should('be.visible')
