@@ -36,6 +36,13 @@ angular.module('dockstore.ui')
     'FormattingService',
     function($scope, $auth, $location, $window,
       UserService, NtfnService, ContainerService, WorkflowService, FrmttSrvc) {
+      $scope.getGitReposProvider = FrmttSrvc.getGitReposProvider;
+      $scope.getGitReposProviderName = FrmttSrvc.getGitReposProviderName;
+      $scope.getGitReposWebUrl = FrmttSrvc.getGitReposWebUrl;
+      $scope.getImageReposProvider = FrmttSrvc.getImageReposProvider;
+      $scope.getImageReposProviderName = FrmttSrvc.getImageReposProviderName;
+      $scope.getImageReposWebUrl = FrmttSrvc.getImageReposWebUrl;
+      $scope.user = UserService.getUserObj();
       UserService.getStarredWorkflows().then(function(data) {
         $scope.starredWorkflows = data;
         $scope.starredWorkflows.forEach(function(workflow) {
@@ -59,31 +66,33 @@ angular.module('dockstore.ui')
             tool.gitUrl,
             tool.gitReposProvider);
           /* Image Repository */
-          tool.imageReposProvider = $scope.getImageReposProvider(
-            tool.path);
           tool.imageReposProviderName = $scope.getImageReposProviderName(
-            tool.imageReposProvider);
+              tool.registry);
           tool.imageReposWebUrl = $scope.getImageReposWebUrl(
-            tool.path,
-            tool.imageReposProvider);
+              tool.path,
+              tool.registry);
         });
       });
 
-      $scope.getGitReposProvider = FrmttSrvc.getGitReposProvider;
-      $scope.getGitReposProviderName = FrmttSrvc.getGitReposProviderName;
-      $scope.getGitReposWebUrl = FrmttSrvc.getGitReposWebUrl;
-      $scope.getImageReposProvider = FrmttSrvc.getImageReposProvider;
-      $scope.getImageReposProviderName = FrmttSrvc.getImageReposProviderName;
-      $scope.getImageReposWebUrl = FrmttSrvc.getImageReposWebUrl;
 
       /**
+       * @ngdoc method
+       * @name isOwner
+       * @methodOf dockstore.ui.controller:StarredEntriesCtrl
+       * @description
        * This function determines if the current user owns the entry with the given Id
        *
-       * @param  {Int} entryId   The ID of the workflow or tool
+       * @param  {number} entryUsers   The users of the workflow or tool
        * @return {Boolean}       If the user owns the entry given
        */
-      $scope.isOwner = function(entryId) {
-        return false;
+      $scope.isOwner = function(entryUsers) {
+        var isOwner = false;
+        entryUsers.forEach(function(user) {
+          if (user.id === $scope.user.id  ) {
+            isOwner = true;
+          }
+        });
+        return isOwner;
       };
     }
   ]);
