@@ -44,12 +44,18 @@ angular.module('dockstore.ui')
         return !($scope.userObj === null || $scope.userObj === undefined);
       };
       /**
+        * @ngdoc method
+        * @name getStarring
+        * @methodOf dockstore.ui.controller:StarringCtrl
+
+        * @description
+
        * This function checks whether the user starred the workflow/tool
        *
-       * @param  {type} userObj   The user object
-       * @param  {type} entryId   The ID of the workflow or tool
-       * @param  {type} entryType "workflow" or "tool"
-       * @return {type}           1 if the user starred the workflow or tool,
+       * @param  {Object} userObj   The user object
+       * @param  {number} entryId   The ID of the workflow or tool
+       * @param  {string} entryType "workflow" or "tool"
+       * @return {boolean}           1 if the user starred the workflow or tool,
        *                          0 otherwise.
        */
       $scope.getStarring = function(userObj, entryId, entryType) {
@@ -78,12 +84,16 @@ angular.module('dockstore.ui')
       };
 
       /**
+       * @ngdoc method
+       * @name setStarring
+       * @methodOf dockstore.ui.controller:StarringCtrl
+       * @description
        * This function stars/unstars the workflow/tool and then updates total_stars
        *
-       * @param  {type} userObj   The user object
-       * @param  {type} entryId   The ID of the workflow or tool
-       * @param  {type} entryType "workflow" or "tool"
-       * @return {type}           Void
+       * @param  {Object} userObj   The user object
+       * @param  {number} entryId   The ID of the workflow or tool
+       * @param  {string} entryType "workflow" or "tool"
+       * @return {void}           Void
        */
       $scope.setStarring = function(userObj, entryId, entryType) {
         if ($scope.isLoggedIn) {
@@ -97,12 +107,16 @@ angular.module('dockstore.ui')
       };
 
       /**
+       * @ngdoc method
+       * @name setStar
+       * @methodOf dockstore.ui.controller:StarringCtrl
+       * @description
        * This function stars/unstars the workflow/tool by the user
        *
-       * @param  {type} userObj   The user object
-       * @param  {type} entryId   The ID of the workflow or tool
-       * @param  {type} entryType "workflow" or "tool"
-       * @return {type}           Void
+       * @param  {Object} userObj   The user object
+       * @param  {number} entryId   The ID of the workflow or tool
+       * @param  {string} entryType "workflow" or "tool"
+       * @return {void}           Void
        */
       $scope.setStar = function(userObj, entryId, entryType) {
         if ($scope.rate === 0) {
@@ -113,12 +127,16 @@ angular.module('dockstore.ui')
       };
 
       /**
+       * @ngdoc method
+       * @name getStarredUsers
+       * @methodOf dockstore.ui.controller:StarringCtrl
+       * @description
        * This function gets the number of users that starred the workflow or tool
        *
-       * @param  {type} userObj   The user object
-       * @param  {type} entryId   The ID of the workflow or tool
-       * @param  {type} entryType "workflow" or "tool"
-       * @return {type}           The amount of users that starred the workflow or tool
+       * @param  {Object} userObj   The user object
+       * @param  {number} entryId   The ID of the workflow or tool
+       * @param  {string} entryType "workflow" or "tool"
+       * @return {number}           The amount of users that starred the workflow or tool
        */
       $scope.getStarredUsers = function(userObj, entryId, entryType) {
         return StarringService.getStarring(userObj, entryId, entryType)
@@ -140,8 +158,17 @@ angular.module('dockstore.ui')
           );
       };
 
+      /**
+       * @ngdoc method
+       * @name setDocument
+       * @methodOf dockstore.ui.controller:StarringCtrl
+       * @description
+       * Determines whether we're dealing with workflow or tool
+       *
+       * @return {type}  description
+       */
       $scope.setDocument = function() {
-        if ((typeof $scope.workflowObj) !== 'undefined') {
+        if ($scope.workflowObj) {
           $scope.entryId = $scope.workflowObj.id;
           $scope.entryType = 'workflow';
         } else {
@@ -152,18 +179,21 @@ angular.module('dockstore.ui')
       var gravatarUrl = function(email, defaultImg) {
         if (email) {
           return "https://www.gravatar.com/avatar/" + md5.createHash(email) + "?d=" + defaultImg;
-        }
-        else {
+        } else {
           return defaultImg;
         }
       };
       //const gravatarUrl = (email, defaultImg) => ("https://www.gravatar.com/avatar/" + md5.createHash(email) + "?d=" + defaultImg);
       /**
+       * @ngdoc method
+       * @name getStargazers
+       * @methodOf dockstore.ui.controller:StarringCtrl
+       * @description
        * Gets stargazers of this workflow/tool.
        *
-       * @param  {type} entryId   Workflow/tool ID
-       * @param  {type} entryType "Workflow" or "Tool"
-       * @return {type}           None
+       * @param  {number} entryId   Workflow/tool ID
+       * @param  {string} entryType "Workflow" or "Tool"
+       * @return {string}           None
        */
       $scope.getStargazers = function(entryId, entryType) {
         return StarringService.getStarring($scope.userObj, entryId, entryType)
@@ -171,7 +201,7 @@ angular.module('dockstore.ui')
             function(starring) {
               $scope.starGazers.users = starring;
               $scope.starGazers.users.forEach(function(user) {
-              user.avatarUrl = gravatarUrl(user.email, user.avatarUrl);
+                user.avatarUrl = gravatarUrl(user.email, user.avatarUrl);
               });
               $scope.starGazers.clicked = true;
             },
