@@ -62,12 +62,14 @@ angular.module('dockstore.ui')
         return StarringService.getStarring(userObj, entryId, entryType)
           .then(
             function(starring) {
-              for (var star in starring) {
-                if (userObj.id === starring[star].id) {
-                  return 1;
+              var match = 0;
+              starring.forEach(function(star){
+                if (star.id === userObj.id) {
+                  match = 1;
                 }
-                return 0;
-              }
+              });
+              return match;
+
             },
             function(response) {
               $scope.setWorkflowDetailsError(
@@ -180,7 +182,11 @@ angular.module('dockstore.ui')
         if (email) {
           return "https://www.gravatar.com/avatar/" + md5.createHash(email) + "?d=" + defaultImg;
         } else {
-          return defaultImg;
+          if (defaultImg) {
+            return defaultImg;
+          } else {
+            return "http://www.imcslc.ca/imc/includes/themes/imc/images/layout/img_placeholder_avatar.jpg";
+          }
         }
       };
       //const gravatarUrl = (email, defaultImg) => ("https://www.gravatar.com/avatar/" + md5.createHash(email) + "?d=" + defaultImg);
