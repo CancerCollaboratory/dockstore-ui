@@ -5,7 +5,7 @@
 ### Highlighted New Features and Fixes
 
 * Allow users to star tools and workflows
-* Stagazers page to show all users who have starred a particular tool or workflow
+* Stargazers page to show all users who have starred a particular tool or workflow
 
 ## November 25, 2016 - Dockstore 1.1 Release
 
