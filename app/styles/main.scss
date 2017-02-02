@@ -82,6 +82,9 @@ body {
   background-color: #2a3e6b;
   height: 100%;
   .button {
+    margin: 5px;
+  }
+  .youtube {
     margin-top: 20px;
   }
   img.blue-rectangle {
@@ -1026,6 +1029,23 @@ div.tabs > div:target > div, :target #info > div, #info > div {
 
 html, body {
   height:100%;
+}
+
+.youtube, .youtube:active, .youtube:focus {
+  text-transform: uppercase;
+  padding: 8px 22px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  background: none;
+  border: 2px solid #a0adcc;
+  color: #a0adcc;
+}
+
+.youtube:hover {
+  background: none;
+  border: 2px solid white;
+  color: white;
 }
 
 /* End Temporary Styles - Need to Refactor Later */
