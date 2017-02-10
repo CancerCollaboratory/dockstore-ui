@@ -85,7 +85,6 @@ angular.module('dockstore.ui')
        * @param  {string} entryType "workflow" or "container"
        * @return {Obj}           Reponse
        */
-
       this.setUnstar = function(user, entryId, entryType) {
         return $q(function(resolve, reject) {
           $http({

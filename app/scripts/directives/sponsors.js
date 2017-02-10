@@ -23,7 +23,6 @@
  * @description
  * # sponsors
  */
-
 angular.module('dockstore.ui')
   .directive('sponsors', function() {
     return {
