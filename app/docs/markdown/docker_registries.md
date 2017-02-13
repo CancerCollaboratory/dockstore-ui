@@ -53,6 +53,6 @@ If you are trying to launch a private docker tool and are getting errors like `i
 
 If you would like to request support for a registry that is not currently supported, then please create an issue on our [Github](https://github.com/ga4gh/dockstore/issues) page.
 
-### Next Steps
+## Next Steps
 
-Continue to read up on the differences between public and private tools on Dockstore.
+Read up on the differences between public and private tools on Dockstore at the [Public and Private Tools](/docs/public_private_tools) page or see our [full list of documentation](/docs).

@@ -27,11 +27,9 @@ angular.module('dockstore.ui')
     return {
       restrict: 'A',
       link: function postLink(scope, element, attr) {
-        if (scope.$last === true) {
           $timeout(function () {
               scope.$emit(attr.onFinishRender);
           });
-        }
       }
     };
   });

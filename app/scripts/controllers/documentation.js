@@ -17,7 +17,7 @@
 'use strict';
 
 /**
- * @ngdoc function
+ * @ngdoc controller
  * @name dockstore.ui.controller:DocumentationCtrl
  * @description
  * # DocumentationCtrl
@@ -26,26 +26,9 @@
 angular.module('dockstore.ui')
   .controller('DocumentationCtrl', [
     '$scope',
-    '$sce',
-    '$location',
-    '$anchorScroll',
     'DocumentationService',
-    function ($scope, $sce, $location, $anchorScroll, DocumentationService) {
+    function ($scope, DocumentationService) {
 
       $scope.docObjs = DocumentationService.getDocumentObjs();
 
-      $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
-          var url = $location.absUrl().split('#')[1];
-          $location.hash(url);
-          $anchorScroll();
-
-          var navSelector = '#toc';
-          var $myNav = $(navSelector);
-          Toc.init($myNav);
-          $('body').scrollspy({
-            target: navSelector
-          });
-      });
-
   }]);
-

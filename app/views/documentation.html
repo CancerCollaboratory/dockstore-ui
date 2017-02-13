@@ -28,9 +28,8 @@
 
 
 <div class="container view-content">
-  <div id="documentationPage">
     <div class="row">
-      <div class="col-md-9">
+      <div class="col-md-12">
         <h3>Introduction</h3>
 
         <p>The goal for the Dockstore is to bring together tools in Docker containers with a standardized, programmatic
@@ -45,17 +44,16 @@
 
         <p>If you are new to Dockstore, please continue to read.</p>
 
-        <markdown ng-repeat="docObj in docObjs" ng-include="docObj.path" on-finish-render="ngRepeatFinished"></markdown>
+        <h3>Table of Contents</h3>
+        <ol>
+          <li ng-repeat="docObj in docObjs">
+            <a ng-href="/docs/{{docObj.slug}}">{{docObj.name}}</a> {{docObj.description}}
+          </li>
+        </ol>
       </div>
-      <div class="col-md-3">
-        <nav class="affix" id="toc" data-spy="affix" data-toggle="toc" data-offset-top="500"></nav>
-      </div>
-    </div>
-  </div>
-
-  <div>
-    <sponsors></sponsors>
   </div>
 </div>
+
+<sponsors></sponsors>
 
 

@@ -33,8 +33,7 @@
   <!-- build:css(.tmp) styles/main.css -->
   <link rel="stylesheet" href="styles/main.css">
   <link rel="stylesheet" href="styles/jquery.qtip.css">
-  <link rel="stylesheet" href="bower_components/jquery-colorbox/example2/colorbox.css"/>
-  <link rel="stylesheet" href="bower_components/jquery-colorbox/example2/colorbox.css"/>
+  <link rel="stylesheet" href="bower_components/jquery-colorbox/example1/colorbox.css"/>
   <!-- endbuild -->
 </head>
 <body data-spy="scroll" data-target="#toc" ng-app="dockstore.ui">
@@ -47,9 +46,6 @@
 
 <!-- Page Content - ngView -->
 
-
-
-
 <div ng-view></div>
 
 <!-- Footer -->
@@ -57,7 +53,7 @@
   <div class="container">
     <div class="footer">
         <span class="about">
-          <a class="white-link" href="/docs#aboutthedockstore">About Dockstore</a>
+          <a class="white-link" href="/docs/about">About Dockstore</a>
         </span>
       <span class="contact">
           Can't find what you're looking for?
@@ -194,9 +190,8 @@
 <script src="scripts/services/formatting.js"></script>
 <script src="scripts/services/UtilityService.js"></script>
 <script src="scripts/filters/hiddentagsfilter.js"></script>
-<script src="scripts/directives/documentationFooter.js"></script>
+<script src="scripts/directives/homeFooter.js"></script>
 <script src="scripts/directives/sponsors.js"></script>
-<script src="scripts/directives/markdown.js"></script>
 <script src="scripts/directives/onFinishRender.js"></script>
 <script src="scripts/controllers/starred.js"></script>
 <script src="scripts/directives/starred.js"></script>
@@ -215,6 +210,7 @@
     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
     ga('create', 'UA-80319775-2', 'auto');
     ga('send', 'pageview', { page: location.pathname });
-  </script>
+</script>
+
 </body>
 </html>

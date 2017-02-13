@@ -26,10 +26,20 @@
   </div>
 </div>
 
+
 <div class="container view-content">
   <div class="row">
     <div class="col-md-12 document">
-      <marked src="docObj.path"></marked>
+      <div class="docPage">
+        <div class="row" id="doc">
+          <div class="col-md-9">
+            <marked ng-include="docObj.markdown" on-finish-render="finishedLoading"></marked>
+          </div>
+          <div class="col-md-3">
+            <nav class="affix" id="toc" data-spy="affix" data-toggle="toc"></nav>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

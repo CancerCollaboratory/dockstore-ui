@@ -23,13 +23,11 @@
  * # sponsors
  */
 angular.module('dockstore.ui')
-  .directive('markdown', function() {
+  .directive('footer', function() {
     return {
-      restrict: 'E',
-      link: function postLink(scope, element, attrs) {
-        var converter = new showdown.Converter(),
-            htmlText  = converter.makeHtml(element.text());
-        element.html(htmlText);
-      }
+      restrict: 'AE',
+      scope: {},
+      link: function postLink(scope, element, attrs) {},
+      templateUrl: 'templates/homeFooter.html'
     };
   });

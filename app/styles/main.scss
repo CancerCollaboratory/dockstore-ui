@@ -448,14 +448,14 @@ ul.pagination li{
 }
 
 
-#documentation {
+#homeFooter {
   margin: 40px 0px;
   width: 100%;
   background-color:#eef0f6;
   border: 1px solid #cfd1d7;
   /*box-shadow: 0px 0px 10px #cfd1d7;*/
 }
-.button.documentation {
+.button.homeFooter {
   /*width: auto;*/
   text-align: center;
   margin: 10px;
@@ -464,16 +464,16 @@ ul.pagination li{
   width: 280px;
 }
 
-#documentation ul {
+#homeFooter ul {
   padding-left: 15px;
   margin-top: 0;
 }
 
-#documentation ul li {
+#homeFooter ul li {
   font-size: 14px;
 }
 
-#documentation h3 {
+#homeFooter h3 {
   font-size: 16px;
   margin-bottom: 10px;
 }
@@ -1049,16 +1049,10 @@ html, body {
 
 /* Responsive Images in Documentation Page */
 
-#documentationPage img {
+#docPage img {
   max-width: 100%;
   height: auto;
   display:block;
-}
-
-#toc {
-  width: auto;
-  top: auto;
-  bottom: 200px;
 }
 
 /* End Temporary Styles - Need to Refactor Later */
