@@ -42,7 +42,7 @@ install:
   - 'bower update'
 
 before_script:
-  - grunt --force # this does syntax checking, unit testing, and jshint
+  - grunt # this does syntax checking, unit testing, and jshint
   - grunt serve --silent & #make sure it runs the server first before testing
   - 'sleep 10'
   - psql 'postgres' -U postgres < travisci/db_dump.sql
