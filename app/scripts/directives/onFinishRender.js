@@ -18,9 +18,9 @@
 
 /**
  * @ngdoc directive
- * @name dockstore.ui.directive:sponsors
+ * @name dockstore.ui.directive:onFinishRender
  * @description
- * # sponsors
+ * # emits event when ng-include has finished loading
  */
 angular.module('dockstore.ui')
   .directive('onFinishRender', function($timeout) {

@@ -20,7 +20,7 @@
  * @ngdoc directive
  * @name dockstore.ui.directive:footnote
  * @description
- * # footnote
+ * # footnote on every page
  */
 angular.module('dockstore.ui')
   .directive('footnote', function () {

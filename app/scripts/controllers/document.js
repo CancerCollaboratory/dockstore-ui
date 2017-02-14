@@ -23,6 +23,8 @@
  * # DocumentCtrl
  * Controller of the dockstore.ui
  */
+
+ /*global Toc*/
 angular.module('dockstore.ui')
   .controller('DocumentCtrl', [
     '$scope',
@@ -44,7 +46,6 @@ angular.module('dockstore.ui')
           var url = $location.absUrl().split('#')[1];
           $location.hash(url);
           $anchorScroll();
-
           var navSelector = '#toc';
           var $myNav = $(navSelector);
             $('body').scrollspy({

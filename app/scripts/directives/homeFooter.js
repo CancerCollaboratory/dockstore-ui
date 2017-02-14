@@ -18,9 +18,9 @@
 
 /**
  * @ngdoc directive
- * @name dockstore.ui.directive:sponsors
+ * @name dockstore.ui.directive:footer
  * @description
- * # sponsors
+ * # footer section on home page
  */
 angular.module('dockstore.ui')
   .directive('footer', function() {
