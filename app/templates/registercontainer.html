@@ -40,7 +40,7 @@
           ng-if="refreshingContainer">
         <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate">
         </span>
-        Please wait, retrieving Quay.io or Docker Hub tool...
+        Please wait, retrieving tool...
       </div>
       <form name="registerContainerForm"
           class="form-horizontal"
@@ -78,6 +78,7 @@
                   </ul>
                 </div>
                 <input
+                    id="sourceCodeRepositoryInput"
                     type="text"
                     class="form-control"
                     name="gitPath"
@@ -184,25 +185,22 @@
             <div class="col-sm-9">
               <div class="input-group">
                 <div class="input-group-btn">
-                  <button type="button"
+                  <button id='imageRegistrySpinner' type="button"
                       class="btn btn-default btn-sm dropdown-toggle"
                       data-toggle="dropdown">
                     {{containerObj.irProvider}} <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu">
-                    <li>
-                      <a href ng-click="containerObj.irProvider = 'Quay.io'">
-                        Quay.io
+                    <li ng-repeat="registry in dockerRegistryMap">
+                      <a href ng-click="containerObj.irProvider = registry.friendlyName" id="imageRegistrySpinner_{{registry.enum}}">
+                        {{registry.friendlyName}}
                       </a>
                     </li>
-                    <li>
-                      <a href ng-click="containerObj.irProvider = 'Docker Hub'">
-                        Docker Hub
-                      </a>
                     </li>
                   </ul>
                 </div>
                 <input
+                    id="imageRegistryInput"
                     type="text"
                     class="form-control"
                     name="imagePath"
@@ -221,6 +219,61 @@
                   ng-if="registerContainerForm.imagePath.$touched">
                 <div ng-messages-include="templates/validation/containers/imagepath.html">
                 </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              Docker Registry Path:
+            </label>
+            <div class="col-sm-9">
+              <input
+                id="dockerRegistryPathInput"
+                class="form-control"
+                name="customDockerRegistryPath"
+                ng-model="customDockerRegistryPath"
+                ng-maxlength="256"
+                uib-tooltip
+                title="Custom Docker registry path"
+                placeholder="e.g. registry.hub.docker.com"
+                ng-disabled="!showCustomDockerRegistryPath"/>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              Private Image:
+            </label>
+            <div class="col-sm-9">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox"
+                         ng-model="containerObj.private_access"
+                         uib-tooltip
+                         title="Image registry entry is private."
+                          id="privateTool"/>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm" ng-show="containerObj.private_access">
+            <label class="col-sm-3 control-label">
+              Tool Maintainer Email:
+            </label>
+            <div class="col-sm-9">
+              <input
+                id="toolMaintainerEmailInput"
+                type="email"
+                class="form-control"
+                name="toolmaintaineremail"
+                ng-model="containerObj.tool_maintainer_email"
+                ng-maxlength="256"
+                uib-tooltip
+                title="Email of the tool maintainer."
+                placeholder="e.g. example@domain.com" />
+              <div
+                class="form-error-messages"
+                ng-messages="registerContainerForm.toolmaintaineremail.$error"
+                ng-if="registerContainerForm.toolmaintaineremail.$touched">
               </div>
             </div>
           </div>
@@ -255,9 +308,9 @@
               ng-click="closeRegisterContainerModal(true)">
             Close
           </button>
-          <button type="submit"
+          <button id="submitButton" type="submit"
               class="btn btn-primary"
-              ng-disabled="registerContainerForm.$invalid || savingActive || refreshingContainer">
+              ng-disabled="registerContainerForm.$invalid || savingActive || refreshingContainer || isInvalidCustomRegistry() || isInvalidPrivateTool()">
             Add Tool
           </button>
         </div>

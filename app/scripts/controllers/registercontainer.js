@@ -28,7 +28,11 @@ angular.module('dockstore.ui')
     '$scope',
     '$q',
     'ContainerService',
-    function ($scope, $q, ContainerService) {
+    'FormattingService',
+    function ($scope, $q, ContainerService, FrmttSrvc) {
+    $scope.dockerRegistryMap = {};
+    $scope.customDockerRegistryPath = null;
+    $scope.showCustomDockerRegistryPath = false;
 
       $scope.registerContainer = function() {
         $scope.setContainerEditError(null);
@@ -108,8 +112,16 @@ angular.module('dockstore.ui')
         return gitUrl;
       };
 
+      /**
+       * Given an image path and a part, returns the part of the path
+       * @param {string} image path, excluding registry (ex. namespace/name)
+       * @param {string} part of image (ex. name, namespace)
+       * @returns Specified section of the image path
+       */
       $scope.getImagePath = function(imagePath, part) {
-        var imagePathRegexp = /^(([a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*)|_)\/([a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*)$/i;
+        /** Defines the regex that an image path (namespace/name) must match.
+         Group 1 = namespace, Group 2 = name*/
+        var imagePathRegexp = /^(([a-zA-Z0-9]+([-_.][a-zA-Z0-9]+)*)|_)\/([a-zA-Z0-9]+([-_.][a-zA-Z0-9]+)*)$/i;
         var matchObj = imagePath.match(imagePathRegexp);
         var imageName = '';
         if (matchObj && matchObj.length > 2) {
@@ -118,18 +130,30 @@ angular.module('dockstore.ui')
         return imageName;
       };
 
+      /**
+      * Given a friendly name of a registry, determine the enum
+      * @param {string} friendly name of docker registry
+      * @returns the docker path of a registry
+      */
       $scope.getContainerRegistry = function(irProvider) {
-        var registry = '';
-        switch (irProvider) {
-          case 'Quay.io':
-            registry = 'QUAY_IO';
-            break;
-          case 'Docker Hub':
-            /* falls through */
-          default:
-            registry = 'DOCKER_HUB';
+        for (var i = 0; i < $scope.dockerRegistryMap.length; i++) {
+          if (irProvider === $scope.dockerRegistryMap[i].friendlyName) {
+            return $scope.dockerRegistryMap[i].enum;
+          }
         }
-        return registry;
+      };
+
+      /**
+      * Given a friendly name of a registry, determine the docker path
+      * @param {string} friendly name of docker registry
+      * @returns the docker path of a registry
+      */
+      $scope.getImageRegistryPath = function(irProvider) {
+        for (var i = 0; i < $scope.dockerRegistryMap.length; i++) {
+          if (irProvider === $scope.dockerRegistryMap[i].friendlyName) {
+            return $scope.dockerRegistryMap[i].dockerPath;
+          }
+        }
       };
 
       $scope.getNormalizedContainerObj = function(containerObj) {
@@ -146,6 +170,9 @@ angular.module('dockstore.ui')
           default_cwl_test_parameter_file: containerObj.default_cwl_test_parameter_file,
           default_wdl_test_parameter_file: containerObj.default_wdl_test_parameter_file,
           is_published: containerObj.is_published,
+          private_access: containerObj.private_access,
+          tool_maintainer_email: containerObj.tool_maintainer_email,
+          path: $scope.createPath()
         };
         if (normContainerObj.toolname === normContainerObj.name) {
           delete normContainerObj.toolname;
@@ -172,4 +199,73 @@ angular.module('dockstore.ui')
 
       $scope.setContainerEditError(null);
 
+      $scope.dockerRegistryMap = FrmttSrvc.returnDockerRegistryList();
+
+      /**
+      * Will create a path for the given tool, properly setting the docker registry path
+      * @returns path on the tool
+      */
+      $scope.createPath = function() {
+        var path = "";
+        if ($scope.customDockerRegistryPath !== null) {
+          path += $scope.customDockerRegistryPath;
+        } else {
+          path += $scope.getImageRegistryPath($scope.containerObj.irProvider);
+        }
+        path += "/" + $scope.getImagePath($scope.containerObj.imagePath, 'namespace') + "/" + $scope.getImagePath($scope.containerObj.imagePath, 'name');
+        return path;
+      };
+
+      /**
+      * Will customize the form for registering a tool based on the Docker registry chosen
+      * @returns nothing
+      */
+      $scope.checkForSpecialDockerRegistry = function() {
+        for (var i = 0; i < $scope.dockerRegistryMap.length; i++) {
+          if ($scope.containerObj.irProvider === $scope.dockerRegistryMap[i].friendlyName) {
+            if ($scope.dockerRegistryMap[i].privateOnly === "true") {
+              $scope.containerObj.private_access = true;
+              $("#privateTool").attr('disabled','disabled');
+            } else {
+              $("#privateTool").removeAttr('disabled');
+            }
+
+            if ($scope.dockerRegistryMap[i].customDockerPath === "true") {
+              $scope.showCustomDockerRegistryPath = true;
+              $scope.customDockerRegistryPath =  null;
+            } else {
+              $scope.showCustomDockerRegistryPath = false;
+              $scope.customDockerRegistryPath = $scope.getImageRegistryPath($scope.containerObj.irProvider);
+            }
+          }
+        }
+      };
+
+      /**
+      * Basic private tool specific checks
+      * @returns True if invalid private tool, False if valid
+      */
+      $scope.isInvalidPrivateTool = function() {
+        return $scope.containerObj.private_access === true && ($scope.containerObj.tool_maintainer_email === null || $scope.containerObj.tool_maintainer_email === '');
+      };
+
+      /**
+      * Basic custom docker registry path checks
+      * @returns True if invalid custom docker registry, False if valid
+      */
+      $scope.isInvalidCustomRegistry = function() {
+        for (var i = 0; i < $scope.dockerRegistryMap.length; i++) {
+          if ($scope.containerObj.irProvider === $scope.dockerRegistryMap[i].friendlyName) {
+            if ($scope.dockerRegistryMap[i].privateOnly === "true") {
+              if ($scope.customDockerRegistryPath === null || $scope.customDockerRegistryPath === '') {
+                return true;
+              } else {
+                return false;
+              }
+            } else {
+              return false;
+            }
+          }
+        }
+      };
   }]);

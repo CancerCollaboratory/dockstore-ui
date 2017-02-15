@@ -32,7 +32,7 @@ angular.module('dockstore.ui')
     'FormattingService',
     'UtilityService',
     'NotificationService',
-    function ($scope, $q, $sce, ContainerService, FrmttSrvc, UtilityService, NtfnService) {
+    function($scope, $q, $sce, ContainerService, FrmttSrvc, UtilityService, NtfnService) {
       $scope.labelsEditMode = false;
       $scope.dockerfileEnabled = false;
       $scope.descriptorEnabled = false;
@@ -53,7 +53,10 @@ angular.module('dockstore.ui')
       $scope.validTags = [];
       $scope.descAvailable = [];
       $scope.buildTooltip = $sce.trustAsHtml('<strong>Fully-Automated</strong>: All versions are automated builds<br><strong>Partially-Automated</strong>: At least one version is an automated build<br><strong>Manual</strong>: No versions are automated builds<br><strong>Unknown</strong>: Build information not known');
+      $scope.toolMaintainerTooltip = $sce.trustAsHtml('E-mail of tool maintainer to be contacted for requesting private image access<br>Defaults to tool author if no tool maintainer given');
       $scope.dockerPullTag = '';
+      $scope.dockerRegistryMap = {};
+      $scope.starGazers = {};
 
       //There are 5 tabs, and only 1 can be active
       // so there are 4 other tabs that are not active
@@ -64,24 +67,24 @@ angular.module('dockstore.ui')
         for (var i = 0; i < notActiveTabs; i++) $scope.activeTabs.push(false);
       }
 
-      $scope.checkPage = function(){
+      $scope.checkPage = function() {
         $scope.$broadcast('checkDescPageType');
       };
 
       $scope.refreshTagLaunchWith = function() {
         //get the tool tags that are valid
-        if ($scope.containerObj === null){
+        if ($scope.containerObj === null) {
           return;
         }
         $scope.validTags = [];
-        for(var i=0;i<$scope.containerObj.tags.length;i++){
-          if($scope.isTagValid($scope.containerObj.tags[i])){
+        for (var i = 0; i < $scope.containerObj.tags.length; i++) {
+          if ($scope.isTagValid($scope.containerObj.tags[i])) {
             $scope.validTags.push($scope.containerObj.tags[i]);
           }
         }
         var isVersionValid = false;
         var firstTag;
-        if($scope.validTags.length !==0){
+        if ($scope.validTags.length !== 0) {
           if ($scope.containerObj.defaultVersion === null) {
             $scope.toolTag = $scope.validTags[0].id;
             $scope.toolTagName = $scope.validTags[0].name;
@@ -89,10 +92,10 @@ angular.module('dockstore.ui')
           } else {
             for (i = 0; i < $scope.validTags.length; i++) {
               if ($scope.validTags[i].name === $scope.containerObj.defaultVersion) {
-                 $scope.toolTag = $scope.validTags[i].id;
-                 $scope.toolTagName = $scope.validTags[i].name;
-                 firstTag = i;
-                 isVersionValid = true;
+                $scope.toolTag = $scope.validTags[i].id;
+                $scope.toolTagName = $scope.validTags[i].name;
+                firstTag = i;
+                isVersionValid = true;
                 break;
               }
             }
@@ -112,12 +115,12 @@ angular.module('dockstore.ui')
           return;
         }
         $scope.descAvailable = [];
-        for(var j=0;j<$scope.validTags[tagIndex].sourceFiles.length;j++){
+        for (var j = 0; j < $scope.validTags[tagIndex].sourceFiles.length; j++) {
           var fileType = $scope.validTags[tagIndex].sourceFiles[j].type;
-          if($scope.descAvailable.indexOf(fileType)){
-            if(fileType === 'DOCKSTORE_CWL' && $scope.descAvailable.indexOf('cwl') === -1){
+          if ($scope.descAvailable.indexOf(fileType)) {
+            if (fileType === 'DOCKSTORE_CWL' && $scope.descAvailable.indexOf('cwl') === -1) {
               $scope.descAvailable.push('cwl');
-            } else if(fileType === 'DOCKSTORE_WDL' && $scope.descAvailable.indexOf('wdl') === -1){
+            } else if (fileType === 'DOCKSTORE_WDL' && $scope.descAvailable.indexOf('wdl') === -1) {
               $scope.descAvailable.push('wdl');
             }
           }
@@ -128,27 +131,27 @@ angular.module('dockstore.ui')
 
       };
 
-      $scope.getDescriptorByTag = function(tagObject){
+      $scope.getDescriptorByTag = function(tagObject) {
         //get descriptor by tag chosen
         $scope.descAvailable = [];
-        for(var j=0;j<tagObject.sourceFiles.length;j++){
+        for (var j = 0; j < tagObject.sourceFiles.length; j++) {
           var fileType = tagObject.sourceFiles[j].type;
-          if($scope.descAvailable.indexOf(fileType)){
-            if(fileType === 'DOCKSTORE_CWL' && $scope.descAvailable.indexOf('cwl') === -1){
+          if ($scope.descAvailable.indexOf(fileType)) {
+            if (fileType === 'DOCKSTORE_CWL' && $scope.descAvailable.indexOf('cwl') === -1) {
               $scope.descAvailable.push('cwl');
-            } else if(fileType === 'DOCKSTORE_WDL' && $scope.descAvailable.indexOf('wdl') === -1){
+            } else if (fileType === 'DOCKSTORE_WDL' && $scope.descAvailable.indexOf('wdl') === -1) {
               $scope.descAvailable.push('wdl');
             }
           }
         }
-        if($scope.descAvailable.length !==0){
+        if ($scope.descAvailable.length !== 0) {
           $scope.desc = $scope.descAvailable[0];
         }
       };
 
       $scope.showLaunchWith = function() {
-        if($scope.containerObj === undefined ||  $scope.containerObj === null || $scope.containerObj.tags.length === 0 ||
-          $scope.validTags.length === 0){
+        if ($scope.containerObj === undefined || $scope.containerObj === null || $scope.containerObj.tags.length === 0 ||
+          $scope.validTags.length === 0) {
           //no tags available in the container, do not show launchWith
           //return false immediately to get out of this method
           return false;
@@ -158,51 +161,51 @@ angular.module('dockstore.ui')
         var tool_path = $scope.containerObj === null ? "" : $scope.containerObj.path;
 
         //get the tag name from tag id
-        for(var i=0;i<$scope.validTags.length;i++){
-          if($scope.toolTag === $scope.validTags[i].id){
+        for (var i = 0; i < $scope.validTags.length; i++) {
+          if ($scope.toolTag === $scope.validTags[i].id) {
             $scope.toolTagName = $scope.validTags[i].name;
             break;
           }
         }
 
         //get rid of blank option in tag dropdown if exists
-        if(document.getElementById('tagVersion')[0] !== undefined &&
+        if (document.getElementById('tagVersion')[0] !== undefined &&
           (document.getElementById('tagVersion')[0].value === '?' ||
-          document.getElementById('tagVersion')[0].value === '')){
+            document.getElementById('tagVersion')[0].value === '')) {
           $scope.refreshTagLaunchWith();
           var firstElement = $scope.toolTagName;
-          var validTagsNameArray =[];
-          for(var j=0;j<$scope.validTags.length;j++){
+          var validTagsNameArray = [];
+          for (var j = 0; j < $scope.validTags.length; j++) {
             validTagsNameArray.push($scope.validTags[j].name);
           }
           var tagVersion = $("#tagVersion");
-          tagVersion.find("option").filter(function(){
+          tagVersion.find("option").filter(function() {
             return $(this).text() === firstElement;
-          }).attr('selected',true);
-          tagVersion.find("option").filter(function(){
-            return window.jQuery.inArray($(this).text(),validTagsNameArray) === -1;
+          }).attr('selected', true);
+          tagVersion.find("option").filter(function() {
+            return window.jQuery.inArray($(this).text(), validTagsNameArray) === -1;
           }).remove();
         }
 
         //get rid of blank option in descriptor dropdown if exists
-        if(document.getElementById('descType')[0] !== undefined &&
+        if (document.getElementById('descType')[0] !== undefined &&
           (document.getElementById('descType')[0].value === '?' ||
-          document.getElementById('descType')[0].value === '')){
+            document.getElementById('descType')[0].value === '')) {
           var firstElementDesc = $scope.descAvailable[0];
           var descriptorAvailable = $scope.descAvailable;
           var descType = $("#descType");
-          descType.find("option").filter(function(){
+          descType.find("option").filter(function() {
             return $(this).text() === firstElementDesc;
-          }).attr('selected',true);
-          descType.find("option").filter(function(){
-            return window.jQuery.inArray($(this).text(),descriptorAvailable) === -1;
+          }).attr('selected', true);
+          descType.find("option").filter(function() {
+            return window.jQuery.inArray($(this).text(), descriptorAvailable) === -1;
           }).remove();
         }
 
         $scope.launchWith =
           "# make a runtime JSON template and fill in desired inputs, outputs, and other parameters" +
-          "\ndockstore tool convert entry2json --entry " + tool_path + ":" + $scope.toolTagName +" > Dockstore.json" +
-          "\nvim Dockstore.json"+
+          "\ndockstore tool convert entry2json --entry " + tool_path + ":" + $scope.toolTagName + " > Dockstore.json" +
+          "\nvim Dockstore.json" +
           "\n# run it locally with the Dockstore CLI" +
           "\ndockstore tool launch --entry " + tool_path + ":" + $scope.toolTagName + " --json Dockstore.json";
 
@@ -222,8 +225,8 @@ angular.module('dockstore.ui')
         //method is called when specific tag is selected
         //to change the LaunchWith commands
         $scope.toolTag = tag;
-        for(var i=0;i<$scope.containerObj.tags.length;i++){
-          if(tag === $scope.containerObj.tags[i].id){
+        for (var i = 0; i < $scope.containerObj.tags.length; i++) {
+          if (tag === $scope.containerObj.tags[i].id) {
             $scope.getDescriptorByTag($scope.containerObj.tags[i]);
             break;
           }
@@ -244,7 +247,8 @@ angular.module('dockstore.ui')
 
       $scope.loadContainerDetails = function(containerPath) {
         $scope.setContainerDetailsError(null);
-        return ContainerService.getPublishedContainerByToolPath(containerPath)
+        return ContainerService.
+        getPublishedContainerByToolPath(containerPath)
           .then(
             function(containerObj) {
               $scope.containerObj = containerObj;
@@ -337,51 +341,51 @@ angular.module('dockstore.ui')
           });
       };
 
-      $scope.getMailToLink = function(containerObj){
+      $scope.getMailToLink = function(containerObj) {
         return UtilityService.getMailToLink("tool", containerObj.path, window.location, containerObj.email);
       };
 
-      $scope.checkContentValid = function(){
+      $scope.checkContentValid = function() {
         //will print this when the 'Publish' button is clicked
         var message = 'The file is missing some required fields. Please make sure the file has all the required fields. ';
         var missingMessage = 'The missing field(s):';
-        if($scope.validContent){
-          if($scope.missingContent.length !== 0){
+        if ($scope.validContent) {
+          if ($scope.missingContent.length !== 0) {
             $scope.missingWarning = true;
           }
           return true;
 
-        } else{
-            if($scope.missingContent.length !== 0){
-              $scope.missingWarning = false;
-              for(var i=0;i<$scope.missingContent.length;i++){
-                missingMessage += ' \''+$scope.missingContent[i]+'\'';
-                if(i !== $scope.missingContent.length -1){
-                  missingMessage+=',';
-                }
-              }
-              if(!$scope.refreshingWorkflow){
-                if($scope.containerObj.descriptorType === 'wdl'){
-                  $scope.setContainerDetailsError(
-                    message+missingMessage +
-                    '. Required fields in WDL file: \'task\', \'workflow\', \'call\', \'command\', and \'output\'',''
-                  );
-                }else{
-                  $scope.setContainerDetailsError(
-                    message+missingMessage +
-                    '. Required fields in CWL Tool file: \'inputs\', \'outputs\', \'class: CommandLineTool\', and \'baseCommand\'',''
-                  );
-                }
+        } else {
+          if ($scope.missingContent.length !== 0) {
+            $scope.missingWarning = false;
+            for (var i = 0; i < $scope.missingContent.length; i++) {
+              missingMessage += ' \'' + $scope.missingContent[i] + '\'';
+              if (i !== $scope.missingContent.length - 1) {
+                missingMessage += ',';
               }
             }
+            if (!$scope.refreshingWorkflow) {
+              if ($scope.containerObj.descriptorType === 'wdl') {
+                $scope.setContainerDetailsError(
+                  message + missingMessage +
+                  '. Required fields in WDL file: \'task\', \'workflow\', \'call\', \'command\', and \'output\'', ''
+                );
+              } else {
+                $scope.setContainerDetailsError(
+                  message + missingMessage +
+                  '. Required fields in CWL Tool file: \'inputs\', \'outputs\', \'class: CommandLineTool\', and \'baseCommand\'', ''
+                );
+              }
+            }
+          }
 
-            if($scope.invalidClass){
-              //file is invalid because class is workflow instead of commandlinetool
-              $scope.setContainerDetailsError(
-                'This CWL file is not a CommandLineTool'+
-                '. Required fields in CWL Tool file: \'inputs\', \'outputs\', \'class: CommandLineTool\', and \'baseCommand\'',''
-              );
-            }
+          if ($scope.invalidClass) {
+            //file is invalid because class is workflow instead of commandlinetool
+            $scope.setContainerDetailsError(
+              'This CWL file is not a CommandLineTool' +
+              '. Required fields in CWL Tool file: \'inputs\', \'outputs\', \'class: CommandLineTool\', and \'baseCommand\'', ''
+            );
+          }
 
           return false;
         }
@@ -458,27 +462,24 @@ angular.module('dockstore.ui')
       $scope.getGitReposProvider = FrmttSrvc.getGitReposProvider;
       $scope.getGitReposProviderName = FrmttSrvc.getGitReposProviderName;
       $scope.getGitReposWebUrl = FrmttSrvc.getGitReposWebUrl;
-      $scope.getImageReposProvider = FrmttSrvc.getImageReposProvider;
       $scope.getImageReposProviderName = FrmttSrvc.getImageReposProviderName;
       $scope.getImageReposWebUrl = FrmttSrvc.getImageReposWebUrl;
 
       $scope.updateInfoURLs = function() {
         /* Git Repository */
         $scope.gitReposProvider = $scope.getGitReposProvider(
-            $scope.containerObj.gitUrl);
+          $scope.containerObj.gitUrl);
         $scope.gitReposProviderName = $scope.getGitReposProviderName(
-            $scope.gitReposProvider);
+          $scope.gitReposProvider);
         $scope.gitReposWebUrl = $scope.getGitReposWebUrl(
-            $scope.containerObj.gitUrl,
-            $scope.gitReposProvider);
+          $scope.containerObj.gitUrl,
+          $scope.gitReposProvider);
         /* Image Repository */
-        $scope.imageReposProvider = $scope.getImageReposProvider(
-            $scope.containerObj.path);
         $scope.imageReposProviderName = $scope.getImageReposProviderName(
-            $scope.imageReposProvider);
+            $scope.containerObj.registry);
         $scope.imageReposWebUrl = $scope.getImageReposWebUrl(
             $scope.containerObj.path,
-            $scope.imageReposProvider);
+            $scope.containerObj.registry);
       };
 
       $scope.getDateTimeString = FrmttSrvc.getDateTimeString;
@@ -491,7 +492,7 @@ angular.module('dockstore.ui')
         });
         var labelStrings = [];
         for (var i = 0; i < sortedLabels.length; i++) {
-            labelStrings.push(sortedLabels[i].value);
+          labelStrings.push(sortedLabels[i].value);
         }
         return labelStrings;
       };
@@ -506,8 +507,8 @@ angular.module('dockstore.ui')
       };
 
       $scope.selectLabelTab = function() {
-       for (var i = 0; i < notActiveTabs; i++) $scope.activeTabs[i] = false;
-       $scope.activeTabs[1] = true;
+        for (var i = 0; i < notActiveTabs; i++) $scope.activeTabs[i] = false;
+        $scope.activeTabs[1] = true;
       };
 
       $scope.toggleLabelsEditMode = function() {
@@ -524,31 +525,31 @@ angular.module('dockstore.ui')
         }
       };
 
-      $scope.submitDescriptorEdits = function(type){
+      $scope.submitDescriptorEdits = function(type) {
         var cwlpath = $scope.containerObj.default_cwl_path;
         var wdlpath = $scope.containerObj.default_wdl_path;
         var dfpath = $scope.containerObj.default_dockerfile_path;
 
-        if(type === 'cwl' && cwlpath === ''){
-          if(wdlpath === ''){
+        if (type === 'cwl' && cwlpath === '') {
+          if (wdlpath === '') {
             $scope.containerObj.default_cwl_path = '/Dockstore.cwl';
           }
-        } else if(type === 'wdl' && wdlpath === ''){
-          if(cwlpath === ''){
+        } else if (type === 'wdl' && wdlpath === '') {
+          if (cwlpath === '') {
             $scope.containerObj.default_wdl_path = '/Dockstore.wdl';
           }
-        } else if(type === 'dockerfile' && dfpath === ''){
-            $scope.containerObj.default_dockerfile_path = '/Dockerfile';
+        } else if (type === 'dockerfile' && dfpath === '') {
+          $scope.containerObj.default_dockerfile_path = '/Dockerfile';
         }
 
-        if($scope.containerObj.default_cwl_path !== 'undefined' || $scope.containerObj.default_wdl_path !== 'undefined' ||
-            $scope.containerObj.default_dockerfile_path !== 'undefined'){
+        if ($scope.containerObj.default_cwl_path !== 'undefined' || $scope.containerObj.default_wdl_path !== 'undefined' ||
+          $scope.containerObj.default_dockerfile_path !== 'undefined') {
           $scope.updateToolAndTags();
         }
       };
 
-      $scope.submitTestParameterFileEdits = function(){
-        if(($scope.containerObj.default_cwl_test_parameter_file !== 'undefined') || ($scope.containerObj.default_wdl_test_parameter_file !== 'undefined')) {
+      $scope.submitTestParameterFileEdits = function() {
+        if (($scope.containerObj.default_cwl_test_parameter_file !== 'undefined') || ($scope.containerObj.default_wdl_test_parameter_file !== 'undefined')) {
           $scope.updateToolAndTags();
         }
       };
@@ -557,17 +558,17 @@ angular.module('dockstore.ui')
         $scope.updateToolDefaultPaths($scope.containerObj.id)
           .then(function() {
             $scope.updateToolTagPaths($scope.containerObj.id)
-              .then(function(){
+              .then(function() {
                 $scope.labelsEditMode = false;
-                $scope.refreshContainer($scope.containerObj.id,0);
+                $scope.refreshContainer($scope.containerObj.id, 0);
               });
           });
       };
 
-      $scope.updateToolDefaultPaths = function(containerId){
+      $scope.updateToolDefaultPaths = function(containerId) {
         return ContainerService.updateToolDefaults(containerId, $scope.containerObj)
           .then(
-            function(containerObj){
+            function(containerObj) {
               $scope.updateToolInfoWithDatabaseInfo(containerObj);
               $scope.updateContainerObj();
               return containerObj;
@@ -589,7 +590,7 @@ angular.module('dockstore.ui')
       $scope.updateToolTagPaths = function(containerId) {
         return ContainerService.updateToolPathTag(containerId, $scope.containerObj)
           .then(
-            function(containerObj){
+            function(containerObj) {
               $scope.updateToolInfoWithDatabaseInfo(containerObj);
               $scope.updateContainerObj();
               return containerObj;
@@ -609,15 +610,15 @@ angular.module('dockstore.ui')
       };
 
       $scope.updateToolInfoWithDatabaseInfo = function(containerObj) {
-        if($scope.containerObj.default_cwl_path !== containerObj.default_cwl_path){
+        if ($scope.containerObj.default_cwl_path !== containerObj.default_cwl_path) {
           $scope.containerObj.default_cwl_path = containerObj.default_cwl_path;
-        } else if($scope.containerObj.default_wdl_path !== containerObj.default_wdl_path){
+        } else if ($scope.containerObj.default_wdl_path !== containerObj.default_wdl_path) {
           $scope.containerObj.default_wdl_path = containerObj.default_wdl_path;
-        } else if($scope.containerObj.default_dockerfile_path !== containerObj.default_dockerfile_path){
+        } else if ($scope.containerObj.default_dockerfile_path !== containerObj.default_dockerfile_path) {
           $scope.containerObj.default_dockerfile_path = containerObj.default_dockerfile_path;
-        } else if($scope.containerObj.default_cwl_test_parameter_file !== containerObj.default_cwl_test_parameter_file){
+        } else if ($scope.containerObj.default_cwl_test_parameter_file !== containerObj.default_cwl_test_parameter_file) {
           $scope.containerObj.default_cwl_test_parameter_file = containerObj.default_cwl_test_parameter_file;
-        } else if($scope.containerObj.default_wdl_test_parameter_file !== containerObj.default_wdl_test_parameter_file){
+        } else if ($scope.containerObj.default_wdl_test_parameter_file !== containerObj.default_wdl_test_parameter_file) {
           $scope.containerObj.default_wdl_test_parameter_file = containerObj.default_wdl_test_parameter_file;
         }
       };
@@ -705,4 +706,51 @@ angular.module('dockstore.ui')
       $scope.getVerifiedSources = function() {
         return UtilityService.getVerifiedToolSources($scope.containerObj);
       };
-  }]);
+
+      $scope.isToolMaintainerEmailNullOrEmpty = function() {
+        return ($scope.containerObj.tool_maintainer_email === null || $scope.containerObj.tool_maintainer_email === '');
+      };
+
+      $scope.getDockerRegistryName = function() {
+        for (var i = 0; i < $scope.dockerRegistryMap.length; i++) {
+          if ($scope.containerObj.registry === $scope.dockerRegistryMap[i].enum) {
+            return $scope.dockerRegistryMap[i].friendlyName;
+          }
+        }
+      };
+
+      $scope.getRequestAccessEmail = function() {
+        if (!$scope.isToolMaintainerEmailNullOrEmpty()) {
+          return $scope.stripMailTo($scope.containerObj.tool_maintainer_email);
+        } else {
+          return $scope.stripMailTo($scope.containerObj.email);
+        }
+      };
+
+
+      $scope.stripMailTo = function(email) {
+        if (email !== null && email !== undefined) {
+          return email.replace(/^mailto:/, '');
+        } else {
+          // Return not available if email is null
+          return "n/a";
+        }
+      };
+
+      /**
+      * Given a registry enum, determines if it is a private only registry
+      * @returns True if private only registry, False otherwise
+      */
+      $scope.checkPrivateOnlyRegistry = function() {
+        for (var i = 0; i < $scope.dockerRegistryMap.length; i++) {
+          if ($scope.containerObj.registry === $scope.dockerRegistryMap[i].enum) {
+            return $scope.dockerRegistryMap[i].privateOnly === "true";
+          }
+        }
+        return false;
+      };
+
+      $scope.dockerRegistryMap = FrmttSrvc.returnDockerRegistryList();
+
+    }
+  ]);

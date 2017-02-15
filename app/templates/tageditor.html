@@ -39,7 +39,7 @@
           ng-if="refreshingContainer">
         <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate">
         </span>
-        Please wait, retrieving Quay.io or Docker Hub tool...
+        Please wait, retrieving tool...
       </div>
       <form name="tagEditorForm"
           class="form-horizontal"
@@ -52,6 +52,7 @@
             </label>
             <div class="col-sm-9">
               <input
+                  id="versionTagInput"
                   type="text"
                   class="form-control"
                   name="name"
@@ -78,6 +79,7 @@
             </label>
             <div class="col-sm-9">
               <input
+                  id="gitReferenceInput"
                   type="text"
                   class="form-control"
                   name="reference"
@@ -349,7 +351,7 @@
               ng-disabled="tagEditorForm.$invalid">
             Save Changes
           </button>
-          <button type="submit"
+          <button id="addVersionTagButton" type="submit"
               class="btn btn-primary"
               ng-show="editMode && tagObj.create"
               ng-disabled="tagEditorForm.$invalid">
