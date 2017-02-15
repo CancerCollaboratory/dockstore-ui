@@ -3,7 +3,6 @@
   "private": true,
   "devDependencies": {
     "connect-modrewrite": "^0.9.0",
-    "coveralls": "^2.11.11",
     "grunt": "^0.4.5",
     "grunt-angular-templates": "^1.0.4",
     "grunt-autoprefixer": "^3.0.4",
@@ -20,25 +19,16 @@
     "grunt-contrib-jshint": "^1.0.0",
     "grunt-contrib-uglify": "^2.0.0",
     "grunt-contrib-watch": "^1.0.0",
-    "grunt-coveralls": "^1.0.1",
     "grunt-filerev": "^2.1.2",
     "grunt-google-cdn": "^0.4.3",
     "grunt-insert": "^0.1.0",
-    "grunt-karma": "^2.0.0",
     "grunt-newer": "^1.1.0",
     "grunt-ng-annotate": "^2.0.2",
-    "grunt-protractor-runner": "^3.2.0",
     "grunt-svgmin": "^3.3.0",
     "grunt-usemin": "^3.0.0",
     "grunt-wiredep": "^3.0.1",
-    "jasmine-core": "^2.4.1",
     "jit-grunt": "^0.10.0",
     "jshint-stylish": "^2.2.0",
-    "karma": "^1.1.1",
-    "karma-coverage": "^1.1.1",
-    "karma-chrome-launcher": "^1.0.1",
-    "karma-jasmine": "^1.0.2",
-    "protractor": "^4.0.2",
     "serve-static": "^1.11.1",
     "time-grunt": "^1.0.0"
   },
@@ -46,6 +36,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "grunt test"
-  }
+    "test": "grunt test & cypress run"
+  },
+  "dependencies": {}
 }

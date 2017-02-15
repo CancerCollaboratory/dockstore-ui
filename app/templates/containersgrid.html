@@ -50,12 +50,15 @@
                 <span ng-show="isVerified(container)" uib-tooltip="Verified">
                   <span class="glyphicon glyphicon-ok"></span>
                 </span>
+                <span ng-show="container.private_access" uib-tooltip="Private">
+                  <span class="glyphicon glyphicon-lock"></span>
+                </span>
                 <a href="/containers/{{container.tool_path}}">{{container.name + (container.toolname ? '/' + container.toolname : '')}}</a>
               </td>
               <td>
                 {{ container.author ? container.author : 'n/a' }}
               </td>
-              <td ng-init="gitReposProvider = getGitReposProvider(container.gitUrl); imageReposProvider = getImageReposProvider(container.path)">
+              <td ng-init="gitReposProvider = getGitReposProvider(container.gitUrl)">
                 <span
                     ng-init="gitReposWebUrl = getGitReposWebUrl(container.gitUrl, gitReposProvider)">
                   <a ng-href="{{gitReposWebUrl}}"
@@ -64,11 +67,11 @@
                     {{getGitReposProviderName(gitReposProvider)}}</a>
                 </span>
                 <span
-                    ng-init="imageReposWebUrl = getImageReposWebUrl(container.path, imageReposProvider)">
+                    ng-init="imageReposWebUrl = getImageReposWebUrl(container.path, container.registry)">
                   <a ng-href="{{imageReposWebUrl}}"
                       target="_blank"
                       ng-if="imageReposWebUrl">
-                    {{getImageReposProviderName(imageReposProvider)}}</a>
+                    {{getImageReposProviderName(container.registry)}}</a>
                 </span>
               </td>
               <td ng-init="dockerPullCmd = getDockerPullCmd(container.path)">
