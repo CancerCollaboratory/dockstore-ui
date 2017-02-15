@@ -34,3 +34,4 @@ angular.module('dockstore.ui')
     DSCLI_RELEASE_URL: 'https://github.com/ga4gh/dockstore/' +
                         'releases/download/0.3-alpha.0/dockstore'
   });
+

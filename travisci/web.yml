@@ -49,3 +49,4 @@ database:
 
   # whether or not idle connections should be validated
   checkConnectionWhileIdle: false
+
