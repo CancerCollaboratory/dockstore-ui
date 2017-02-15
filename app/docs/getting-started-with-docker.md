@@ -170,6 +170,6 @@ In the next section, we will also demonstrate how this command-line including th
 
 At this point you have a working Docker image.  You could use the `docker push` command to send that to Quay or DockerHub and share with others.  However, what you lose is a standardized way to describe how to run your tool.  That's what the CWL descriptor and Dockstore provide.  We think it's valuable and there's an increasing number of tools designed to work with CWL so there are benefits to not just stopping here.
 
-## Next Steps
+### Next Steps
 
-Follow the [next tutorial](docs/getting-started-with-cwl) to describe your tool with CWL.
+Continue with the tutorial to describe your tool with CWL.

@@ -289,7 +289,7 @@ I click on "releases" in my GitHub project [page](https://github.com/CancerColla
 
 **Tip:** [HubFlow](https://datasift.github.io/gitflow/) is an excellent way to manage the lifecycle of releases on GitHub.  Take a look!
 
-# Building on Quay.io
+## Building on Quay.io
 
 Now that you've perfected the `Dockerfile`, have built the image on your local host, and have tested running the Docker container and tool packaged inside and have released this version on GitHub, it's time to push the image to a place where others can use it.  For this you can use DockerHub or GitLab but we prefer [Quay.io](http://quay.io) since it integrates really nicely with Dockstore.
 
@@ -353,6 +353,6 @@ We provide a hello world example as follows:
 
 We are currently monitoring WDL to see how metadata like that provided for CWL will be integrated into WDL.
 
-## Next Steps
+### Next Steps
 
-Follow the [next tutorial](docs/getting-started-with-dockstore) to register your tool on Dockstore.
+Continue with the tutorial to register your tool on Dockstore.

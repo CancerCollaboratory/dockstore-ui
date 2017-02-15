@@ -242,10 +242,10 @@ https://www.dockstore.org/containers/quay.io/briandoconnor/dockstore-tool-bamsta
 
 You can find tools on the Dockstore website or also through the `dockstore tool search` command line option.
 
-## Next Steps
+### Next Steps
 
 You can follow this basic pattern for each of your Docker-based tools.  Once registered, you can send links to your tools on Dockstore to colleagues and use it as a public platform for sharing your tools.  
 
-Read up on how Dockstore uses Docker registries at the [Docker Registries](/docs/docker_registries) page or see our [full list of documentation](/docs).
+Continue to read up on how Dockstore uses Docker registries.
 
 

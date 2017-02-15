@@ -37,6 +37,6 @@ Several large projects in the Biosciences, specifically cancer sequencing projec
 
 We plan on expanding the Dockstore in several ways over the coming months.  Please see our [issues page](https://github.com/CancerCollaboratory/dockstore/issues) for details and discussions.
 
-## Next Steps
+### Next Steps
 
-Find out how to register more complex workflows at [Workflows](docs/workflows).
+Continue to find out how to register more complex workflows.

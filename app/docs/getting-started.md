@@ -33,6 +33,6 @@ You can also call `dockstore --version` which should report the same version as 
     
 In addition to the tools mentioned above you will probably want an editor capable of syntax highlighting Dockerfiles such as [Atom](https://atom.io/).
 
-## Next Steps
+### Next Steps
 
-Follow the [next tutorial](docs/getting-started-with-docker) to start creating your tool.
+Continue with the tutorial to start creating your tool.

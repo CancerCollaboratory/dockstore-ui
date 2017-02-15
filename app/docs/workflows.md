@@ -76,6 +76,6 @@ The `dockstore manual_publish` command can be used to manually register a workfl
 
 You can find tools on the Dockstore website or also through the `dockstore workflow search` command line option.
 
-## Next Steps
+### Next Steps
 
-Find out how to launch your tools and workflows at [Launching Tools and Workflows](/docs/launch).
+Continue to find out how to launch your tools and workflows.
