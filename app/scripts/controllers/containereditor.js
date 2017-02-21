@@ -324,7 +324,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.$on('deregisterContainer', function(event, containerId) {
-        $scope.removeContainer(containerId);
+          $scope.removeContainer(containerId);
       });
 
   }]);

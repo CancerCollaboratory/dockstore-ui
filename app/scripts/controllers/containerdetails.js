@@ -291,24 +291,29 @@ angular.module('dockstore.ui')
       };
 
       $scope.deregisterContainer = function(containerId) {
-        $scope.setContainerDetailsError(null);
-        return ContainerService.deleteContainer(containerId)
-          .then(
-            function() {
-              $scope.$emit('deregisterContainer', containerId);
-              return containerId;
-            },
-            function(response) {
-              $scope.setContainerDetailsError(
-                'The webservice encountered an error trying to delete this ' +
-                'container, please ensure that the container exists, and is ' +
-                'set to manual build mode.',
-                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
-                response.data
-              );
-              return $q.reject(response);
-            }
-          );
+        var confirmation = confirm("Are you sure you wish to deregister?");
+
+        if(confirmation === true) {
+          $scope.setContainerDetailsError(null);
+          return ContainerService.deleteContainer(containerId)
+            .then(
+              function() {
+                $scope.$emit('deregisterContainer', containerId);
+                return containerId;
+              },
+              function(response) {
+                $scope.setContainerDetailsError(
+                  'The webservice encountered an error trying to delete this ' +
+                  'container, please ensure that the container exists, and is ' +
+                  'set to manual build mode.',
+                  '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                  response.data
+                );
+                return $q.reject(response);
+              }
+            );
+
+        }
       };
 
       $scope.refreshContainer = function(containerId, activeTabIndex) {
