@@ -23,6 +23,8 @@
  * # ContainerDetailsCtrl
  * Controller of the dockstore.ui
  */
+
+/* global confirm */
 angular.module('dockstore.ui')
   .controller('ContainerDetailsCtrl', [
     '$scope',
