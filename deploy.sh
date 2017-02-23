@@ -4,6 +4,8 @@ set -o errexit -o nounset
 
 if [ ! -z "$TRAVIS_TAG" ]
 then
+  echo "Building ngdocs.  $TRAVIS_TAG is a new tag"
+else
   echo "This commit was made against the $TRAVIS_BRANCH and not a tag"
   exit 0
 fi
