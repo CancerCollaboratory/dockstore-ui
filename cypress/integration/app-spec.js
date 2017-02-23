@@ -12,6 +12,38 @@ describe('dockstore homepage', function() {
 		//expect(browser.getLocationAbsUrl()).toMatch("/");
 	});
 
+	describe('Buttons', function() {
+  	  it('video button visible', function() {
+        cy
+          .get(".btn.youtube")
+            .should("exist")
+      });
+
+      it("user login button visible", function() {
+        cy
+          .get("div.button.login")
+              .should("exist")
+      });
+
+      it("news and events button visible", function() {
+        cy
+          .get("div.header-lower")
+            .find("div.button")
+              .first()
+                .get("a")
+                  .contains("News and Events")
+      });
+
+      it("get started button visible", function() {
+        cy
+          .get("div.header-lower")
+            .find("div.button")
+              .last()
+                .get("a")
+                  .contains("Get Started")
+      });
+  });
+
   describe('Browse tabs', function() {
 	  it('should have tool tab selected', function() {
       cy
