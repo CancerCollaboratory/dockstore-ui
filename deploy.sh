@@ -2,9 +2,9 @@
 
 set -o errexit -o nounset
 
-if [ "$TRAVIS_BRANCH" != "feature/issue-572" ]
+if [ ! -z "$TRAVIS_TAG" ]
 then
-  echo "This commit was made against the $TRAVIS_BRANCH and not the master! No deploy!"
+  echo "This commit was made against the $TRAVIS_BRANCH and not a tag"
   exit 0
 fi
 
@@ -20,8 +20,6 @@ git fetch upstream
 git reset upstream/gh-pages
 
 touch .
-
-echo "ngdocs.com" > CNAME
 
 git add -A .
 git commit -m "rebuild pages at ${rev}"
