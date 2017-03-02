@@ -34,7 +34,8 @@ angular.module('dockstore.ui')
     'FormattingService',
     'UtilityService',
     'NotificationService',
-    function($scope, $q, $sce, ContainerService, FrmttSrvc, UtilityService, NtfnService) {
+    'confirmService',
+    function($scope, $q, $sce, ContainerService, FrmttSrvc, UtilityService, NtfnService, confirmService) {
       $scope.labelsEditMode = false;
       $scope.dockerfileEnabled = false;
       $scope.descriptorEnabled = false;
@@ -293,9 +294,14 @@ angular.module('dockstore.ui')
       };
 
       $scope.deregisterContainer = function(containerId) {
-        var confirmation = confirm("Are you sure you wish to deregister?");
+        var modalOptions = {
+                    closeButtonText: 'Close',
+                    actionButtonText: 'OK',
+                    headerText: 'Proceed?',
+                    bodyText: 'Perform this action?'
+                };
 
-        if(confirmation === true) {
+        return confirmService.showModal({}, modalOptions).then(function (result) {
           $scope.setContainerDetailsError(null);
           return ContainerService.deleteContainer(containerId)
             .then(
@@ -314,8 +320,7 @@ angular.module('dockstore.ui')
                 return $q.reject(response);
               }
             );
-
-        }
+          });
       };
 
       $scope.refreshContainer = function(containerId, activeTabIndex) {
