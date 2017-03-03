@@ -294,9 +294,9 @@ angular.module('dockstore.ui')
       $scope.deregisterContainer = function(containerId) {
         var modalOptions = {
                     closeButtonText: 'Close',
-                    actionButtonText: 'OK',
-                    headerText: 'Proceed?',
-                    bodyText: 'Perform this action?'
+                    actionButtonText: 'Continue',
+                    headerText: 'Are you sure you wish to deregister this tool?',
+                    bodyText: 'All information associated with this tool will be deleted.'
                 };
 
         return confirmService.showModal({}, modalOptions).then(function (result) {
