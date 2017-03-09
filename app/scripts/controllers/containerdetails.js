@@ -253,6 +253,15 @@ angular.module('dockstore.ui')
           .then(
             function(containerObj) {
               $scope.containerObj = containerObj;
+              $scope.bioschema = {
+                  "@context": "http://schema.org",
+                  "@type": "SoftwareApplication",
+                  "name": $scope.containerObj.name,
+                  "description": $scope.containerObj.description,
+                  "url": $scope.containerObj.gitUrl,
+                  "publisher": $scope.containerObj.namespace,
+                  "applicationCategory": "Commnad Line Tool"
+              };
             },
             function(response) {
               $scope.setContainerDetailsError(
