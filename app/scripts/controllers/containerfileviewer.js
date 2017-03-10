@@ -29,7 +29,8 @@ angular.module('dockstore.ui')
     '$q',
     'ContainerService',
     'NotificationService',
-    function ($scope, $q, ContainerService, NtfnService) {
+    '$location',
+    function ($scope, $q, ContainerService, NtfnService, $location) {
 
       var descriptors = ["cwl", "wdl"];
 
@@ -38,11 +39,24 @@ angular.module('dockstore.ui')
       $scope.successContent = [];
       $scope.fileContent = null;
 
-
       $scope.checkDockerfile = function() {
         var dockerfile = $scope.getDockerFile($scope.containerObj.id, $scope.selTagName);
       };
 
+      $scope.setBioschema = function() {
+        var bioschema = {
+            "@context": "http://schema.org",
+            "@type": "SoftwareApplication",
+            "name": $scope.containerObj.name,
+            "description": $scope.containerObj.description,
+            "url": $location.absUrl(),
+            "applicationCategory": "Command Line Tool"
+        };
+
+        $scope.$emit('bioschemaSet', bioschema);
+      };
+
+      // TODO: This function is way too long, it should be shortened
       // Check that the descriptor is valid
       $scope.checkDescriptor = function() {
         $scope.containerTags = $scope.getContainerTags();
@@ -130,6 +144,7 @@ angular.module('dockstore.ui')
             }
 
             var result = $scope.fileContent;
+
             if (result !== null) {
             m = [];
             v = false;
@@ -385,6 +400,8 @@ angular.module('dockstore.ui')
 
       // Initialize the select/dropdown elements
       $scope.setDocument = function() {
+        $scope.setBioschema();
+
         // prepare Container Version drop-down
         $scope.containerTags = $scope.getContainerTags();
         $scope.selTagName = $scope.containerTags[0];
