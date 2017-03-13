@@ -11,11 +11,16 @@
   </div>
 </div>
 
+<<<<<<< HEAD
 <div class="container view-content" style="margin-top: 20px">
+=======
+<div class="container view-content">
+>>>>>>> 1806512... Feature/organization (#142)
   <div class="row">
     <div class="col-md-12">
       <div ng-if="organizations.length !== 0">
         <div ng-repeat="organization in organizations">
+<<<<<<< HEAD
           <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" data-collapsible="expandable">
             <div class="panel panel-default">
               <div class="panel-heading clearfix" role="tab" id="head{{organization}}">
@@ -31,6 +36,19 @@
                       <a ng-href="/search-containers?namespace={{organization}}" class="btn btn-primary-outline"><img class="site-icons-small" src="images/dockstore-tools-purple.png"></a>
                       <a ng-href="/search-workflows?organization={{organization}}" class="btn btn-primary-outline"><img class="site-icons-small" src="images/dockstore-workflows-purple.png"></a>
                     </div>
+=======
+          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true"
+               data-collapsible="expandable">
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="head{{organization}}">
+                <h4 class="panel-title">
+                  <a class="collapsed" role="button" data-toggle="collapse"
+                     ng-href="#collapse{{organization}}"
+                     aria-expanded="false" aria-controls="collapseTwo" target="_self">
+                    {{organization}}
+                  </a>
+                </h4>
+>>>>>>> 1806512... Feature/organization (#142)
               </div>
               <div id="collapse{{organization}}" class="panel-collapse collapse" role="tabpanel"
                    aria-labelledby="head{{organization}}">
