@@ -183,7 +183,7 @@ angular.module('dockstore.ui')
         return $q(function(resolve, reject) {
           $http({
             method: 'GET',
-            url: WebService.API_URI + '/extendedGA4GH/' + organization
+            url: WebService.API_URI + '/api/ga4gh/v1/extended/tools/' + organization
           }).then(function(response) {
             resolve(response.data);
           }, function(response) {
@@ -192,11 +192,11 @@ angular.module('dockstore.ui')
         });
       };
 
-      this.getToolsByOrg = function(organization) {
+      this.getContainersByOrg = function(organization) {
         return $q(function(resolve, reject) {
           $http({
             method: 'GET',
-            url: WebService.API_URI + '/extendedGA4GH/entries/' + organization
+            url: WebService.API_URI + '/api/ga4gh/v1/extended/containers/' + organization
           }).then(function(response) {
             resolve(response.data);
           }, function(response) {
@@ -209,7 +209,7 @@ angular.module('dockstore.ui')
         return $q(function(resolve, reject) {
           $http({
             method: 'GET',
-            url: WebService.API_URI + '/extendedGA4GH/workflows/' + organization
+            url: WebService.API_URI + '/api/ga4gh/v1/extended/workflows/' + organization
           }).then(function(response) {
             resolve(response.data);
           }, function(response) {
@@ -222,7 +222,7 @@ angular.module('dockstore.ui')
         return $q(function(resolve, reject) {
           $http({
             method: 'GET',
-            url: WebService.API_URI + '/extendedGA4GH/organizations'
+            url: WebService.API_URI + '/api/ga4gh/v1/extended/organizations'
           }).then(function(response) {
             resolve(response.data);
           }, function(response) {

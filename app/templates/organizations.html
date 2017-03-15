@@ -11,7 +11,7 @@
   </div>
 </div>
 
-<div class="container view-content">
+<div class="container view-content" style="margin-top: 20px">
   <div class="row">
     <div class="col-md-12">
       <div ng-if="organizations.length !== 0">
@@ -20,13 +20,19 @@
                data-collapsible="expandable">
             <div class="panel panel-default">
               <div class="panel-heading" role="tab" id="head{{organization}}">
-                <h4 class="panel-title">
-                  <a class="collapsed" role="button" data-toggle="collapse"
-                     ng-href="#collapse{{organization}}"
-                     aria-expanded="false" aria-controls="collapseTwo" target="_self">
-                    {{organization}}
-                  </a>
-                </h4>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-md-9">
+                      <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse"
+                           ng-href="#collapse{{organization}}"
+                           aria-expanded="false" aria-controls="collapseTwo" target="_self">
+                          {{organization}}
+                        </a>
+                      </h4>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div id="collapse{{organization}}" class="panel-collapse collapse" role="tabpanel"
                    aria-labelledby="head{{organization}}">

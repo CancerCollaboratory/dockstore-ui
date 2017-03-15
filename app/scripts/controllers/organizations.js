@@ -33,12 +33,12 @@ angular.module('dockstore.ui')
         return TokenService.getOrganizations();
       },
 
-      assignTools = function(resultFromApi) {
+      assignContainers = function(resultFromApi) {
         $scope.organizations = resultFromApi;
         var promises = [];
         for(var i = 0; i < $scope.organizations.length; i++) {
           var org = $scope.organizations[i];
-          var promise = TokenService.getToolsByOrg(org);
+          var promise = TokenService.getContainersByOrg(org);
           promises.push(promise);
         }
         return $q.all(promises);
@@ -55,7 +55,7 @@ angular.module('dockstore.ui')
         return $q.all(promises);
       },
 
-      mapTools = function(resultFromApi) {
+      mapContainers = function(resultFromApi) {
         var ordered = resultFromApi;
         $scope.orgToTools = {};
         for(var i = 0; i < ordered.length; i++) {
@@ -78,8 +78,8 @@ angular.module('dockstore.ui')
       };
 
       getOrgs()
-        .then(assignTools)
-          .then(mapTools)
+        .then(assignContainers)
+          .then(mapContainers)
         .catch(reportProblems);
 
       getOrgs()
