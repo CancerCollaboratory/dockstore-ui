@@ -16,23 +16,19 @@
     <div class="col-md-12">
       <div ng-if="organizations.length !== 0">
         <div ng-repeat="organization in organizations">
-          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true"
-               data-collapsible="expandable">
+          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" data-collapsible="expandable">
             <div class="panel panel-default">
-              <div class="panel-heading" role="tab" id="head{{organization}}">
-                <div class="container">
-                  <div class="row">
-                    <div class="col-md-9">
-                      <h4 class="panel-title">
-                        <a class="collapsed" role="button" data-toggle="collapse"
-                           ng-href="#collapse{{organization}}"
-                           aria-expanded="false" aria-controls="collapseTwo" target="_self">
-                          {{organization}}
-                        </a>
-                      </h4>
+              <div class="panel-heading clearfix" role="tab" id="head{{organization}}">
+                    <h4 class="panel-title pull-left">
+                      <a class="collapsed" role="button" data-toggle="collapse"
+                         ng-href="#collapse{{organization}}"
+                         aria-expanded="false" aria-controls="collapseTwo" target="_self">
+                        {{organization}}
+                      </a>
+                    </h4>
+                    <div class="btn-group pull-right">
+                      <a ng-href="/organizations/{{organization}}" class="btn btn-primary-outline"><i class="glyphicon glyphicon-globe organization-popup"></i></a>
                     </div>
-                  </div>
-                </div>
               </div>
               <div id="collapse{{organization}}" class="panel-collapse collapse" role="tabpanel"
                    aria-labelledby="head{{organization}}">
