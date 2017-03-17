@@ -41,7 +41,9 @@ angular.module('dockstore.ui')
         var promises = [];
         for(var i = 0; i < $scope.organizations.length; i++) {
           var org = $scope.organizations[i];
+
           var promise = OrganizationService.getContainersByOrg(org);
+
           promises.push(promise);
         }
         return $q.all(promises);
@@ -52,7 +54,9 @@ angular.module('dockstore.ui')
         var promises = [];
         for(var i = 0; i < $scope.organizations.length; i++) {
           var org = $scope.organizations[i];
+
           var promise = OrganizationService.getWorkflowsByOrg(org);
+          
           promises.push(promise);
         }
         return $q.all(promises);
