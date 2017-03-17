@@ -27,7 +27,9 @@
                       </a>
                     </h4>
                     <div class="btn-group pull-right">
-                      <a ng-href="/organizations/{{organization}}" class="btn btn-primary-outline"><i class="glyphicon glyphicon-globe organization-popup"></i></a>
+                      <a ng-href="/organizations/{{organization}}" class="btn btn-primary-outline"><i class="glyphicon glyphicon-globe organizations redirect"></i></a>
+                      <a ng-href="/search-containers?namespace={{organization}}" class="btn btn-primary-outline"><img class="site-icons-small" src="images/dockstore-tools-purple.png"></a>
+                      <a ng-href="/search-workflows?organization={{organization}}" class="btn btn-primary-outline"><img class="site-icons-small" src="images/dockstore-workflows-purple.png"></a>
                     </div>
               </div>
               <div id="collapse{{organization}}" class="panel-collapse collapse" role="tabpanel"
