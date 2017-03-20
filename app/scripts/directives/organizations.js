@@ -18,23 +18,17 @@
 
 /**
  * @ngdoc directive
- * @name dockstore.ui.directive:stargazers
- * @restrict AE
+ * @name dockstore.ui.directive:organizations
  * @description
- * # stargazers
+ * # organizations
  */
 angular.module('dockstore.ui')
-  .directive('stargazers', function() {
+  .directive('organizations', function () {
     return {
       restrict: 'AE',
-      //controller: 'StargazersCtrl',
-      scope: {
-        workflowObj: '=',
-        containerObj: '=',
-        starGazers: '='
-      },
-
+      controller: 'OrganizationsCtrl',
+      scope: {},
       link: function postLink(scope, element, attrs) {},
-      templateUrl: 'templates/stargazers.html'
+      templateUrl: 'templates/organizations.html'
     };
   });

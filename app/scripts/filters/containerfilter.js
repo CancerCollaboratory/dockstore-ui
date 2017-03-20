@@ -17,24 +17,17 @@
 'use strict';
 
 /**
- * @ngdoc directive
- * @name dockstore.ui.directive:stargazers
- * @restrict AE
+ * @ngdoc filter
+ * @name dockstore.ui.filter:ContainerFilter
+ * @function
  * @description
- * # stargazers
+ * # ContainerFilter
+ * Filter in the dockstore.ui.
  */
 angular.module('dockstore.ui')
-  .directive('stargazers', function() {
-    return {
-      restrict: 'AE',
-      //controller: 'StargazersCtrl',
-      scope: {
-        workflowObj: '=',
-        containerObj: '=',
-        starGazers: '='
-      },
-
-      link: function postLink(scope, element, attrs) {},
-      templateUrl: 'templates/stargazers.html'
+  .filter('ContainerFilter', [function ($location) {
+    return function(ga4ghId) {
+        var dockstoreUrl = "/containers/" + ga4ghId;
+        return dockstoreUrl;
     };
-  });
+  }] );
