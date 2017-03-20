@@ -44,16 +44,33 @@ angular.module('dockstore.ui')
       };
 
       $scope.setBioschema = function() {
-        var bioschema = {
+        // default bioschema
+        var bioschema = [{
             "@context": "http://schema.org",
             "@type": "SoftwareApplication",
             "name": $scope.containerObj.name,
             "description": $scope.containerObj.description,
             "url": $location.absUrl(),
-            "applicationCategory": "Command Line Tool"
-        };
+            "applicationCategory": "Command Line Tool",
+            "operatingSystem": "Linux",
+            "image": "https://avatars0.githubusercontent.com/u/9947495?v=3&s=200"
+        }];
 
-        $scope.$emit('bioschemaSet', bioschema);
+        ContainerService.getSchema($scope.containerObj.id).then(
+          function(schema) {
+            // always use the user defined schemas
+            if (schema.length > 0) {
+              bioschema = schema;
+            }
+          },
+          function(response) {
+            return $q.reject(response);
+          }
+        ).finally(
+          function() {
+            $scope.$emit('bioschemaSet', bioschema);
+          }
+        );
       };
 
       // TODO: This function is way too long, it should be shortened
