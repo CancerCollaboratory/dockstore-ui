@@ -26,7 +26,6 @@
 angular.module('dockstore.ui')
   .controller('OrganizationsCtrl', [
     '$scope',
-<<<<<<< HEAD
     'OrganizationService',
     '$q',
     '$routeParams',
@@ -35,13 +34,6 @@ angular.module('dockstore.ui')
 
       var getOrgs = function() {
         return OrganizationService.getOrganizations();
-=======
-    'TokenService',
-    '$q',
-    function($scope, TokenService, $q) {
-      var getOrgs = function() {
-        return TokenService.getOrganizations();
->>>>>>> 1806512... Feature/organization (#142)
       },
 
       assignTools = function(resultFromApi) {
@@ -49,11 +41,7 @@ angular.module('dockstore.ui')
         var promises = [];
         for(var i = 0; i < $scope.organizations.length; i++) {
           var org = $scope.organizations[i];
-<<<<<<< HEAD
           var promise = OrganizationService.getContainersByOrg(org);
-=======
-          var promise = TokenService.getToolsByOrg(org);
->>>>>>> 1806512... Feature/organization (#142)
           promises.push(promise);
         }
         return $q.all(promises);
@@ -64,11 +52,7 @@ angular.module('dockstore.ui')
         var promises = [];
         for(var i = 0; i < $scope.organizations.length; i++) {
           var org = $scope.organizations[i];
-<<<<<<< HEAD
           var promise = OrganizationService.getWorkflowsByOrg(org);
-=======
-          var promise = TokenService.getWorkflowsByOrg(org);
->>>>>>> 1806512... Feature/organization (#142)
           promises.push(promise);
         }
         return $q.all(promises);
@@ -96,22 +80,14 @@ angular.module('dockstore.ui')
         return $q.reject(fault);
       };
 
-<<<<<<< HEAD
       var getOrgsPromise = getOrgs();
 
       getOrgsPromise
-=======
-      getOrgs()
->>>>>>> 1806512... Feature/organization (#142)
         .then(assignTools)
           .then(mapTools)
         .catch(reportProblems);
 
-<<<<<<< HEAD
       getOrgsPromise
-=======
-      getOrgs()
->>>>>>> 1806512... Feature/organization (#142)
         .then(assignWorkflows)
           .then(mapWorkflows)
         .catch(reportProblems);

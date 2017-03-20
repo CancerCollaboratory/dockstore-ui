@@ -181,14 +181,11 @@ angular
           controller: 'OrganizationsCtrl',
           controllerAs: 'Organizations'
         })
-<<<<<<< HEAD
         .when('/organizations/:org', {
           templateUrl: 'views/org.html',
           controller: 'OrganizationsCtrl',
           controllerAs: 'Organizations'
         })
-=======
->>>>>>> 1806512... Feature/organization (#142)
         .otherwise({
           redirectTo: '/'
         });
