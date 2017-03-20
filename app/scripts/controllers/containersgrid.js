@@ -106,7 +106,6 @@ angular.module('dockstore.ui')
       };
 
       $scope.$watch('searchQueryContainer', function(term) {
-        //console.log(term);
         $scope.filteredTools = $filter('filter')($scope.containers, term);
         if ($scope.filteredTools !== undefined) {
           $scope.entryCount = $scope.filteredTools.length;
