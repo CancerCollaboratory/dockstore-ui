@@ -62,6 +62,7 @@ angular.module('dockstore.ui')
         return StarringService.getStarring(userObj, entryId, entryType)
           .then(
             function(starring) {
+
               var match = 0;
               starring.forEach(function(star){
                 if (star.id === userObj.id) {
@@ -69,6 +70,7 @@ angular.module('dockstore.ui')
                 }
               });
               return match;
+
             },
             function(response) {
               $scope.setWorkflowDetailsError(
@@ -169,7 +171,9 @@ angular.module('dockstore.ui')
        * @return {type}  description
        */
       $scope.setDocument = function() {
+
         if ($scope.workflowObj) {
+
           $scope.entryId = $scope.workflowObj.id;
           $scope.entryType = 'workflow';
         } else {
@@ -181,11 +185,13 @@ angular.module('dockstore.ui')
         if (email) {
           return "https://www.gravatar.com/avatar/" + md5.createHash(email) + "?d=" + defaultImg;
         } else {
+
           if (defaultImg) {
             return defaultImg;
           } else {
             return "http://www.imcslc.ca/imc/includes/themes/imc/images/layout/img_placeholder_avatar.jpg";
           }
+
         }
       };
       //const gravatarUrl = (email, defaultImg) => ("https://www.gravatar.com/avatar/" + md5.createHash(email) + "?d=" + defaultImg);

@@ -36,6 +36,7 @@ h6.panel-title {
     <h3>Starred Tools</h3>
     <div class="alert alert-info" role="alert" ng-if="starredTools.length==0">
       <span class="glyphicon glyphicon-warning-sign"></span>
+
       You have no starred tools.
     </div>
     <div ng-repeat="entries in starredTools">
@@ -54,6 +55,7 @@ h6.panel-title {
           <starring class="pull-right" container-obj="entries"></starring>
           <p class="update">By {{entries.namespace}}</p>
 
+
           <p><a ng-href={{entries.gitReposWebUrl}}>{{entries.gitReposWebUrl}}</a></p>
           <p><a ng-href={{entries.imageReposWebUrl}}>{{entries.imageReposWebUrl}}</a></p>
 
@@ -68,10 +70,12 @@ h6.panel-title {
   <div class="alert alert-info" role="alert" ng-if="starredWorkflows.length==0">
     <span class="glyphicon glyphicon-warning-sign"></span>
 
+
     You have no starred workflows.
   </div>
   <div ng-repeat="entries in starredWorkflows">
     <div ng-if="entries.is_published || isOwner(entries.users)" class="col-lg-4 col-md-6 col-sm-8 col-xs-12">
+
 
     <div class="panel panel-default">
       <div class="panel-heading">

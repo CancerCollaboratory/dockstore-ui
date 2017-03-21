@@ -36,6 +36,7 @@ angular.module('dockstore.ui')
     'FormattingService',
     function($scope, $auth, $location, $window,
       UserService, NtfnService, ContainerService, WorkflowService, FrmttSrvc) {
+
       $scope.getGitReposProvider = FrmttSrvc.getGitReposProvider;
       $scope.getGitReposProviderName = FrmttSrvc.getGitReposProviderName;
       $scope.getGitReposWebUrl = FrmttSrvc.getGitReposWebUrl;
@@ -43,6 +44,7 @@ angular.module('dockstore.ui')
       $scope.getImageReposProviderName = FrmttSrvc.getImageReposProviderName;
       $scope.getImageReposWebUrl = FrmttSrvc.getImageReposWebUrl;
       $scope.user = UserService.getUserObj();
+
       UserService.getStarredWorkflows().then(function(data) {
         $scope.starredWorkflows = data;
         $scope.starredWorkflows.forEach(function(workflow) {
@@ -66,6 +68,7 @@ angular.module('dockstore.ui')
             tool.gitUrl,
             tool.gitReposProvider);
           /* Image Repository */
+
           tool.imageReposProviderName = $scope.getImageReposProviderName(
               tool.registry);
           tool.imageReposWebUrl = $scope.getImageReposWebUrl(

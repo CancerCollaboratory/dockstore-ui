@@ -36,7 +36,9 @@ angular.module('dockstore.ui')
 
       link: function postLink(scope, element, attrs) {
         scope.$watchGroup(['containerObj', 'workflowObj'], function() {
+
           if (scope.containerObj || scope.workflowObj){
+
             scope.setDocument();
             scope.getStarring(scope.userObj, scope.entryId, scope.entryType).then(function(data) {
               scope.rate = data;
@@ -44,7 +46,9 @@ angular.module('dockstore.ui')
             scope.getStarredUsers(scope.userObj, scope.entryId, scope.entryType).then(function(data) {
               scope.total_stars = data;
             });
+
           }
+
         });
       },
       templateUrl: 'templates/starring.html'
