@@ -176,6 +176,16 @@ angular
           controller: 'MaintenanceCtrl',
           controllerAs: 'Maintenance'
         })
+        .when('/organizations', {
+          templateUrl: 'views/organizations.html',
+          controller: 'OrganizationsCtrl',
+          controllerAs: 'Organizations'
+        })
+        .when('/organizations/:org', {
+          templateUrl: 'views/org.html',
+          controller: 'OrganizationsCtrl',
+          controllerAs: 'Organizations'
+        })
         .otherwise({
           redirectTo: '/'
         });
@@ -238,7 +248,7 @@ angular
       $rootScope.$on('$routeChangeStart', function() {
         if ($location.url() === '/') return;
         var public_views = [
-          '/search-containers', '/containers', '/docs', '/login', '/publish', 'maintenance', '/workflows', '/search-workflows'
+          '/search-containers', '/containers', '/docs', '/login', '/publish', 'maintenance', '/workflows', '/search-workflows', '/organizations'
         ];
         var isViewPublic = function(path) {
           for (var i = 0; i < public_views.length; i++) {
