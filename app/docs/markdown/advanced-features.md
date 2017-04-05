@@ -79,6 +79,10 @@ cache-dir =
 The former is false by default and can be set to true in order to activate the cache.
 The latter is `~/.dockstore/cache/` by default and can be set to any directory location.
 
+## File Provision Retries
+
+By default, Dockstore will attempt to download files up to three times. Control this with the `file-provision-retries` parameter inside `~/.dockstore/config`.
+
 ## Running CWL-runner with extra tags
 
 When running a CWL tool, you may want to add additional parameters/flags to the cwl-runner command. You can do this by updating your dockstore config file (~/.dockstore/config).
