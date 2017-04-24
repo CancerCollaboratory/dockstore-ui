@@ -139,7 +139,7 @@
                   ng-minlength="3"
                   ng-maxlength="256"
                   ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.(cwl|yaml|yml)$/i"
-                  required
+                  ng-required="!(containerObj.default_cwl_path.length || containerObj.default_wdl_path.length)"
                   uib-tooltip
                   title="Default relative path to the CWL Descriptor in the Git repository."
                   placeholder="e.g. /Dockstore.cwl" />
@@ -165,7 +165,7 @@
                 ng-minlength="3"
                 ng-maxlength="256"
                 ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.wdl$/i"
-                required
+                ng-required="!(containerObj.default_cwl_path.length || containerObj.default_wdl_path.length)"
                 uib-tooltip
                 title="Default relative path to the WDL Descriptor in the Git repository."
                 placeholder="e.g. /Dockstore.wdl" />
