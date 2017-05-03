@@ -368,8 +368,13 @@
                 ng-show="containerObj.description"
                 marked="containerObj.description">
               </div>
+            </div>
+          </li>
+          <li ng-show="!containerObj.description && editMode">
+            <div class="well well-sm">
+              <span class = "glyphicon glyphicon-warning-sign"></span>
               <span ng-show="!containerObj.description">
-                No description associated with this container. Please select a version.
+                No description associated with this container.  Please add a description.
               </span>
             </div>
           </li>
