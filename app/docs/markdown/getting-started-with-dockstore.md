@@ -281,13 +281,13 @@ Recommended when you're not using Quay.io or if someone else has the same tool n
 Manual -> Fully-Automated:
 
 1. Deregister the manual tool
-2. Create a new Fully-Automated one
+2. Create a new Fully-Automated one (simply click "Refresh All Tools")
 
 Fully-Automated -> Manual:
 
 1. Delete Quay.io repository
-2. "Refresh All Tools"
-3. Create a new Manual tool
+2. "Refresh All Tools" (this will remove the tool from Dockstore)
+3. Create a new Manual tool (will have to recreate the Quay.io repository)
 
 ## Sharing the Tool
 
