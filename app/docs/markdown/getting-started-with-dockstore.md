@@ -236,7 +236,7 @@ The `dockstore tool manual_publish` command can be used to manually register a t
 
 How to create it:
 
-You create it by using the "Refresh All Tools" button.  This will scan through your Quay.io repositories and automatically register the tool on Dockstore.
+Create by using the "Refresh All Tools" button.  This will scan through your Quay.io repositories and automatically register the tool on Dockstore.
 
 Requirements:
 
@@ -248,9 +248,10 @@ This build mode automatically adds versions to your tool with Quay tags and Git 
 
 Limitations:
 
-- Unable to deregister tool
+- Unable to easily deregister the tool
 - Unable to manually add versions
 - Cannot uniquely name the tool
+- Currently only works with Quay.io image registry
 
 When to use:  
 
@@ -260,12 +261,12 @@ Recommended when you are using a Quay.io registry, want a quick and easy way to 
 
 How to create it:
 
-- Click Add Tool, use Quay.io registry, and change the tool name from default.
+- Click Add Tool, fill in details
 
 Requirements:
 
 - Registry that has at least one tag
-- Token to the corresponding registry
+- Token to the corresponding registry (if using Quay.io)
 
 Limitations:
 
@@ -273,7 +274,7 @@ Limitations:
 
 When to use:
 
-Recommended when you're not using Quay.io or if someone else have the same tool name already and you want your own tool instead.  Also if you are not using build triggers.
+Recommended when you're not using Quay.io or if someone else has the same tool name already and you want your own tool instead.  Also if you are not using build triggers.
 
 ### Converting Between Build Modes
 
