@@ -51,8 +51,8 @@ Next, pick a version of your tool that you wish to present to the world by click
 ### Quick Registration of Alternate Tools
 
 Outside of this tutorial, you may wish to re-register a pre-existing tool with a new name. This can occur when you've quick registered a tool, but wish to create a new tool with a different descriptor based on the same Docker image when your Docker image supports a number of different commands.
- 
-Consider the linked [repository](https://github.com/CancerCollaboratory/dockstore-tool-bamstats). If you've followed the tutorial, you will have this as a published tool. But wait, there's a `Dockstore2.cwl` in the same repo with a different command. 
+
+Consider the linked [repository](https://github.com/CancerCollaboratory/dockstore-tool-bamstats). If you've followed the tutorial, you will have this as a published tool. But wait, there's a `Dockstore2.cwl` in the same repo with a different command.
 
 To register this, follow the procedure below:
 
@@ -60,11 +60,11 @@ First, make note of the GitHub repository that stores the descriptors for the to
 
 ![Existing tool](docs/alternate1.png)
 
-Second, hit the plus button under the organization and ensure that the GitHub repository and image registry match your previous tool. Note that we changed the default CWL Descriptor Path to `Dockstore2.cwl` to simulate an alternate descriptor for the same Docker image. Last but not least, change the tool name to distinguish the tool from the intial tool. 
+Second, hit the plus button under the organization and ensure that the GitHub repository and image registry match your previous tool. Note that we changed the default CWL Descriptor Path to `Dockstore2.cwl` to simulate an alternate descriptor for the same Docker image. Last but not least, change the tool name to distinguish the tool from the intial tool.
 
 ![Add alternate tool](docs/alternate2.png)
 
-After clicking on "Add Tool" you should now see a new "Fully-Automated" tool that shared a GitHub and quay.io repo with an existing tool. Note that the description and launch-with commands should reflect the new tool and the ID will have an additional part (up from three) identifying the new alternate tool. 
+After clicking on "Add Tool" you should now see a new "Fully-Automated" tool that shared a GitHub and quay.io repo with an existing tool. Note that the description and launch-with commands should reflect the new tool and the ID will have an additional part (up from three) identifying the new alternate tool.
 
 ![Newly created alternate tool](docs/alternate3.png)
 
@@ -92,6 +92,31 @@ Press the 'Add Tag' button to begin creating tags for the different versions of 
 ![Edit Version Tag Dialogue](docs/tageditor_modal.png)
 
 The fields in the form should correspond to the actual values on GitHub/Bitbucket/GitLab and Quay.io/Docker Hub in order for the information to be useful to other users. Selecting `Hidden` will prevent the tag from appearing in the public listing of tags for the image.
+
+## [Different Ways To Register Tools on Dockstore](#differet-ways-to-register)
+
+There are 3 major ways to register tools on Dockstore
+- The Dockstore website
+- The Dockstore webservice
+- The Write API webservice and client
+
+There is no clear cut answer for determining which is the best way to register tools on Dockstore.  Many factors affect it.  The below is merely our a suggestion, feel free to register tools on Dockstore in whichever way you prefer.
+
+Registering many tools or very few tools?
+  - Very Few
+    - Use the Dockstore website.  Just need to manually create the GitHub and Quay.io repository (if they don't exist).  If you're using Quay.io as the image registry, you can simply "Refresh All Tools" on the Dockstore website.  Otherwise, you can manually register the tool.
+  - Many
+    - GitHub and image registry repositories already made for each tool?
+      - Yes
+        - Are you using Quay.io for your image registry?
+          - Yes
+            - Use either the Dockstore webservice or website.  Just need to refresh all tools.  All of your Quay.io tools should automatically register on Dockstore.
+          - No
+            - Use the Dockstore webservice so you can programmatically register and publish all tools.
+      - No
+        - Use the Write API webservice and client.  After some setup time (getting GitHub and Quay.io tokens, setting up service, etc), it allows you to programmatically create GitHub and Quay.io repositories on the fly, then register/publish them on Dockstore.
+
+Generally, Write API webservice and client has the highest setup time compared to the other methods of registering.  But, as you register more tools, the Write API tends to become the better choice (since it performs many intermediary steps for you).
 
 ### CLI Client
 
@@ -265,4 +290,3 @@ You can find tools on the Dockstore website or also through the `dockstore tool 
 You can follow this basic pattern for each of your Docker-based tools.  Once registered, you can send links to your tools on Dockstore to colleagues and use it as a public platform for sharing your tools.
 
 Read up on how Dockstore uses Docker registries at the [Docker Registries](/docs/docker_registries) page or see our [full list of documentation](/docs).
-
