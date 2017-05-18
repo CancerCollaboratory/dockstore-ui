@@ -232,7 +232,7 @@ The `dockstore tool manual_publish` command can be used to manually register a t
 
 ## Additional Information on Build Modes
 
-#### Fully-Automated
+#### [Fully-Automated](#Fully-Automated)
 
 How to create it:
 
@@ -257,7 +257,7 @@ When to use:
 
 Recommended when you are using a Quay.io registry, want a quick and easy way to register the tool, and want to avoid manually adding new versions to the tool.  Generally recommended for most tools.
 
-#### Manual
+#### [Manual](#Manual)
 
 How to create it:
 
