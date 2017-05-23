@@ -11,7 +11,7 @@ To give you a taste of what we're working on for the next major version of Docks
 * UI rewrite
   * We're currently migrating our UI from AngularJS to Angular (2), watch for performance improvements and usability improvements in this area
 * Write API Web Service and Client!
-  * With just a CWL descriptor and Dockerfile, this allows you to programmatically create GitHub and Quay.io repositories and then register and publish the tool on Dockstore in just 2 commands.  Publishing tools on Dockstore has gotten a lot easier.  See [GitHub](https://github.com/dockstore/write_api_service/) for more info on how to use the Write API.  See [Getting Started With Dockstore](/docs/getting-started-with-dockstore#) for information on different ways to register tools on Dockstore and when to use this Write API.
+  * With just a CWL descriptor and Dockerfile, this allows you to programmatically create GitHub and Quay.io repositories and then register and publish the tool on Dockstore in just 2 commands.  Publishing tools on Dockstore has gotten a lot easier.  See [GitHub](https://github.com/dockstore/write_api_service/) for more info on how to use the Write API.  See [For Developers](/docs/developers#different-ways-to-register) for information on different ways to register tools on Dockstore and when to use this Write API.
 
 As usual, we're open to suggestions. If you have one or if you spot a bug, drop us a line on [GitHub](https://github.com/ga4gh/dockstore/issues)
 
