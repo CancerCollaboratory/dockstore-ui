@@ -28,3 +28,4 @@ for various conferences.  Feel free to create a fork and add yours.
 ## 2017
 ### BOSC
 * [CGP as a Service: From data submission to results using your web-browser](./user_posters/2017_BOSC_Sanger_keiranmraine.pdf)
+  * Wellcome Trust Sanger Institute, Keiran M Raine
