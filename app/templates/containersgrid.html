@@ -63,7 +63,7 @@
                 <a href="/containers/{{container.tool_path}}">{{container.name + (container.toolname ? '/' + container.toolname : '')}}</a>
               </td>
               <td>
-                {{ container.starredUsers.length == 0 ? '' : container.starredUsers.length }}
+                {{ container.starredUsers.length === 0 ? '' : container.starredUsers.length }}
               </td>
               <td>
                 {{ container.author ? container.author : 'n/a' }}
